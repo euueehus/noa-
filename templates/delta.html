@@ -43,7 +43,21 @@
         width: 50%;
         height: auto;
     }
+    .custom-popup{
+        width: 700x;
+        max-width: 90vw;
+        
+        
+        border-radius: 12px;
+    }
 </style>
+
+
+
+
+
+
+
 
 <body>
     <h1>洲~</h1><br>
@@ -69,4 +83,17 @@
     <br>
 
     <button onclick="window.location.href='/list' ">回去</button>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+<script>
+    Swal.fire({
+    html:'<span style="color:#ff4444;font-size:40px;"><b>你掉進陷阱了!</b></span>',
+    imageUrl: "/static/賽大哥.jpg",
+    imageWidth: 1000,
+    imageHeight: 500,
+    imageAlt: "Custom image",
+    customClass: {
+        popup: 'custom-popup'
+  }
+});
+</script>
