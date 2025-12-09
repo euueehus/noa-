@@ -3,56 +3,151 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body {
-            background-color: #ffffff;
-            text-align: left;
+            background: #f9f9f9;
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
         }
 
-        .list_head {
-            color: #FF0000;
+        header {
+            background: #0077cc;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .list_body {
-            color: rgb(43, 5, 255)
+        header img {
+            width: 50px;
+            height: auto;
         }
 
-        button {
-            padding: 3px 15px;
-            font-size: 15px;
-            cursor: pointer;
-            color: #000000;
+        header a {
+            color: #fff;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: bold;
         }
 
-        .list_back {
-            color: rgb(43, 5, 255);
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
         }
 
-        img {
-            width: 5%;
-            height: 5%;
+        .project {
+            background: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
+        .project h2 a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+
+        .project h2 a:hover {
+            color: #ff6600;
+        }
+
+        .project img {
+            float: right;
+            width: 120px;
+            height: auto;
+            margin-left: 15px;
+            border-radius: 6px;
+        }
+
+        .note {
+            font-size: 14px;
+            color: #555;
+        }
+
+        del {
+            color: #999;
         }
     </style>
 </head>
 
 <body>
-    <img src="/static/git_logo.jpg" alt="logo">
-    <a href="https://github.com/euueehus">我的github~</a>
-    <h2><a href="https://github.com/euueehus/class-2-colulator-bmi">2025/09/23 (二) 02 流程控制 選擇結構</a></h2><br>
-    <h2><a href="https://github.com/euueehus/loop-">2025/09/30 (二) 03 流程控制 重複結構</a></h2><br>
-    <h2><a href="https://github.com/euueehus/SONG">2025/10/07 (二) 04 陣列</a></h2><br>
-    <h2><a href="https://github.com/euueehus/train-tick">2025/10/14 (二) 05 函式</a></h2><br>
-    <h2><a href="https://github.com/euueehus/barrrrrrrr">2025/10/21 (二) 06 拉霸遊戲機</a></h2><br>
-    <h2><a href="https://github.com/euueehus/pan">2025/10/28 (二) 07 小畫家</a></h2><br>
-    <h2><a href="https://github.com/euueehus/pppppp">2025/11/04 (二) 08 遊戲設計 Pacman</a></h2><br>
-    <h2><a href="https://github.com/euueehus/menu">2025/11/11 (二) 09 系統設計：麥當勞點餐系統</a></h2><br>
-    <h2><a href="https://github.com/euueehus/train-tick">離線小恐龍</a></h2><br>
-    <img src="/static/di.jpg" alt="cute">
-    <h5>你問我為甚麼沒有連結?</h5><del><h5>哈哈這個人忘了存</h5></del>
-    <h2>2025/11/25 (二) 11 七彩呼吸燈</h2><img src="/static/hand_bad.jpg"" alt="hand"><del><h5>666手摸焊槍</h5></del>
-    <h2><a href="https://github.com/euueehus/test1">2025/12/02 (二) 12 期末測驗1</a></h2><br>
-    <h2><a href="https://github.com/euueehus/test2">2025/12/02 (二) 12 期末測驗2</a></h2><br>
-    <h2><a href="https://github.com/euueehus/test3">2025/12/02 (二) 12 期末測驗3</a></h2><br>
+    <header>
+        <img src="/static/git_logo.jpg" alt="logo">
+        <a href="https://github.com/euueehus">我的 GitHub~</a>
+    </header>
+
+    <div class="container">
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/class-2-colulator-bmi">2025/09/23 (二) 02 流程控制 選擇結構</a></h2>
+            <p class="note">計算機</p>
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/loop-">2025/09/30 (二) 03 流程控制 重複結構</a></h2>
+            <p class="note">討厭數列</p>
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/SONG">2025/10/07 (二) 04 陣列</a></h2>
+            <del><p class="note">一千唱完了剩下五百沒唱</p></del>
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/train-tick">2025/10/14 (二) 05 函式</a></h2>
+            <p class="note">體驗叫火車~~</p>
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/barrrrrrrr">2025/10/21 (二) 06 拉霸遊戲機</a></h2>
+            <del><p class="note">賭博!!!!!!!</p></del>
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/pan">2025/10/28 (二) 07 小畫家</a></h2>
+            <p class="note">小畫家還滿好玩的w</p>
+            <img src="/static/cute_cat.jpg" alt="cat">
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/pppppp">2025/11/04 (二) 08 遊戲設計 Pacman</a></h2>
+            <p class="note">小精靈</p>
+            <img src="/static/pacman.jpg" alt="pac">
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/menu">2025/11/11 (二) 09 系統設計：麥當勞點餐系統</a></h2>
+            <p class="note">可以買蔣校長喔!</p>
+            <img src="/static/Chiang_Kai-shek_Colour.jpg" alt="a">
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/train-tick">離線小恐龍</a></h2>
+            <p class="note">你問我為甚麼沒有連結?</p>
+            <del><p class="note">哈哈這個人忘了存</p></del>
+            <img src="/static/di.jpg" alt="cute">
+        </div>
+
+        <div class="project">
+            <h2>2025/11/25 (二) 11 七彩呼吸燈</h2>
+            <del><p class="note">666手摸焊槍</p></del>
+            <img src="/static/hand_bad.jpg" alt="hand">
+        </div>
+
+        <div class="project">
+            <h2><a href="https://github.com/euueehus/test1">2025/12/02 (二) 12 期末測驗1</a></h2>
+            <h2><a href="https://github.com/euueehus/test2">2025/12/02 (二) 12 期末測驗2</a></h2>
+            <h2><a href="https://github.com/euueehus/test3">2025/12/02 (二) 12 期末測驗3</a></h2>
+        </div>
+        <div class="project">
+            <button onclick="window.location.href='/list' ">回上一頁</button>
+        </div>
+    </div>
 </body>
+</html>
