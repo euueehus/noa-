@@ -3,108 +3,139 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
         body {
             background-color: #000000;
-            text-align: left;
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #fff;
         }
 
-        .list_head {
-            color: #FF0000;
+        h1 {
+            color: #ff4444;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
-        .list_body {
-            color: rgb(43, 5, 255)
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        ul li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        ul li a {
+            color: #00aaff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        ul li a:hover {
+            color: #ffaa00;
+        }
+
+        .section {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .section h2 {
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+
+        .section img {
+            float: right;
+            width: 120px;
+            height: auto;
+            margin-left: 15px;
+            border-radius: 8px;
+        }
+
+        .section p {
+            color: #ccc;
         }
 
         button {
-            padding: 3px 15px;
+            padding: 8px 20px;
             font-size: 15px;
             cursor: pointer;
-            color: #000000;
+            border: none;
+            border-radius: 5px;
+            background: #00aaff;
+            color: #fff;
+            transition: background 0.3s;
         }
 
-        .list_back {
-            color: rgb(43, 5, 255);
+        button:hover {
+            background: #ffaa00;
         }
 
-        img {
-            width: 10%;
-            height: 10%;
-
+        .footer {
+            text-align: center;
+            margin-top: 40px;
         }
     </style>
 </head>
 
 <body>
-    <div>
-        <div class="list_head">
-            <strong>
-                <h1>目錄如下~:</h1>
-            </strong>
-        </div>
-    </div>
-    <div>
-        <div class="list_body">
-            <ul>
-                <li><a href="#intro">
-                        <h3>自我介紹!!!</h3>
-                    </a></li>
-                <li><a href="#kards">
-                        <h3>kards!</h3>
-                    </a></li>
-                <li><a href="#minecraft">
-                        <h3>minecraft!!!!!!</h3>
-                    </a></li>
-                <li><a href="#delta">
-                        <h3>三角洲df!!</h3>
-                    </a></li>
-                <li><a href="#class">
-                        <h3>上課的!!</h3>
-                    </a></li>
-                <li>
-                    <h3><s>待增加...</s></h3>
-                </li>
-            </ul>
-            <h2 id="intro">自我介紹!</h2><img src="/static/intro.jpg">
-            <div>
-                <div class="list_back">
-                    <p>這個是按鈕!</p>
-                    <button onclick="location.href='/intro'">點我跳轉!</button>
-                </div>
-            </div>
-            <h2 id="kards">kards!</h2><img src=/static/Kards_logo.jpg>
-            <div>
-                <div class="list_back">
-                    <p>這個是按鈕!</p>
-                    <button onclick="location.href='/Kards'">點我跳轉!</button>
-                </div>
-            </div>
-            <h2 id="minecraft">minecraft!</h2><img src="/static/minecraft_logo.jpg">
-            <div>
-                <div calss="list_back">
-                    <p>這個是按鈕!</p>
-                    <button onclick="location.href='/minecraft'">點我跳轉!</button>
-                </div>
-            </div>
-            <h2 id="delta">三角洲!!</h2><img src="/static/H.D.A.jpg">
-            <div>
-                <div class=" list_back">
-                    <p>這個是按鈕!</p>
-                    <button onclick="location.href='/delta'">點我跳轉!</button><br>
-                </div>
-            </div>
-            <h2 id="calss">上課的!!</h2><img src="/static/calss_logo.jpg">
-            <div>
-                <div class=" list_back">
-                    <p>這個是按鈕!</p>
-                    <button onclick="location.href='/calss'">點我跳轉!</button><br>
-                </div>
-            </div>
+    <h1>目錄如下~:</h1>
+    <ul>
+        <li><a href="#intro">自我介紹</a></li>
+        <li><a href="#kards">Kards</a></li>
+        <li><a href="#minecraft">Minecraft</a></li>
+        <li><a href="#delta">三角洲</a></li>
+        <li><a href="#class">上課的</a></li>
+        <li><s>待增加...</s></li>
+    </ul>
 
-        </div>
-        <div class="list_back">
-            <button onclick="window.location.href='/'">回去!!</button>
-        </div>
+    <div class="section" id="intro">
+        <h2>自我介紹!</h2>
+        <img src="/static/intro.jpg" alt="intro">
+        <p>這個是按鈕!</p>
+        <button onclick="location.href='/intro'">點我跳轉!</button>
+    </div>
+
+    <div class="section" id="kards">
+        <h2>Kards!</h2>
+        <img src="/static/Kards_logo.jpg" alt="kards">
+        <p>這個是按鈕!</p>
+        <button onclick="location.href='/Kards'">點我跳轉!</button>
+    </div>
+
+    <div class="section" id="minecraft">
+        <h2>Minecraft!</h2>
+        <img src="/static/minecraft_logo.jpg" alt="minecraft">
+        <p>這個是按鈕!</p>
+        <button onclick="location.href='/minecraft'">點我跳轉!</button>
+    </div>
+
+    <div class="section" id="delta">
+        <h2>三角洲!!</h2>
+        <img src="/static/H.D.A.jpg" alt="delta">
+        <p>這個是按鈕!</p>
+        <button onclick="location.href='/delta'">點我跳轉!</button>
+    </div>
+
+    <div class="section" id="class">
+        <h2>上課的!!</h2>
+        <img src="/static/calss_logo.jpg" alt="class">
+        <p>這個是按鈕!</p>
+        <button onclick="location.href='/calss'">點我跳轉!</button>
+    </div>
+
+    <div class="footer">
+        <button onclick="window.location.href='/'">回去!!</button>
+    </div>
 </body>
+</html>
