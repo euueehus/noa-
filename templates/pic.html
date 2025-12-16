@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片展示</title>
+    <style>
+        body {
+            background-color: #000000;
+            /* 黑色背景 */
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #fff;
+        }
+
+        h1 {
+            color: #ff4444;
+            /* 紅色標題 */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* 圖片容器：使用 Flexbox 排版 */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            /* 自動換行 */
+            justify-content: center;
+            /* 置中排列 */
+            gap: 20px;
+            /* 圖片間距 */
+        }
+
+        .gallery img {
+            width: 250px;
+            /* 固定寬度 */
+            height: auto;
+            /* 高度自動 */
+            border-radius: 10px;
+            /* 圓角 */
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.3);
+            /* 白色陰影 */
+            transition: transform 0.3s, box-shadow 0.3s;
+            /* 動畫效果 */
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            /* 滑鼠移上去放大 */
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.6);
+            /* 陰影加強 */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>好看的圖片!!!!!!!!!!!!</h1>
+
+    <div class="gallery">
+        <img src="/static/noa_banned_logo.jpg" alt="Noa Logo">
+        <img src="/static/genshin_1.jpg" alt="Genshin">
+        <img src="/static/gura_mu.jpg" alt="Gura Mu">
+        <img src="/static/long_gura.jpg" alt="Long Gura">
+    </div>
+
+</body>
+
+</html>

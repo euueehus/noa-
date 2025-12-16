@@ -59,5 +59,20 @@ def calss():
     return render_template("calss.html")
 
 
+@app.route("/Noa")
+def Noa():
+    return render_template("log_li.php")
+
+
+@app.route("/passs")
+def passs():
+    return render_template("passs.html")
+
+
+@app.route("/pic")
+def pic():
+    return render_template("pic.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=os.getenv("PORT", default=5000), host="0.0.0.0")
