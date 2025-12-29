@@ -96,33 +96,33 @@
         <h2>這是我的神奇區域~嘿嘿~</h2>
     </header>
 
+    <!-- PHP 登入檢查 -->
     <div class="section">
         <?php
-        if ($_POST["pwd"] == "10082") {
-            echo "登入成功！";
+        if (isset($_POST["pwd"]) && $_POST["pwd"] === "10082") {
+            echo "<p style='color:lime;'>登入成功！</p>";
         } else {
-            echo "密碼錯誤！";
+            echo "<p style='color:red;'>密碼錯誤！</p>";
         }
         ?>
-        <div class="section">
-            <div class="section-content">
-                <h2>放好看的圖片</h2>
-                <button onclick="window.location.href='/pic'">gogogo</button>
-                <del>
-                    <h5>非請勿入</h5>
-                </del>
-            </div>
-            <div></div>
-            <div class="section">
-                <div class="section-content">
-                    <h2>沒啥好說的就是回去</h2>
-                    <button onclick="window.location.href='/list'">回去!</button>
-                </div>
-                <div>
+    </div>
 
-                </div>
-            </div>
+    <!-- 圖片區塊 -->
+    <div class="section">
+        <div class="section-content">
+            <h2>放好看的圖片</h2>
+            <button onclick="window.location.href='/pic'">gogogo</button>
+            <del><h5>非請勿入</h5></del>
+        </div>
+    </div>
+
+    <!-- 返回區塊 -->
+    <div class="section">
+        <div class="section-content">
+            <h2>沒啥好說的就是回去</h2>
+            <button onclick="window.location.href='/list'">回去!</button>
+        </div>
+    </div>
 
 </body>
-
 </html>
