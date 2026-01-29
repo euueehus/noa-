@@ -59,7 +59,7 @@ def calss():
     return render_template("calss.html")
 
 
-@app.route('/log_li', methods=['POST'])
+@app.route("/log_li", methods=["POST"])
 def Noa():
     return render_template("log_li.php")
 
