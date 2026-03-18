@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進位轉換</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --border: #2a2a3a;
+            --accent: #00e5ff;
+            --accent2: #ff4081;
+            --text: #e0e0f0;
+            --text-dim: #5a5a7a;
+            --mono: 'Space Mono', monospace;
+            --sans: 'Noto Sans TC', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridDrift 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridDrift {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(40px);
+            }
+        }
+
+        /* Floating glow blobs */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            pointer-events: none;
+            animation: blobFloat 8s ease-in-out infinite alternate;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent2);
+            bottom: -80px;
+            right: -80px;
+            animation-delay: -4s;
+        }
+
+        @keyframes blobFloat {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(30px, 20px) scale(1.1);
+            }
+        }
+
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 48px 44px;
+            width: 420px;
+            box-shadow: 0 0 60px rgba(0, 229, 255, 0.06), 0 20px 60px rgba(0, 0, 0, 0.6);
+            animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 40px;
+            right: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header .label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .header h1 {
+            font-family: var(--mono);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .header h1 span {
+            color: var(--accent);
+        }
+
+        /* Input */
+        .input-group {
+            margin-bottom: 28px;
+        }
+
+        .input-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-family: var(--mono);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap::after {
+            content: '10';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            pointer-events: none;
+        }
+
+        #inputNum {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 48px 14px 18px;
+            font-family: var(--mono);
+            font-size: 20px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            -moz-appearance: textfield;
+        }
+
+        #inputNum::-webkit-inner-spin-button,
+        #inputNum::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        #inputNum:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
+        }
+
+        #inputNum::placeholder {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        /* Radio group */
+        .radio-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 28px;
+        }
+
+        .radio-label {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .radio-label input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.2s;
+            font-family: var(--mono);
+        }
+
+        .radio-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1.5px solid var(--text-dim);
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .radio-name {
+            font-size: 13px;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .radio-sub {
+            margin-left: auto;
+            font-size: 10px;
+            color: var(--text-dim);
+            opacity: 0.5;
+        }
+
+        .radio-label input:checked~.radio-btn {
+            border-color: var(--accent);
+            background: rgba(0, 229, 255, 0.06);
+        }
+
+        .radio-label input:checked~.radio-btn .radio-dot {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+
+        .radio-label input:checked~.radio-btn .radio-name {
+            color: var(--accent);
+        }
+
+        .radio-label:hover .radio-btn {
+            border-color: rgba(0, 229, 255, 0.3);
+        }
+
+        /* Button */
+        .convert-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            color: var(--accent);
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .convert-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .convert-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .convert-btn:hover::before {
+            opacity: 0.1;
+        }
+
+        .convert-btn:hover {
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        }
+
+        .convert-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Output */
+        .output-wrap {
+            position: relative;
+        }
+
+        .output-label {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-family: var(--mono);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #output {
+            width: 100%;
+            background: rgba(0, 229, 255, 0.04);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-family: var(--mono);
+            font-size: 22px;
+            color: var(--accent);
+            outline: none;
+            letter-spacing: 2px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        #output.has-value {
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+        }
+
+        #output::placeholder {
+            color: var(--text-dim);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        /* Flash animation on result */
+        @keyframes resultFlash {
+            0% {
+                box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+            }
+        }
+
+        #output.flash {
+            animation: resultFlash 0.4s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="card">
+        <div class="header">
+            <span class="label">Base Converter</span>
+            <h1>進位<span>轉換</span></h1>
+        </div>
+
+        <div class="input-group">
+            <span class="input-label">輸入十進位數字</span>
+            <div class="input-wrap">
+                <input type="number" id="inputNum" placeholder="0" min="0">
+            </div>
+        </div>
+
+        <div class="radio-group">
+            <label class="radio-label">
+                <input type="radio" name="base" value="2">
+                <div class="radio-btn">
+                    <div class="radio-dot"></div>
+                    <span class="radio-name">二進位</span>
+                    <span class="radio-sub">BIN</span>
+                </div>
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="base" value="8">
+                <div class="radio-btn">
+                    <div class="radio-dot"></div>
+                    <span class="radio-name">八進位</span>
+                    <span class="radio-sub">OCT</span>
+                </div>
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="base" value="10">
+                <div class="radio-btn">
+                    <div class="radio-dot"></div>
+                    <span class="radio-name">十進位</span>
+                    <span class="radio-sub">DEC</span>
+                </div>
+            </label>
+            <label class="radio-label">
+                <input type="radio" name="base" value="16">
+                <div class="radio-btn">
+                    <div class="radio-dot"></div>
+                    <span class="radio-name">十六進位</span>
+                    <span class="radio-sub">HEX</span>
+                </div>
+            </label>
+        </div>
+
+        <button class="convert-btn" onclick="run()"><span>CONVERT ▸</span></button>
+
+        <div class="output-wrap">
+            <span class="output-label">結果</span>
+            <input type="text" id="output" readonly placeholder="—">
+        </div>
+    </div>
+
+    <script>
+        const dic = { 10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F" };
+        let list = [];
+
+        function convert(num, base) {
+            list = [];
+            if (num === 0) { list.push(0); return; }
+            while (num > 0) {
+                list.push(num % base);
+                num = Math.floor(num / base);
+            }
+            list.reverse();
+        }
+
+        function getResult(base) {
+            if (base === 16) {
+                return list.map(n => dic[n] !== undefined ? dic[n] : n.toString()).join("");
+            }
+            return list.join("");
+        }
+
+        function calculate(inputValue, base) {
+            const num = parseInt(inputValue);
+            if (isNaN(num) || num < 0) { alert("請輸入有效的非負整數"); return; }
+            convert(num, base);
+            return getResult(base);
+        }
+
+        function run() {
+            const inputValue = document.getElementById("inputNum").value;
+            const selected = document.querySelector('input[name="base"]:checked');
+            if (!selected) { alert("請選擇目標進位"); return; }
+            const base = parseInt(selected.value);
+            const result = calculate(inputValue, base);
+            if (result === undefined) return;
+            const outputEl = document.getElementById("output");
+            outputEl.value = result;
+            outputEl.classList.add("has-value");
+            outputEl.classList.remove("flash");
+            void outputEl.offsetWidth;
+            outputEl.classList.add("flash");
+        }
+
+        // Allow Enter key
+        document.getElementById("inputNum").addEventListener("keydown", e => {
+            if (e.key === "Enter") run();
+        });
+    </script>
+</body>
+
+</html>

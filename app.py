@@ -74,5 +74,20 @@ def pic():
     return render_template("pic.html")
 
 
+@app.route("/c_sfz")
+def csharp():
+    return render_template("c_sfz.html")
+
+
+@app.route("/c_list")
+def c_list():
+    return render_template("c_list.html")
+
+
+@app.route("/c_bi")
+def c_bi():
+    return render_template("c_bi.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=os.getenv("PORT", default=5000), host="0.0.0.0")

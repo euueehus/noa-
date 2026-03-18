@@ -107,7 +107,7 @@
         ?>
     </div>
 
-    <!-- 圖片區塊 -->
+   
     <div class="section">
         <div class="section-content">
             <h2>放好看的圖片</h2>
