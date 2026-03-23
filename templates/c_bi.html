@@ -37,10 +37,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
 
-        /* Animated grid background */
         body::before {
             content: '';
             position: fixed;
@@ -63,7 +61,6 @@
             }
         }
 
-        /* Floating glow blobs */
         .blob {
             position: fixed;
             border-radius: 50%;
@@ -79,7 +76,6 @@
             background: var(--accent);
             top: -100px;
             left: -100px;
-            animation-delay: 0s;
         }
 
         .blob-2 {
@@ -106,8 +102,8 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 48px 44px;
-            width: 420px;
+            padding: 44px 40px;
+            width: 460px;
             box-shadow: 0 0 60px rgba(0, 229, 255, 0.06), 0 20px 60px rgba(0, 0, 0, 0.6);
             animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
@@ -137,7 +133,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
 
         .header .label {
@@ -162,141 +158,156 @@
             color: var(--accent);
         }
 
-        /* Input */
-        .input-group {
-            margin-bottom: 28px;
+        /* ── converter row ── */
+        .converter-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 24px;
         }
 
-        .input-label {
-            font-size: 11px;
+        .field-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field-label {
+            font-family: var(--mono);
+            font-size: 10px;
             letter-spacing: 2px;
             color: var(--text-dim);
             text-transform: uppercase;
-            font-family: var(--mono);
-            display: block;
-            margin-bottom: 10px;
         }
 
-        .input-wrap {
+        /* base selector */
+        .base-select-wrap {
             position: relative;
         }
 
-        .input-wrap::after {
-            content: '10';
+        .base-select-wrap::after {
+            content: '▾';
             position: absolute;
-            right: 14px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            font-family: var(--mono);
-            font-size: 10px;
-            color: var(--text-dim);
-            letter-spacing: 1px;
+            color: var(--accent);
+            font-size: 12px;
             pointer-events: none;
         }
 
-        #inputNum {
+        select {
+            width: 100%;
+            background: rgba(0, 229, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 36px 11px 14px;
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--text);
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
+        }
+
+        select option {
+            background: #1a1a28;
+        }
+
+        /* custom base input row */
+        .custom-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .custom-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .custom-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 64, 129, 0.3);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--accent2);
+            outline: none;
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .custom-input:focus {
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.12);
+        }
+
+        .custom-input::placeholder {
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* arrow icon */
+        .arrow-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 2px;
+        }
+
+        .arrow-icon {
+            font-family: var(--mono);
+            font-size: 20px;
+            color: var(--text-dim);
+            letter-spacing: -2px;
+        }
+
+        /* input number */
+        .num-input {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 14px 48px 14px 18px;
+            padding: 14px 18px;
             font-family: var(--mono);
             font-size: 20px;
             color: var(--text);
             outline: none;
             transition: border-color 0.2s, box-shadow 0.2s;
-            -moz-appearance: textfield;
         }
 
-        #inputNum::-webkit-inner-spin-button,
-        #inputNum::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-        }
-
-        #inputNum:focus {
+        .num-input:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
         }
 
-        #inputNum::placeholder {
+        .num-input::placeholder {
             color: var(--text-dim);
             font-size: 14px;
         }
 
-        /* Radio group */
-        .radio-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 28px;
-        }
-
-        .radio-label {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .radio-label input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .radio-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.02);
-            transition: all 0.2s;
+        .section-label {
             font-family: var(--mono);
-        }
-
-        .radio-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            border: 1.5px solid var(--text-dim);
-            flex-shrink: 0;
-            transition: all 0.2s;
-        }
-
-        .radio-name {
-            font-size: 13px;
-            color: var(--text-dim);
-            transition: color 0.2s;
-        }
-
-        .radio-sub {
-            margin-left: auto;
             font-size: 10px;
+            letter-spacing: 2px;
             color: var(--text-dim);
-            opacity: 0.5;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
         }
 
-        .radio-label input:checked~.radio-btn {
-            border-color: var(--accent);
-            background: rgba(0, 229, 255, 0.06);
-        }
-
-        .radio-label input:checked~.radio-btn .radio-dot {
-            background: var(--accent);
-            border-color: var(--accent);
-            box-shadow: 0 0 8px var(--accent);
-        }
-
-        .radio-label input:checked~.radio-btn .radio-name {
-            color: var(--accent);
-        }
-
-        .radio-label:hover .radio-btn {
-            border-color: rgba(0, 229, 255, 0.3);
-        }
-
-        /* Button */
+        /* button */
         .convert-btn {
             width: 100%;
             padding: 15px;
@@ -341,21 +352,7 @@
             transform: scale(0.98);
         }
 
-        /* Output */
-        .output-wrap {
-            position: relative;
-        }
-
-        .output-label {
-            font-size: 11px;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            font-family: var(--mono);
-            display: block;
-            margin-bottom: 10px;
-        }
-
+        /* output */
         #output {
             width: 100%;
             background: rgba(0, 229, 255, 0.04);
@@ -381,7 +378,6 @@
             letter-spacing: 1px;
         }
 
-        /* Flash animation on result */
         @keyframes resultFlash {
             0% {
                 box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
@@ -394,6 +390,74 @@
 
         #output.flash {
             animation: resultFlash 0.4s ease-out;
+        }
+
+        /* steps breakdown */
+        .steps-wrap {
+            margin-top: 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: none;
+        }
+
+        .steps-wrap.visible {
+            display: block;
+        }
+
+        .steps-title {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .steps-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+
+        .steps-list li {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            display: flex;
+            gap: 8px;
+        }
+
+        .steps-list li .step-num {
+            color: var(--accent);
+            min-width: 60px;
+        }
+
+        .steps-list li .step-rem {
+            color: var(--accent2);
+        }
+
+        /* divider */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+            opacity: 0.5;
+        }
+
+        /* error */
+        .error-msg {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent2);
+            letter-spacing: 1px;
+            min-height: 16px;
+            margin-bottom: 12px;
+            display: block;
         }
     </style>
 </head>
@@ -409,102 +473,199 @@
             <h1>進位<span>轉換</span></h1>
         </div>
 
-        <div class="input-group">
-            <span class="input-label">輸入十進位數字</span>
-            <div class="input-wrap">
-                <input type="number" id="inputNum" placeholder="0" min="0">
+        <!-- From / To selectors -->
+        <div class="converter-row">
+            <div class="field-block">
+                <span class="field-label">從（來源進位）</span>
+                <div class="base-select-wrap">
+                    <select id="fromBase" onchange="onFromBaseChange()">
+                        <option value="2">2　二進位 BIN</option>
+                        <option value="8">8　八進位 OCT</option>
+                        <option value="10" selected>10　十進位 DEC</option>
+                        <option value="16">16　十六進位 HEX</option>
+                        <option value="custom">自訂…</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="arrow-col">
+                <span class="arrow-icon">→</span>
+            </div>
+
+            <div class="field-block">
+                <span class="field-label">到（目標進位）</span>
+                <div class="base-select-wrap">
+                    <select id="toBase" onchange="onToBaseChange()">
+                        <option value="2" selected>2　二進位 BIN</option>
+                        <option value="8">8　八進位 OCT</option>
+                        <option value="10">10　十進位 DEC</option>
+                        <option value="16">16　十六進位 HEX</option>
+                        <option value="custom">自訂…</option>
+                    </select>
+                </div>
             </div>
         </div>
 
-        <div class="radio-group">
-            <label class="radio-label">
-                <input type="radio" name="base" value="2">
-                <div class="radio-btn">
-                    <div class="radio-dot"></div>
-                    <span class="radio-name">二進位</span>
-                    <span class="radio-sub">BIN</span>
-                </div>
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="base" value="8">
-                <div class="radio-btn">
-                    <div class="radio-dot"></div>
-                    <span class="radio-name">八進位</span>
-                    <span class="radio-sub">OCT</span>
-                </div>
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="base" value="10">
-                <div class="radio-btn">
-                    <div class="radio-dot"></div>
-                    <span class="radio-name">十進位</span>
-                    <span class="radio-sub">DEC</span>
-                </div>
-            </label>
-            <label class="radio-label">
-                <input type="radio" name="base" value="16">
-                <div class="radio-btn">
-                    <div class="radio-dot"></div>
-                    <span class="radio-name">十六進位</span>
-                    <span class="radio-sub">HEX</span>
-                </div>
-            </label>
+        <!-- Custom base inputs (hidden by default) -->
+        <div class="custom-row" id="customRow" style="display:none;">
+            <div class="custom-block" id="customFromBlock" style="display:none;">
+                <span class="field-label"
+                    style="color:var(--accent2);letter-spacing:2px;font-size:10px;font-family:var(--mono);text-transform:uppercase;">自訂來源進位</span>
+                <input class="custom-input" type="number" id="customFrom" placeholder="例：3, 5, 32…" min="2" max="36"
+                    value="">
+            </div>
+            <div class="custom-block" id="customToBlock" style="display:none;">
+                <span class="field-label"
+                    style="color:var(--accent2);letter-spacing:2px;font-size:10px;font-family:var(--mono);text-transform:uppercase;">自訂目標進位</span>
+                <input class="custom-input" type="number" id="customTo" placeholder="例：3, 5, 32…" min="2" max="36"
+                    value="">
+            </div>
         </div>
+
+        <div class="divider"></div>
+
+        <!-- Number input -->
+        <span class="section-label">輸入數字</span>
+        <input class="num-input" type="text" id="inputNum" placeholder="在此輸入…" autocomplete="off" spellcheck="false">
+
+        <div class="divider"></div>
+
+        <span class="error-msg" id="errMsg"></span>
 
         <button class="convert-btn" onclick="run()"><span>CONVERT ▸</span></button>
 
-        <div class="output-wrap">
-            <span class="output-label">結果</span>
-            <input type="text" id="output" readonly placeholder="—">
+        <span class="section-label">結果</span>
+        <input type="text" id="output" readonly placeholder="—">
+
+        <!-- Steps breakdown -->
+        <div class="steps-wrap" id="stepsWrap">
+            <div class="steps-title">計算步驟</div>
+            <ul class="steps-list" id="stepsList"></ul>
         </div>
     </div>
 
     <script>
-        const dic = { 10: "A", 11: "B", 12: "C", 13: "D", 14: "E", 15: "F" };
-        let list = [];
+        const DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-        function convert(num, base) {
-            list = [];
-            if (num === 0) { list.push(0); return; }
-            while (num > 0) {
-                list.push(num % base);
-                num = Math.floor(num / base);
-            }
-            list.reverse();
+        function getFromBase() {
+            const sel = document.getElementById('fromBase').value;
+            if (sel === 'custom') return parseInt(document.getElementById('customFrom').value);
+            return parseInt(sel);
+        }
+        function getToBase() {
+            const sel = document.getElementById('toBase').value;
+            if (sel === 'custom') return parseInt(document.getElementById('customTo').value);
+            return parseInt(sel);
         }
 
-        function getResult(base) {
-            if (base === 16) {
-                return list.map(n => dic[n] !== undefined ? dic[n] : n.toString()).join("");
-            }
-            return list.join("");
+        function onFromBaseChange() {
+            updateCustomVisibility();
+            updateInputPlaceholder();
+        }
+        function onToBaseChange() {
+            updateCustomVisibility();
         }
 
-        function calculate(inputValue, base) {
-            const num = parseInt(inputValue);
-            if (isNaN(num) || num < 0) { alert("請輸入有效的非負整數"); return; }
-            convert(num, base);
-            return getResult(base);
+        function updateCustomVisibility() {
+            const fromCustom = document.getElementById('fromBase').value === 'custom';
+            const toCustom = document.getElementById('toBase').value === 'custom';
+            document.getElementById('customRow').style.display = (fromCustom || toCustom) ? 'grid' : 'none';
+            document.getElementById('customFromBlock').style.display = fromCustom ? 'flex' : 'none';
+            document.getElementById('customToBlock').style.display = toCustom ? 'flex' : 'none';
+        }
+
+        function updateInputPlaceholder() {
+            const fb = getFromBase();
+            if (!isNaN(fb)) {
+                document.getElementById('inputNum').placeholder = `輸入 ${fb} 進位數字`;
+            }
+        }
+
+        // Parse a string in given base to decimal (BigInt for precision)
+        function parseToDecimal(str, base) {
+            str = str.toUpperCase().trim();
+            let result = 0n;
+            const b = BigInt(base);
+            for (let i = 0; i < str.length; i++) {
+                const ch = str[i];
+                const val = DIGITS.indexOf(ch);
+                if (val < 0 || val >= base) throw new Error(`字元 "${ch}" 不屬於 ${base} 進位`);
+                result = result * b + BigInt(val);
+            }
+            return result;
+        }
+
+        // Convert decimal (BigInt) to string in given base, also return steps
+        function decimalToBase(num, base) {
+            if (num === 0n) return { result: '0', steps: [{ div: '0', rem: '0' }] };
+            const b = BigInt(base);
+            const steps = [];
+            let digits = [];
+            let n = num;
+            while (n > 0n) {
+                const rem = n % b;
+                steps.push({ div: n.toString(), rem: DIGITS[Number(rem)] });
+                digits.push(DIGITS[Number(rem)]);
+                n = n / b;
+            }
+            digits.reverse();
+            steps.reverse();
+            return { result: digits.join(''), steps };
         }
 
         function run() {
-            const inputValue = document.getElementById("inputNum").value;
-            const selected = document.querySelector('input[name="base"]:checked');
-            if (!selected) { alert("請選擇目標進位"); return; }
-            const base = parseInt(selected.value);
-            const result = calculate(inputValue, base);
-            if (result === undefined) return;
-            const outputEl = document.getElementById("output");
+            const errEl = document.getElementById('errMsg');
+            errEl.textContent = '';
+
+            const fromBase = getFromBase();
+            const toBase = getToBase();
+
+            if (isNaN(fromBase) || fromBase < 2 || fromBase > 36) {
+                errEl.textContent = '⚠ 來源進位需介於 2–36'; return;
+            }
+            if (isNaN(toBase) || toBase < 2 || toBase > 36) {
+                errEl.textContent = '⚠ 目標進位需介於 2–36'; return;
+            }
+
+            const inputStr = document.getElementById('inputNum').value.trim();
+            if (!inputStr) { errEl.textContent = '⚠ 請輸入數字'; return; }
+
+            let decimal;
+            try {
+                decimal = parseToDecimal(inputStr, fromBase);
+            } catch (e) {
+                errEl.textContent = `⚠ ${e.message}`; return;
+            }
+
+            const { result, steps } = decimalToBase(decimal, toBase);
+
+            const outputEl = document.getElementById('output');
             outputEl.value = result;
-            outputEl.classList.add("has-value");
-            outputEl.classList.remove("flash");
+            outputEl.classList.add('has-value');
+            outputEl.classList.remove('flash');
             void outputEl.offsetWidth;
-            outputEl.classList.add("flash");
+            outputEl.classList.add('flash');
+
+            // Show steps (only when not trivial)
+            const stepsWrap = document.getElementById('stepsWrap');
+            const stepsList = document.getElementById('stepsList');
+            stepsList.innerHTML = '';
+
+            if (toBase !== 10) {
+                // Show conversion steps
+                steps.forEach(s => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="step-num">${s.div} ÷ ${toBase}</span><span>= … 餘</span><span class="step-rem"> ${s.rem}</span>`;
+                    stepsList.appendChild(li);
+                });
+                stepsWrap.classList.add('visible');
+            } else {
+                stepsWrap.classList.remove('visible');
+            }
         }
 
-        // Allow Enter key
-        document.getElementById("inputNum").addEventListener("keydown", e => {
-            if (e.key === "Enter") run();
+        document.getElementById('inputNum').addEventListener('keydown', e => {
+            if (e.key === 'Enter') run();
         });
     </script>
 </body>
