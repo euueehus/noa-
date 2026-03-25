@@ -89,5 +89,10 @@ def c_bi():
     return render_template("c_bi.html")
 
 
+@app.route("/c_gb")
+def c_gb():
+    return render_template("c_gb.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=os.getenv("PORT", default=5000), host="0.0.0.0")
