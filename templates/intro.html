@@ -2,70 +2,86 @@
 <html lang="zh-TW">
 
 <head>
+    <meta charset="UTF-8">
+    <title>自介desu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <style>
+        /* 背景漸層 */
         body {
-            background-color: #000000;
-        }
-
-        .intro-box {
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 18px;
-            line-height: 1.8;
+            margin: 0;
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #0d0d0d, #1a1a40, #330000);
             color: #ffffff;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
+        /* Intro 區塊 */
+        .intro-box {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 40px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+            font-size: 20px;
+            line-height: 1.9;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .intro-box:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 40px rgba(255, 200, 0, 0.6);
+        }
+
+        /* 標題 */
+        .intro-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #ffcc00;
+            text-shadow: 0 0 10px #ffaa00;
+        }
+
+        /* 強調角色語氣 */
+        .highlight {
+            color: #ff6666;
+            font-weight: bold;
+        }
+
+        /* 按鈕 */
+        .back-button {
+            display: block;
+            margin: 40px auto 0;
+            padding: 14px 28px;
+            font-size: 18px;
             cursor: pointer;
-            background-color: #f0f0f0;
-            color: #0000ff;
+            background: #ffcc00;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
-        img {
-            width: 20%;
-            height: auto;
-        }
-
-        imgset {
-            width: 20%;
-            height: 100%;
-
+        .back-button:hover {
+            background: #ffaa00;
+            transform: scale(1.1);
         }
     </style>
+</head>
 
 <body>
+    <div class="intro-box">
+        <div class="intro-title"></div>
+        <p>
+            <span class="highlight">火花</span>的毀滅感在程式裡燃燒，<br>
+            <span class="highlight">花火</span>的不在乎讓我敢隨性創作，<br>
+            <span class="highlight">銀狼</span>的從容是我在鍵盤後的冷靜，<br>
+            <span class="highlight">亂破</span>的衝勁就像我寫程式先衝再說，<br>
 
-
-    <div>
-        <div class="intro-box">
-            我的名字是 王安宏(noa!!)<br>
-            住在火星，未婚。 <br>
-            我在 VS Code 裡生活，每天最晚凌晨三點睡覺。 <br>
-            我不抽煙，茶喝到死掉為止。<br>
-            每天會打開 Flask，調整路由直到滿意為止<br>
-            我喜歡WWII、喜歡語言、喜歡看程式變得整齊。<br>
-            我不追求勝負，但我喜歡把事情做得漂亮。<br>
-            我只是想說:<br>
-            我的網站不是為了炫技，是為了留下我想記住的東西。<br>
-            如果你願意進來看看，我會很高興。<br>
-            但如果你想挑戰它——我是不會輸給任何人的。<br>
-            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~分隔線!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>
-            <p>興趣:</p><img src="/static/Kards_logo.jpg">
-            <h1>卡茲!!!!!!!!!!!!</h1>
-            <div class=imgset><img src="/static/H.D.A.jpg"></div>
-            <h1>非心~~~~~</h1>
-            <img src="/static/jojo_music.jpg">
-            <h1>臥室傳來一陣黃金之風....</h1><br>
-            <img src="/static/Ryan_poster.jpg">
-            <h1>拯救雷恩大兵!!! 好看!!!!!! 去看!!!</h1><br>
-
-            <br>
-            <br>
-            <br>
-        </div>
-        <button onclick="window.location.href='/list'">回去</button>
+        <h5><del>中二病(?</del></h5>
+        </p>
+        <button class="back-button" onclick="window.location.href='/list'">回去</button>
+    </div>
 </body>
+
+</html>

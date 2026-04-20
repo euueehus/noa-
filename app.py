@@ -94,5 +94,10 @@ def c_gb():
     return render_template("c_gb.html")
 
 
+@app.route("/H_game")
+def H_game():
+    return render_template("H_game.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=os.getenv("PORT", default=5000), host="0.0.0.0")

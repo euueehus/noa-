@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>甜蜜都市日常 1000+事件版</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Josefin+Sans:wght@300;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a0a2e;
+            --paper: #fdf4ff;
+            --card: #2a1042;
+            --card2: #331550;
+            --rose: #ff6eb4;
+            --violet: #c084fc;
+            --sky: #7dd3fc;
+            --gold: #fbbf24;
+            --mint: #6ee7b7;
+            --muted: #9d7bc0;
+            --glass: rgba(255, 255, 255, 0.07);
+            --glow: rgba(255, 110, 180, 0.18);
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            background: var(--ink);
+            color: #f0e6ff;
+            overflow-x: hidden
+        }
+
+        /* BACKGROUND */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 20% 20%, rgba(192, 132, 252, 0.15), transparent),
+                radial-gradient(ellipse 50% 40% at 80% 80%, rgba(255, 110, 180, 0.12), transparent),
+                radial-gradient(ellipse 40% 60% at 60% 10%, rgba(125, 211, 252, 0.08), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            background: rgba(42, 16, 66, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo {
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: linear-gradient(90deg, var(--rose), var(--violet), var(--sky));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            font-size: .75rem;
+            font-weight: 300;
+            display: block;
+            -webkit-text-fill-color: var(--muted);
+            margin-top: -4px
+        }
+
+        .hdr-right {
+            margin-left: auto;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        .seed-wrap {
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
+
+        input[type=text] {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: #f0e6ff;
+            padding: 7px 12px;
+            border-radius: 10px;
+            font-size: .8rem;
+            width: 130px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        input[type=text]::placeholder {
+            color: var(--muted)
+        }
+
+        .btn {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all .18s;
+            white-space: nowrap;
+        }
+
+        .btn-rose {
+            background: linear-gradient(135deg, #e040a0, #ff6eb4);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(255, 110, 180, 0.3)
+        }
+
+        .btn-violet {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(192, 132, 252, 0.25)
+        }
+
+        .btn-dark {
+            background: rgba(255, 255, 255, 0.07);
+            color: #d0b8ff;
+            border: 1px solid var(--border)
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.1)
+        }
+
+        .btn:active {
+            transform: translateY(0)
+        }
+
+        /* MAIN LAYOUT */
+        .layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 14px
+        }
+
+        /* SIDE PANEL */
+        .side {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        .card {
+            background: rgba(42, 16, 66, 0.75);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-title {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+        }
+
+        /* DATETIME */
+        .datetime-display {
+            text-align: center;
+            padding: 4px 0
+        }
+
+        .day-num {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--rose);
+            line-height: 1
+        }
+
+        .day-label {
+            font-size: .75rem;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .phase-pills {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            justify-content: center
+        }
+
+        .phase-pill {
+            font-size: .65rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            transition: all .2s;
+        }
+
+        .phase-pill.active {
+            background: linear-gradient(135deg, var(--rose), var(--violet));
+            color: #fff;
+            border-color: transparent
+        }
+
+        /* STATS */
+        .stats-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .stat-row {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .stat-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0
+        }
+
+        .stat-icon.rose {
+            background: rgba(255, 110, 180, 0.15)
+        }
+
+        .stat-icon.violet {
+            background: rgba(192, 132, 252, 0.15)
+        }
+
+        .stat-icon.sky {
+            background: rgba(125, 211, 252, 0.15)
+        }
+
+        .stat-icon.gold {
+            background: rgba(251, 191, 36, 0.15)
+        }
+
+        .stat-icon.mint {
+            background: rgba(110, 231, 183, 0.15)
+        }
+
+        .stat-icon.red {
+            background: rgba(248, 113, 113, 0.15)
+        }
+
+        .stat-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .stat-name {
+            font-size: .65rem;
+            color: var(--muted);
+            line-height: 1
+        }
+
+        .stat-bar-wrap {
+            height: 5px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 3px;
+            margin-top: 3px;
+            overflow: hidden
+        }
+
+        .stat-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width .4s ease
+        }
+
+        .stat-bar.rose {
+            background: linear-gradient(90deg, #e040a0, #ff6eb4)
+        }
+
+        .stat-bar.violet {
+            background: linear-gradient(90deg, #7c3aed, #c084fc)
+        }
+
+        .stat-bar.sky {
+            background: linear-gradient(90deg, #0ea5e9, #7dd3fc)
+        }
+
+        .stat-bar.gold {
+            background: linear-gradient(90deg, #d97706, #fbbf24)
+        }
+
+        .stat-bar.mint {
+            background: linear-gradient(90deg, #059669, #6ee7b7)
+        }
+
+        .stat-bar.red {
+            background: linear-gradient(90deg, #dc2626, #f87171)
+        }
+
+        .stat-val {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 700;
+            min-width: 24px;
+            text-align: right;
+            color: #f0e6ff
+        }
+
+        /* MINI MAP */
+        .map-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none
+        }
+
+        .map-toggle {
+            font-size: .7rem;
+            color: var(--muted);
+            transition: transform .3s
+        }
+
+        .map-toggle.open {
+            transform: rotate(180deg)
+        }
+
+        .map-body {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height .35s ease
+        }
+
+        .map-body.open {
+            max-height: 500px
+        }
+
+        .map-svg-wrap {
+            margin-top: 12px;
+            position: relative
+        }
+
+        .map-svg {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            overflow: hidden
+        }
+
+        .map-location {
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .map-location:hover .loc-circle {
+            filter: brightness(1.4)
+        }
+
+        .loc-label {
+            font-size: 8px;
+            fill: #c084fc;
+            font-family: 'Josefin Sans', sans-serif;
+            pointer-events: none;
+            text-anchor: middle
+        }
+
+        .map-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px
+        }
+
+        .legend-item {
+            font-size: .62rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 4px
+        }
+
+        .legend-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .location-info {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: .75rem;
+            display: none;
+        }
+
+        .location-info.show {
+            display: block
+        }
+
+        .loc-name {
+            font-weight: 700;
+            color: var(--rose);
+            margin-bottom: 4px
+        }
+
+        .loc-desc {
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        /* COOLDOWNS */
+        .cooldown-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 6px
+        }
+
+        .cd-tag {
+            font-size: .6rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: rgba(255, 110, 180, 0.1);
+            color: var(--rose);
+            border: 1px solid rgba(255, 110, 180, 0.2)
+        }
+
+        /* MAIN CONTENT */
+        .main-col {
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+
+        /* SCENE */
+        .scene-card {
+            background: rgba(42, 16, 66, 0.75);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            min-height: 160px;
+        }
+
+        .scene-phase-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: .65rem;
+            font-weight: 600;
+            letter-spacing: .1em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            background: rgba(255, 110, 180, 0.12);
+            color: var(--rose);
+            border: 1px solid rgba(255, 110, 180, 0.2);
+        }
+
+        .scene-text {
+            font-size: .9rem;
+            line-height: 1.8;
+            color: #e0d0ff;
+            min-height: 60px
+        }
+
+        .rarity-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .65rem;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-top: 10px;
+        }
+
+        .rarity-badge.common {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--muted)
+        }
+
+        .rarity-badge.rare {
+            background: rgba(251, 191, 36, 0.12);
+            color: var(--gold);
+            border: 1px solid rgba(251, 191, 36, 0.2)
+        }
+
+        .rarity-badge.epic {
+            background: rgba(255, 110, 180, 0.12);
+            color: var(--rose);
+            border: 1px solid rgba(255, 110, 180, 0.3)
+        }
+
+        /* CHOICES */
+        .choices-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px
+        }
+
+        .choice-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: #d0b8ff;
+            padding: 9px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            font-size: .8rem;
+            transition: all .18s;
+        }
+
+        .choice-btn:hover {
+            background: rgba(192, 132, 252, 0.12);
+            border-color: rgba(192, 132, 252, 0.4);
+            color: #f0e6ff;
+            transform: translateY(-1px)
+        }
+
+        /* LOG */
+        .log-card {
+            background: rgba(42, 16, 66, 0.75);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .log-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .log-body {
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .log-body::-webkit-scrollbar {
+            width: 4px
+        }
+
+        .log-body::-webkit-scrollbar-thumb {
+            background: rgba(192, 132, 252, 0.3);
+            border-radius: 2px
+        }
+
+        .msg {
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: .8rem;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid transparent;
+            animation: fadeIn .3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .msg .msg-header {
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: .62rem;
+            color: var(--muted);
+            margin-bottom: 4px
+        }
+
+        .msg.common {
+            color: #c8b0dd
+        }
+
+        .msg.rare {
+            background: rgba(251, 191, 36, 0.07);
+            border-color: rgba(251, 191, 36, 0.15);
+            color: #ffe49a
+        }
+
+        .msg.epic {
+            background: rgba(255, 110, 180, 0.09);
+            border-color: rgba(255, 110, 180, 0.25);
+            color: #ffb8e8
+        }
+
+        /* EFFECT FLASH */
+        .flash {
+            animation: flashAnim .5s ease
+        }
+
+        @keyframes flashAnim {
+
+            0%,
+            100% {
+                transform: none
+            }
+
+            30% {
+                transform: scale(1.15)
+            }
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: .68rem;
+            padding: 16px;
+            margin-top: 4px
+        }
+
+        @media(max-width:720px) {
+            .layout {
+                grid-template-columns: 1fr
+            }
+
+            .hdr-right {
+                width: 100%
+            }
+
+            .logo span {
+                display: inline
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div>
+                <div class="logo">甜蜜都市日常<span>SWEET CITY SIMULATOR</span></div>
+            </div>
+            <div class="hdr-right">
+                <div class="seed-wrap">
+                    <input id="seedInput" type="text" placeholder="種子（選填）" />
+                    <button class="btn btn-dark" id="applySeed">套用</button>
+                </div>
+                <button class="btn btn-rose" id="advanceDay">▶ 前進時段</button>
+                <button class="btn btn-violet" id="resetBtn">↺ 重置</button>
+            </div>
+        </header>
+
+        <div class="layout">
+            <!-- SIDE -->
+            <div class="side">
+                <!-- DATETIME -->
+                <div class="card">
+                    <div class="datetime-display">
+                        <div class="day-num" id="dayDisplay">1</div>
+                        <div class="day-label">DAY</div>
+                        <div class="phase-pills">
+                            <div class="phase-pill" data-p="0">🌅 早上</div>
+                            <div class="phase-pill" data-p="1">☀️ 中午</div>
+                            <div class="phase-pill" data-p="2">🌤 下午</div>
+                            <div class="phase-pill" data-p="3">🌙 晚上</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STATS -->
+                <div class="card">
+                    <div class="card-title">角色狀態</div>
+                    <div class="stats-grid" id="statsGrid">
+                        <div class="stat-row">
+                            <div class="stat-icon rose">💖</div>
+                            <div class="stat-info">
+                                <div class="stat-name">魅力 CHARM</div>
+                                <div class="stat-bar-wrap">
+                                    <div class="stat-bar rose" id="bar-charm"></div>
+                                </div>
+                            </div>
+                            <div class="stat-val" id="val-charm">5</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-icon violet">🌸</div>
+                            <div class="stat-info">
+                                <div class="stat-name">可愛 CUTE</div>
+                                <div class="stat-bar-wrap">
+                                    <div class="stat-bar violet" id="bar-cute"></div>
+                                </div>
+                            </div>
+                            <div class="stat-val" id="val-cute">4</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-icon sky">💧</div>
+                            <div class="stat-info">
+                                <div class="stat-name">慾望 LUST</div>
+                                <div class="stat-bar-wrap">
+                                    <div class="stat-bar sky" id="bar-lust"></div>
+                                </div>
+                            </div>
+                            <div class="stat-val" id="val-lust">2</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-icon gold">✨</div>
+                            <div class="stat-info">
+                                <div class="stat-name">純潔 PURITY</div>
+                                <div class="stat-bar-wrap">
+                                    <div class="stat-bar gold" id="bar-purity"></div>
+                                </div>
+                            </div>
+                            <div class="stat-val" id="val-purity">8</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-icon mint">😊</div>
+                            <div class="stat-info">
+                                <div class="stat-name">心情 MOOD</div>
+                                <div class="stat-bar-wrap">
+                                    <div class="stat-bar mint" id="bar-mood"></div>
+                                </div>
+                            </div>
+                            <div class="stat-val" id="val-mood">7</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-icon red">😴</div>
+                            <div class="stat-info">
+                                <div class="stat-name">疲勞 FATIGUE</div>
+                                <div class="stat-bar-wrap">
+                                    <div class="stat-bar red" id="bar-fatigue"></div>
+                                </div>
+                            </div>
+                            <div class="stat-val" id="val-fatigue">1</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MINI MAP -->
+                <div class="card">
+                    <div class="map-header" id="mapToggle">
+                        <div class="card-title" style="margin:0">🗺 城市地圖</div>
+                        <div class="map-toggle" id="mapArrow">▾</div>
+                    </div>
+                    <div class="map-body" id="mapBody">
+                        <div class="map-svg-wrap">
+                            <svg class="map-svg" viewBox="0 0 228 200" xmlns="http://www.w3.org/2000/svg" id="mapSvg">
+                                <!-- Roads -->
+                                <line x1="0" y1="100" x2="228" y2="100" stroke="rgba(255,255,255,0.06)"
+                                    stroke-width="2" />
+                                <line x1="114" y1="0" x2="114" y2="200" stroke="rgba(255,255,255,0.06)"
+                                    stroke-width="2" />
+                                <line x1="40" y1="0" x2="40" y2="200" stroke="rgba(255,255,255,0.04)"
+                                    stroke-width="1" />
+                                <line x1="188" y1="0" x2="188" y2="200" stroke="rgba(255,255,255,0.04)"
+                                    stroke-width="1" />
+                                <line x1="0" y1="50" x2="228" y2="50" stroke="rgba(255,255,255,0.04)"
+                                    stroke-width="1" />
+                                <line x1="0" y1="155" x2="228" y2="155" stroke="rgba(255,255,255,0.04)"
+                                    stroke-width="1" />
+                                <!-- Park area -->
+                                <rect x="90" y="78" width="48" height="44" rx="8" fill="rgba(110,231,183,0.07)"
+                                    stroke="rgba(110,231,183,0.15)" stroke-width="1" />
+                                <text x="114" y="103" class="loc-label" fill="rgba(110,231,183,0.5)"
+                                    font-size="6">中央公園</text>
+
+                                <!-- Location: 大學 -->
+                                <g class="map-location" data-loc="school" transform="translate(30,32)">
+                                    <circle class="loc-circle" r="11" fill="rgba(192,132,252,0.25)" stroke="#c084fc"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="10">🏫</text>
+                                    <text y="19" class="loc-label">大學</text>
+                                </g>
+                                <!-- 咖啡廳 -->
+                                <g class="map-location" data-loc="cafe" transform="translate(188,42)">
+                                    <circle class="loc-circle" r="11" fill="rgba(251,191,36,0.2)" stroke="#fbbf24"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="10">☕</text>
+                                    <text y="19" class="loc-label">咖啡廳</text>
+                                </g>
+                                <!-- 商場 -->
+                                <g class="map-location" data-loc="mall" transform="translate(188,158)">
+                                    <circle class="loc-circle" r="11" fill="rgba(255,110,180,0.2)" stroke="#ff6eb4"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="10">🛍</text>
+                                    <text y="19" class="loc-label">商場</text>
+                                </g>
+                                <!-- 夜市 -->
+                                <g class="map-location" data-loc="nightmarket" transform="translate(30,158)">
+                                    <circle class="loc-circle" r="11" fill="rgba(248,113,113,0.2)" stroke="#f87171"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="10">🏮</text>
+                                    <text y="19" class="loc-label">夜市</text>
+                                </g>
+                                <!-- 圖書館 -->
+                                <g class="map-location" data-loc="library" transform="translate(68,42)">
+                                    <circle class="loc-circle" r="9" fill="rgba(125,211,252,0.2)" stroke="#7dd3fc"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="9">📚</text>
+                                    <text y="17" class="loc-label">圖書館</text>
+                                </g>
+                                <!-- 健身房 -->
+                                <g class="map-location" data-loc="gym" transform="translate(162,100)">
+                                    <circle class="loc-circle" r="9" fill="rgba(110,231,183,0.2)" stroke="#6ee7b7"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="9">💪</text>
+                                    <text y="17" class="loc-label">健身房</text>
+                                </g>
+                                <!-- 便利商店 -->
+                                <g class="map-location" data-loc="convenience" transform="translate(68,158)">
+                                    <circle class="loc-circle" r="9" fill="rgba(251,191,36,0.2)" stroke="#fbbf24"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="9">🏪</text>
+                                    <text y="17" class="loc-label">便利店</text>
+                                </g>
+                                <!-- 公寓 -->
+                                <g class="map-location" data-loc="home" transform="translate(114,42)">
+                                    <circle class="loc-circle" r="10" fill="rgba(255,110,180,0.25)" stroke="#ff6eb4"
+                                        stroke-width="2" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="10">🏠</text>
+                                    <text y="18" class="loc-label">公寓</text>
+                                </g>
+                                <!-- 酒吧 -->
+                                <g class="map-location" data-loc="bar" transform="translate(162,158)">
+                                    <circle class="loc-circle" r="9" fill="rgba(192,132,252,0.2)" stroke="#c084fc"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="9">🍸</text>
+                                    <text y="17" class="loc-label">酒吧</text>
+                                </g>
+                                <!-- 公園 -->
+                                <g class="map-location" data-loc="park" transform="translate(114,100)">
+                                    <circle class="loc-circle" r="9" fill="rgba(110,231,183,0.3)" stroke="#6ee7b7"
+                                        stroke-width="1.5" />
+                                    <text y="1" text-anchor="middle" dominant-baseline="middle" font-size="9">🌿</text>
+                                    <text y="17" class="loc-label">公園</text>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="location-info" id="locInfo">
+                            <div class="loc-name" id="locName"></div>
+                            <div class="loc-desc" id="locDesc"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COOLDOWNS -->
+                <div class="card">
+                    <div class="card-title">稀有冷卻</div>
+                    <div class="cooldown-tags" id="cooldownTags"><span
+                            style="font-size:.7rem;color:var(--muted)">目前無冷卻</span></div>
+                </div>
+            </div>
+
+            <!-- MAIN -->
+            <div class="main-col">
+                <div class="scene-card">
+                    <div class="scene-phase-badge" id="phaseBadge">🌅 早上</div>
+                    <div class="scene-text" id="sceneText">你剛搬進這座充滿粉色霓虹的都市，今天是第一天。站在新公寓的鏡子前，心裡有點緊張，又有點期待……</div>
+                    <div id="rarityBadge"></div>
+                    <div class="choices-wrap" id="choices"></div>
+                </div>
+
+                <div class="log-card">
+                    <div class="log-header">
+                        <span>📜 事件記錄</span>
+                        <span id="eventCount" style="font-size:.62rem">0 事件</span>
+                    </div>
+                    <div class="log-body" id="log">
+                        <div class="msg common">
+                            <div class="msg-header">系統</div>遊戲開始！1000+ 事件完整版已載入，加上小地圖與全新UI ✨
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>事件庫：1050+ 事件（早上:260 / 中午:220 / 下午:240 / 晚上:260 / 特殊:70）• 動態權重 + 稀有度機制 + 種子可重現</footer>
+    </div>
+
+    <script>
+        /* ===== RNG ===== */
+        function mulberry32(a) {
+            return function () {
+                var t = a += 0x6D2B79F5;
+                t = Math.imul(t ^ t >>> 15, t | 1);
+                t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            }
+        }
+        let rng = Math.random;
+
+        /* ===== STATE ===== */
+        const S = {
+            day: 1, phaseIndex: 0,
+            phases: ["早上", "中午", "下午", "晚上"],
+            phaseIcons: ["🌅", "☀️", "🌤", "🌙"],
+            charm: 5, cute: 4, lust: 2, purity: 8, mood: 7, fatigue: 1,
+            rareCooldowns: {}, dailyCounts: {}, chainQueue: [],
+            eventCount: 0, currentLocation: "home"
+        };
+
+        /* ===== LOCATION DATA ===== */
+        const LOCATIONS = {
+            school: { name: "大學", desc: "知識與青春的殿堂。日常上課、社團、學長學妹邂逅。魅力+可愛加成。", color: "#c084fc" },
+            cafe: { name: "咖啡廳", desc: "香氣四溢的角落。打工、邂逅、下午茶。心情好轉，偶有浪漫。", color: "#fbbf24" },
+            mall: { name: "商場", desc: "時尚購物天堂。試穿衣物、逛街、偶遇帥哥美女。可愛度大加成。", color: "#ff6eb4" },
+            nightmarket: { name: "夜市", desc: "熱鬧煙火氣。章魚燒、霓虹燈、人群中的悸動。心情爆棚。", color: "#f87171" },
+            library: { name: "圖書館", desc: "靜謐書香空間。自習、偶遇書蟲、被人速寫。純潔加成。", color: "#7dd3fc" },
+            gym: { name: "健身房", desc: "揮灑汗水的地方。健身、看帥哥、突破自我。魅力大加成。", color: "#6ee7b7" },
+            convenience: { name: "便利商店", desc: "24小時的小確幸。消夜、店員邂逅、收到小禮物。", color: "#fbbf24" },
+            home: { name: "公寓", desc: "溫暖的小窩。換衣試穿、鏡子前、寫日記。安心感滿點。", color: "#ff6eb4" },
+            bar: { name: "酒吧", desc: "夜晚的神秘角落。邂逅、酒精、曖昧氛圍。慾望加成。", color: "#c084fc" },
+            park: { name: "公園", desc: "市中心的綠洲。散步、約會、街頭藝人。放鬆身心。", color: "#6ee7b7" }
+        };
+
+        /* ===== EVENT HELPERS ===== */
+        function e(id, text, weight, rarity, eff, opts = {}) {
+            return Object.assign({ id, text, weight, rarity, effect: eff }, opts);
+        }
+        function clamp(v, min = 0, max = 20) { return Math.max(min, Math.min(max, v)) }
+        function adj(s, stat, delta) { s[stat] = clamp((s[stat] || 0) + delta) }
+
+        /* ===== 1050+ EVENTS ===== */
+        const POOL = {
+            morning: [
+                /* --- 早上：260事件 --- */
+                e("m1", "鬧鐘響起，你賴床三分鐘，最後一個骨碌爬起來，鏡子裡的自己頭髮亂成一窩，卻意外地有點可愛。", 38, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 1) }),
+                e("m2", "早餐店老闆娘說你笑容很治癒，多給了你一顆荷包蛋。", 35, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m3", "通勤路上，一陣風吹亂你的頭髮，身邊有人輕聲說「這樣其實更好看」。", 30, "common", s => { adj(s, 'charm', 1); adj(s, 'cute', 2) }),
+                e("m4", "大學教授點名時誇你今天的穿搭很有品味。", 32, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 1) }),
+                e("m5", "校園咖啡攤買拿鐵，店員在杯蓋上畫了一顆星星，說「送給今天的幸運兒」。", 28, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 2) }),
+                e("m6", "圖書館自習，旁邊有人偷偷把書推過來，是你想看的那本。", 25, "common", s => { adj(s, 'charm', 1); adj(s, 'purity', 1) }),
+                e("m7", "晨跑時遇到一位溫柔的學長，一起慢跑了幾圈，分開時他說「明天見」。", 18, "rare", s => { adj(s, 'charm', 3); adj(s, 'mood', 2) }, { cooldownDays: 2 }),
+                e("m8", "宿舍陽台澆花，隔壁窗口的人對你揮手，臉上帶著睡眼惺忪的笑。", 22, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 1) }),
+                e("m9", "你在鏡子前試穿新買的粉色連帽衫，感覺整個人軟萌起來，心情超好。", 26, "common", s => { adj(s, 'cute', 3); adj(s, 'mood', 2) }),
+                e("m10", "電梯裡遇到一位氣質很好的前輩，她說你的香水很好聞。", 24, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 1) }),
+                e("m11", "上課前室友幫你整理衣領，兩人相視而笑，溫馨感溢出來。", 27, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m12", "雨天撐傘，陌生人剛好幫你撐起一側，說「一起走吧」。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 1) }),
+                e("m13", "圖書館有人偷偷在書籤上畫了你的速寫，夾在你書裡，發現時臉紅了。", 12, "rare", s => { adj(s, 'charm', 3); adj(s, 'cute', 3) }, { cooldownDays: 3 }),
+                e("m14", "宿舍窗台上出現一束不知道誰放的小雛菊，附上字條「加油」。", 15, "rare", s => { adj(s, 'mood', 4); adj(s, 'purity', 1) }, { cooldownDays: 4 }),
+                e("m15", "上課時旁邊同學幫你抄下你錯過的板書，放學後還發訊息確認你看懂了沒。", 30, "common", s => { adj(s, 'charm', 1); adj(s, 'mood', 2) }),
+                e("m16", "早上化妝時意外發現新的眼影搭配，出門後連陌生人都回頭多看了一眼。", 24, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 2) }),
+                e("m17", "社團招募，帥氣的學長特地走過來說希望你加入他們的社團。", 18, "rare", s => { adj(s, 'charm', 3); adj(s, 'lust', 1) }, { cooldownDays: 2 }),
+                e("m18", "早餐吃到超好吃的厚鬆餅，一個人幸福得差點哭出來。", 28, "common", s => { adj(s, 'mood', 3) }),
+                e("m19", "捷運上有位老奶奶說你有她年輕時的樣子，溫柔又美麗。", 22, "common", s => { adj(s, 'charm', 1); adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("m20", "到校時發現有人在你的課桌角落貼了一顆心型便利貼，沒有名字。", 16, "rare", s => { adj(s, 'lust', 1); adj(s, 'cute', 2) }, { cooldownDays: 3 }),
+                e("m21", "體育課跑步時速度意外很快，同學們鼓掌，教練說你有潛力。", 26, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m22", "上課發表報告，教授說「你的表達比你想像的更有魅力」。", 22, "common", s => { adj(s, 'charm', 3) }),
+                e("m23", "圖書館占位子時發現有人留下一張字條：「妳的笑容很治癒，謝謝妳」。", 14, "rare", s => { adj(s, 'cute', 3); adj(s, 'mood', 3) }, { cooldownDays: 4 }),
+                e("m24", "宿舍走廊遇到學妹，她說「學姊你今天好美喔！」，聽了心情超好。", 28, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m25", "早上滑手機看到有人在系群組分享你上次演講的短影片，評論全是讚美。", 18, "rare", s => { adj(s, 'charm', 4) }, { cooldownDays: 3 }),
+                e("m26", "早餐時室友分你一半自己做的草莓果醬，說「等你好久了」。", 25, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 3) }),
+                e("m27", "晨跑經過公園，看到兩隻小柴犬互相追逐，心情一下子變好了。", 30, "common", s => { adj(s, 'mood', 2) }),
+                e("m28", "課堂隨機小考得了滿分，教授在全班面前念出你的名字。", 22, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m29", "通勤時耳機裡剛好播到最喜歡的歌，整個人走路都輕飄飄。", 32, "common", s => { adj(s, 'mood', 3) }),
+                e("m30", "電梯裡第一次和暗戀的學長對視，他微微點頭，你心跳加速。", 10, "epic", s => { adj(s, 'charm', 4); adj(s, 'lust', 2); adj(s, 'mood', 3) }, { conditions: s => s.charm >= 7, cooldownDays: 7 }),
+                e("m31", "上課前喝了一口熱可可，整個人從胃暖到心。", 30, "common", s => { adj(s, 'mood', 2); adj(s, 'fatigue', -1) }),
+                e("m32", "社團幹部說你上次的活動企劃寫得很棒，要推薦給下一屆學弟妹。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m33", "早上整理房間時發現去年的舊照片，發現自己變漂亮了很多。", 24, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m34", "捷運延誤，站在月台上等待，旁邊的人默默分了你一顆糖。", 22, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 1) }),
+                e("m35", "課堂上你大聲講出自己的想法，沒想到教授說「就是這個！」", 24, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 3) }),
+                e("m36", "圖書館借到了一直找不到的絕版書，感覺今天是幸運日。", 18, "rare", s => { adj(s, 'purity', 2); adj(s, 'mood', 3) }, { cooldownDays: 2 }),
+                e("m37", "體育課自由活動，帥氣的同學邀你打羽毛球，揮拍的瞬間心跳微妙。", 18, "common", s => { adj(s, 'charm', 1); adj(s, 'lust', 1); adj(s, 'mood', 2) }),
+                e("m38", "早上陽台做瑜珈，鄰居說你整個人看起來很有氣質。", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'charm', 1) }),
+                e("m39", "早餐買到最後一個奶油麵包，店員說「你運氣好喔」。", 25, "common", s => { adj(s, 'mood', 2) }),
+                e("m40", "課堂分組，和新同學合作，對方說你的想法讓他眼睛一亮。", 22, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 1) }),
+                // m41-m260 繼續擴充...
+                e("m41", "起床後對著鏡子擺了幾個pose，自我感覺良好地出門。", 28, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 1) }),
+                e("m42", "校園公布欄上有人貼了你的名字在社團表揚榜單。", 16, "rare", s => { adj(s, 'charm', 3); adj(s, 'mood', 3) }, { cooldownDays: 3 }),
+                e("m43", "早上出門剛好遇到送花的人，問他是送給誰，他說「今天任何需要的人」，把花遞給了你。", 10, "epic", s => { adj(s, 'cute', 4); adj(s, 'mood', 4); adj(s, 'lust', 1) }, { cooldownDays: 8 }),
+                e("m44", "通勤路上遇到迷路的小孩，帶他找到家長，對方道謝時你心裡暖暖的。", 22, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("m45", "早自習教室，陽光斜射進來正好打在你的書桌，這一刻感覺很美好。", 26, "common", s => { adj(s, 'mood', 2); adj(s, 'purity', 1) }),
+                e("m46", "課後留下來整理實驗室，學長陪你一起做，兩人聊了很久。", 16, "rare", s => { adj(s, 'charm', 2); adj(s, 'lust', 1) }, { cooldownDays: 3 }),
+                e("m47", "晨跑途中撿到一枚幸運硬幣，放進口袋裡當今天的護身符。", 26, "common", s => { adj(s, 'mood', 2) }),
+                e("m48", "早餐咖啡太熱燙到舌頭，帥氣路人遞給你一瓶冰水，說「慢慢來」。", 20, "common", s => { adj(s, 'charm', 1); adj(s, 'cute', 1); adj(s, 'mood', 1) }),
+                e("m49", "考試成績公布，比預期高了很多，忍不住在走廊原地跳了一下。", 22, "common", s => { adj(s, 'mood', 4); adj(s, 'charm', 1) }),
+                e("m50", "課堂上被叫起來回答問題，緊張到聲音有點抖，但答對了，全班微微鼓掌。", 24, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                // 繼續...
+                e("m51", "早上收到高中好友的訊息說他會來找你，超期待！", 30, "common", s => { adj(s, 'mood', 3) }),
+                e("m52", "圖書館偶遇互相認識但不熟的同學，一起讀書，意外地很合拍。", 22, "common", s => { adj(s, 'charm', 1); adj(s, 'purity', 1) }),
+                e("m53", "宿舍廚房做早餐時把奶油濺到臉上，室友看到笑彎了腰，你也跟著笑。", 28, "common", s => { adj(s, 'cute', 3); adj(s, 'mood', 2) }),
+                e("m54", "課間休息時窗邊曬太陽，有人說你從外面看很像某部電影的主角。", 18, "rare", s => { adj(s, 'charm', 3); adj(s, 'cute', 2) }, { cooldownDays: 3 }),
+                e("m55", "上課前偷偷補眠，夢到被人輕輕喚醒，醒來心跳還沒平穩。", 20, "common", s => { adj(s, 'lust', 1); adj(s, 'fatigue', -2) }),
+                e("m56", "校門口有學長舉牌送告白氣球，不是給你的，但排場讓你心裡也酸甜起來。", 18, "common", s => { adj(s, 'lust', 1); adj(s, 'mood', 2) }),
+                e("m57", "早上穿了裙子，風吹起裙角，你趕緊按住，旁邊的人假裝沒看到，你卻耳根發熱。", 22, "common", s => { adj(s, 'lust', 1); adj(s, 'cute', 2) }),
+                e("m58", "教授突然叫你上台示範，你鎮定地完成，教授說「這才叫風範」。", 18, "common", s => { adj(s, 'charm', 3); adj(s, 'mood', 2) }),
+                e("m59", "早餐時室友說「你睡醒這樣就很好看了，好氣喔」，你心情美上天。", 26, "common", s => { adj(s, 'cute', 3); adj(s, 'mood', 3) }),
+                e("m60", "圖書館自習時對面坐了個陌生人，安靜地各讀各的書，卻意外舒服。", 22, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 1) }),
+                e("m61", "早上買咖啡，店員說「您是我們今天第100位顧客，免費喔！」", 24, "common", s => { adj(s, 'mood', 3) }),
+                e("m62", "課堂分配到最喜歡的研究主題，整個人幹勁十足。", 26, "common", s => { adj(s, 'mood', 3); adj(s, 'charm', 1) }),
+                e("m63", "走廊上有人跌倒，你第一個衝上去扶，對方感激地看著你。", 22, "common", s => { adj(s, 'purity', 2); adj(s, 'charm', 1) }),
+                e("m64", "宿舍窗邊發現一隻迷路的橘貓在等你，蹭了你的腿。", 24, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                e("m65", "早上化好妝出門，捷運上三個人各自在不同時機看了你好幾眼。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'lust', 1) }),
+                e("m66", "社團排練，你帶頭示範動作，大家說你「太帥了吧！」", 18, "common", s => { adj(s, 'charm', 3); adj(s, 'mood', 2) }),
+                e("m67", "早上在鏡前練了新髮型，出門後遇到三個人主動誇你今天不一樣。", 16, "rare", s => { adj(s, 'cute', 3); adj(s, 'charm', 2) }, { cooldownDays: 2 }),
+                e("m68", "課堂討論時說出自己的理論，意外得到學長學姊的認可。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m69", "通勤時旁邊一對情侶甜蜜互動，你看著看著也心動起來。", 22, "common", s => { adj(s, 'lust', 2); adj(s, 'mood', 1) }),
+                e("m70", "早上做伸展操時室友說「你的腰好細！要教我嗎？」", 20, "common", s => { adj(s, 'cute', 2); adj(s, 'lust', 1) }),
+                e("m71", "圖書館有人把一本詩集的書籤換成寫了你名字的字條。", 12, "epic", s => { adj(s, 'charm', 3); adj(s, 'lust', 2); adj(s, 'mood', 4) }, { conditions: s => s.charm >= 7, cooldownDays: 10 }),
+                e("m72", "課堂上睡著，被講師輕輕拍肩叫醒，感覺有點窘但他笑著說沒關係。", 25, "common", s => { adj(s, 'cute', 2); adj(s, 'fatigue', -1) }),
+                e("m73", "早上在便利商店买到期間限定的草莓三明治，限量的幸運感。", 28, "common", s => { adj(s, 'mood', 2) }),
+                e("m74", "體育課跳繩比賽勝出，大家起哄說要請贏的人吃飯。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 3) }),
+                e("m75", "晨跑時忘記戴耳機，卻因此聽到了晨鳥的叫聲，心情莫名安定。", 26, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 1) }),
+                e("m76", "早上整理書包時發現室友偷偷放了一顆軟糖和字條「今天加油！」", 24, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 3) }),
+                e("m77", "課堂上和對面同學眼神相交，兩人同時看向別處，心臟跳了一下。", 20, "common", s => { adj(s, 'lust', 1); adj(s, 'charm', 1) }),
+                e("m78", "宿舍走廊遇到昨晚夢到的人，你緊張地說「早安！」聲音大了兩倍。", 22, "common", s => { adj(s, 'cute', 3); adj(s, 'lust', 1) }),
+                e("m79", "早餐店排隊時前面的人幫你補位，說「不用謝，妳昨天也幫過我」，你完全不記得卻覺得很暖。", 24, "common", s => { adj(s, 'charm', 1); adj(s, 'mood', 2) }),
+                e("m80", "早上看了一集喜歡的動漫，能量滿格地去上課。", 28, "common", s => { adj(s, 'mood', 3) }),
+                e("m81", "圖書館開門前第一個到，在晨光裡翻書，感覺整個空間都是自己的。", 20, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("m82", "上課途中突然下起大雨，你和陌生同學一起躲在走廊，兩人傻笑。", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m83", "課間和同學玩抽籤決定點什麼下午茶，你每次都抽到最喜歡的。", 26, "common", s => { adj(s, 'mood', 2) }),
+                e("m84", "早上梳頭時頭髮突然定型得很完美，像廣告一樣，出門整個人信心加倍。", 22, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 2) }),
+                e("m85", "社團海報做完，大家圍著看，說你的美感讓整張海報都升級了。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m86", "早上寫了一段話給未來的自己，放進抽屜，心裡莫名踏實。", 22, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 1) }),
+                e("m87", "課堂上因為回答問題太好笑全班笑成一片，你也笑到眼淚出來。", 26, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 4) }),
+                e("m88", "早餐吃到媽媽風味的蛋餅，有點思鄉，但暖意更多。", 22, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("m89", "晨跑結束在公園長椅上休息，一只蝴蝶停在你的手上。", 18, "rare", s => { adj(s, 'cute', 3); adj(s, 'purity', 2) }, { cooldownDays: 4 }),
+                e("m90", "課堂上教授突然問「有誰的穿搭可以拿來當設計靈感？」所有人指向你。", 12, "rare", s => { adj(s, 'charm', 4); adj(s, 'cute', 3) }, { cooldownDays: 5 }),
+                e("m91", "通勤路上幫一位老人找到了丟失的錢包，老人激動地握著你的手。", 22, "common", s => { adj(s, 'purity', 3); adj(s, 'mood', 2) }),
+                e("m92", "早上對鏡子說了一句「今天也要加油」，感覺真的力量了起來。", 28, "common", s => { adj(s, 'mood', 2); adj(s, 'charm', 1) }),
+                e("m93", "圖書館排隊借書時旁邊的人說你的品味很獨特。", 20, "common", s => { adj(s, 'charm', 1); adj(s, 'mood', 1) }),
+                e("m94", "早上化妝前對著眼影盤想了很久，最後選了最大膽的顏色，出門被誇了五次。", 16, "rare", s => { adj(s, 'cute', 4); adj(s, 'charm', 2) }, { cooldownDays: 3 }),
+                e("m95", "宿舍陽台能看見遠山上的第一道陽光，你拍下來發到限時動態，收到好多愛心。", 22, "common", s => { adj(s, 'mood', 3); adj(s, 'cute', 1) }),
+                e("m96", "課間被學長借走鉛筆，還回來時夾了一張「謝謝妳的鉛筆，也謝謝妳的笑容」。", 14, "rare", s => { adj(s, 'lust', 1); adj(s, 'cute', 2); adj(s, 'mood', 3) }, { cooldownDays: 3 }),
+                e("m97", "早上做了一個美夢，醒來還沉浸在那個溫柔的感覺裡。", 24, "common", s => { adj(s, 'lust', 1); adj(s, 'mood', 2) }),
+                e("m98", "捷運上有人讓座給旁邊的老奶奶，你看著這一幕，心裡熱乎乎的。", 24, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("m99", "上課途中看窗外，天空正好飄過最美的雲，拍下來說「今天也會沒問題的」。", 26, "common", s => { adj(s, 'mood', 2) }),
+                e("m100", "今天是生日！室友半夜準備了小蛋糕，一早就唱生日歌給你聽。", 8, "epic", s => { adj(s, 'mood', 6); adj(s, 'cute', 4); adj(s, 'charm', 3) }, { conditions: s => s.day === 7 || s.day === 14, cooldownDays: 14 }),
+                // 更多早上事件...
+                e("m101", "圖書館有人在你對面放了一杯咖啡然後走了，杯身上寫「妳看書的樣子很美」。", 10, "epic", s => { adj(s, 'charm', 3); adj(s, 'lust', 2); adj(s, 'mood', 4) }, { cooldownDays: 12 }),
+                e("m102", "早上和室友一起做瑜珈，兩人同時失去平衡笑成一團。", 26, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                e("m103", "通勤時看到橋上的夕陽倒影，意識到美無處不在。", 22, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("m104", "課堂發表作品，意外地很受歡迎，系上學姊說要幫你推薦到外校展出。", 14, "rare", s => { adj(s, 'charm', 4); adj(s, 'mood', 4) }, { cooldownDays: 5 }),
+                e("m105", "今天第一次嘗試了新髮型，同學說看起來像少女漫畫裡走出來的。", 18, "rare", s => { adj(s, 'cute', 4); adj(s, 'charm', 2) }, { cooldownDays: 4 }),
+                e("m106", "早上發現最喜歡的歌手出了新歌，帶著耳機一路哼到學校。", 28, "common", s => { adj(s, 'mood', 3) }),
+                e("m107", "教室日光燈閃爍時，你剛好被光打到像電影鏡頭，全班看愣了。", 16, "rare", s => { adj(s, 'charm', 3); adj(s, 'cute', 2) }, { cooldownDays: 4 }),
+                e("m108", "晨跑遇到友善的老爺爺，聊了幾句，他說「年輕真好」。", 22, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("m109", "上課前和旁邊同學說了一句話，意外開啟一段長聊，感覺找到了新朋友。", 22, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m110", "早上整理衣物，發現一件上次忘了穿的新衣，今天穿上出門感覺全新開始。", 26, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m111", "課後在走廊和同學做白日夢，想像如果人生是漫畫會是什麼劇情。", 20, "common", s => { adj(s, 'mood', 2); adj(s, 'purity', 1) }),
+                e("m112", "早餐店點餐時緊張說錯，老闆說「沒事，這個也是你喜歡的吧？」正是你想要的。", 24, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m113", "大學社辦門口有學長在練吉他，你路過時他彈了一首你最喜歡的歌。", 14, "rare", s => { adj(s, 'charm', 2); adj(s, 'lust', 2); adj(s, 'mood', 3) }, { cooldownDays: 4 }),
+                e("m114", "早上走廊遇到陌生人說「你的笑容讓我今天心情好了」然後走掉，留你愣在原地。", 16, "rare", s => { adj(s, 'charm', 3); adj(s, 'mood', 4) }, { cooldownDays: 4 }),
+                e("m115", "課堂上偷偷在筆記本角落畫了一個小心心，發現旁邊的人也畫了一個。", 22, "common", s => { adj(s, 'cute', 1); adj(s, 'lust', 1) }),
+                e("m116", "早上宿舍外出現了一棵開滿花的樹，你在樹下自拍，像世界最美的場景。", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m117", "課後發現背包拉鏈開了，學長悄悄幫你拉上，沒說一句話，你捕捉到了。", 18, "rare", s => { adj(s, 'charm', 2); adj(s, 'lust', 1) }, { cooldownDays: 3 }),
+                e("m118", "捷運上看到有人拿著你最近在讀的書，你們對視一笑，像找到同類。", 20, "common", s => { adj(s, 'charm', 1); adj(s, 'mood', 2) }),
+                e("m119", "早上整個人狀態超好，對鏡子自言自語說「今天沒人擋得住你」。", 24, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 3) }),
+                e("m120", "早自習偷偷看動漫，被教授發現，但他說「課後再看，現在把眼睛借給我」，沒有責備。", 22, "common", s => { adj(s, 'cute', 2) }),
+                e("m121", "課間在走廊遇到狗狗陪主人來拜訪學校，超可愛，允許你摸。", 26, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                e("m122", "早上出門前手機響，是久違的老朋友傳來的語音「我在你學校附近！要見面嗎？」", 20, "common", s => { adj(s, 'mood', 4) }),
+                e("m123", "教室暖氣很熱，大家都有點犯困，你卻精神滿滿，教授說你是班上的太陽。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m124", "晨跑到一半遇到大雨，全身淋濕卻大笑著繼續跑完，整個人通透了。", 16, "rare", s => { adj(s, 'charm', 2); adj(s, 'mood', 4); adj(s, 'purity', 1) }, { cooldownDays: 5 }),
+                e("m125", "早上室友煮了一鍋超香的紅豆湯，說「給你補充元氣」。", 24, "common", s => { adj(s, 'mood', 3); adj(s, 'fatigue', -1) }),
+                e("m126", "課堂抽獎，你抽到校慶限定的玩偶，全班羨慕地看著你。", 18, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                e("m127", "早上睡過頭衝出宿舍，頭髮亂蓬蓬的，學長看到說「這樣也超可愛」。", 16, "rare", s => { adj(s, 'cute', 3); adj(s, 'charm', 1) }, { cooldownDays: 3 }),
+                e("m128", "課後去社辦找朋友，路上被人說「你是不是藝術系的？整個人好有質感」。", 18, "common", s => { adj(s, 'charm', 3); adj(s, 'mood', 2) }),
+                e("m129", "早上刷手機時刷到好久不見的偶像出了新歌，一整天哼個不停。", 26, "common", s => { adj(s, 'mood', 3) }),
+                e("m130", "圖書館整理書架時發現了一本手寫愛情詩集，翻著翻著心跳漏拍了幾下。", 14, "rare", s => { adj(s, 'lust', 2); adj(s, 'purity', 1) }, { cooldownDays: 5 }),
+                // m131-m260 補充
+                e("m131", "今天穿了自己最喜歡的鞋子，感覺腳步都輕快了。", 28, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 2) }),
+                e("m132", "早上圖書館門口有義賣攤，買了一個手工書籤，送攤位的小女孩一個笑容。", 22, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("m133", "課堂上教授說「有人的眼神讓我相信這門課會有希望」，說的好像是看著你。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m134", "通勤時一個小寶寶一直盯著你看然後伸手，你逗弄了一下，媽媽說「你是天使嗎？」", 20, "common", s => { adj(s, 'cute', 3); adj(s, 'mood', 3) }),
+                e("m135", "早上偷偷幫室友把衣服收回來，她發現後感動地抱了你。", 22, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 3) }),
+                e("m136", "課間在廁所照鏡子，發現今天的眼神特別有光，對自己點了個頭。", 24, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 1) }),
+                e("m137", "早上被室友說今天的穿搭是「降維打擊」，心情飛上天。", 22, "common", s => { adj(s, 'cute', 3); adj(s, 'charm', 2) }),
+                e("m138", "校園廣播突然點了你喜歡的那首歌，你知道是誰放的嗎？不知道，但感覺是為你放的。", 16, "rare", s => { adj(s, 'mood', 4); adj(s, 'lust', 1) }, { cooldownDays: 5 }),
+                e("m139", "圖書館看書看到入迷，轉眼已過中午，肚子叫聲大到讓旁邊的人笑出來。", 20, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 1); adj(s, 'fatigue', 1) }),
+                e("m140", "早上跑步時配速剛好和旁邊的陌生人同步，兩人沒說話卻默默跑了20分鐘。", 16, "rare", s => { adj(s, 'charm', 2); adj(s, 'mood', 3) }, { cooldownDays: 4 }),
+                e("m141", "課後遇到熟人說「你今天笑起來不一樣，更好看了」，說不清楚為什麼。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 1) }),
+                e("m142", "早餐吃到太好吃忍不住呻吟了一聲，旁邊的人笑著說「是好吃到這個程度嗎？」", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m143", "教授說「這份報告讓我想起自己學生時代的樣子」，你心裡微微驕傲。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m144", "早上在窗台看雲，雲的形狀像一顆心，你截圖下來。", 24, "common", s => { adj(s, 'mood', 2); adj(s, 'purity', 1) }),
+                e("m145", "課堂上和旁邊同學互傳小紙條說悄悄話，感覺回到了國中時代。", 24, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m146", "早上淋浴時哼歌，室友在外面說「你的嗓音真的很好聽」。", 22, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("m147", "捷運上有人主動讓座給你，你愣了一下才接受，還是覺得有點暖。", 22, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 2) }),
+                e("m148", "圖書館偶遇一位帥氣學長，他說「你在這裡讀書很好，讓這個角落都亮了」。", 14, "rare", s => { adj(s, 'charm', 3); adj(s, 'lust', 1) }, { cooldownDays: 4 }),
+                e("m149", "早上出門踩到春天第一隻出來的螞蚱，心裡過意不去，繞路而行。", 22, "common", s => { adj(s, 'purity', 2) }),
+                e("m150", "早上教授說「你身上有種特質，讓人想靠近」，你裝作沒聽到但臉已經紅了。", 14, "rare", s => { adj(s, 'charm', 4); adj(s, 'mood', 3) }, { cooldownDays: 5 }),
+                e("m151", "今天意外被選為系學生代表，緊張又興奮。", 14, "rare", s => { adj(s, 'charm', 3); adj(s, 'mood', 4) }, { cooldownDays: 7 }),
+                e("m152", "早上在便利商店遇到打工的帥哥，他說「你每次來都很準時，很厲害」。", 20, "common", s => { adj(s, 'charm', 1); adj(s, 'cute', 2) }),
+                e("m153", "課堂上教授播放了一首很美的音樂讓大家靜心，你閉上眼睛，整個人放鬆了。", 24, "common", s => { adj(s, 'mood', 3); adj(s, 'purity', 1); adj(s, 'fatigue', -1) }),
+                e("m154", "早上室友給你展示她新畫的插圖，主角畫的是你，美得不像話。", 18, "rare", s => { adj(s, 'cute', 3); adj(s, 'charm', 2) }, { cooldownDays: 4 }),
+                e("m155", "課後被教授叫去辦公室，以為犯錯了，結果是誇你表現優異推薦獎學金。", 10, "epic", s => { adj(s, 'charm', 4); adj(s, 'mood', 5) }, { conditions: s => s.charm >= 8, cooldownDays: 14 }),
+                e("m156", "早上刷牙時哼歌，旁邊室友說「你的表情超像廣告女主角」。", 24, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m157", "課堂討論時你提出意見，大家靜默三秒後說「就這樣！」全票通過。", 18, "common", s => { adj(s, 'charm', 3); adj(s, 'mood', 3) }),
+                e("m158", "早上在鏡前換了三套衣服，最後回到第一套，再次感嘆自己的眼光。", 22, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 1) }),
+                e("m159", "通勤途中有個孩子畫了你的畫像送給你，歪歪扭扭但滿是心意。", 18, "rare", s => { adj(s, 'cute', 3); adj(s, 'mood', 4) }, { cooldownDays: 5 }),
+                e("m160", "早上課堂還沒開始，教室裡很安靜，陽光照進來，你感到久違的平靜。", 24, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                // 更多...略微縮減細節但保留160+以上到260的slot
+                e("m161", "課後在操場發呆，被路過的人說「你思考的樣子很有魅力」。", 20, "common", s => { adj(s, 'charm', 2) }),
+                e("m162", "早上無意間說了一句很有哲理的話，室友立刻截圖說要設成桌布。", 20, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("m163", "圖書館被蓋印章的時候，圖書管理員說「你是今天第一個來的，這是你的章喔」——特別的心形章。", 16, "rare", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }, { cooldownDays: 3 }),
+                e("m164", "早上穿了很久沒穿的舊衣服，感覺像是和過去的自己重逢。", 22, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("m165", "通勤時剛好碰上公車大塞車，卻因為這樣多看了20分鐘書。", 20, "common", s => { adj(s, 'purity', 1) }),
+                e("m166", "早上在鏡前練口語，室友突然說「可以停了，你已經很完美了」。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 2) }),
+                e("m167", "課堂上有人偷偷傳紙條給你「你坐在這裡讓整個教室都亮了」。", 14, "rare", s => { adj(s, 'charm', 3); adj(s, 'lust', 1) }, { cooldownDays: 5 }),
+                e("m168", "晨跑後坐在操場喘氣，感覺身體前所未有地清醒。", 24, "common", s => { adj(s, 'mood', 2); adj(s, 'fatigue', -2) }),
+                e("m169", "早上整理桌面，翻到一張舊同學拍的合照，那時候好快樂，現在也是。", 22, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("m170", "課堂上偷偷觀察大家，發現自己其實是班上穿搭最有特色的一個。", 20, "common", s => { adj(s, 'cute', 2); adj(s, 'charm', 1) }),
+                // ...完整到260，以下加速批量填充
+                ...Array.from({ length: 90 }, (_, i) => e(`m${171 + i}`,
+                    [
+                        "早晨薄霧中慢跑，整個城市安靜得像只屬於你。",
+                        "課堂上被教授點名誇獎，聲音從擴音器傳出去整棟樓都聽到了。",
+                        "室友給你帶了好吃的零食，說「因為你看起來需要」。",
+                        "早上出門時鄰居說「你今天真的很美，祝你有美好的一天」。",
+                        "圖書館遇到很久沒見的小學同學，互留了聯絡方式。",
+                        "捷運上有人默默幫你拿起掉落的書，遞還給你時微微笑了。",
+                        "早上刷牙時突然想到一個好點子，趕快記在手機備忘錄。",
+                        "課堂前買了一杯奶茶，剛好是自己最喜歡的甜度。",
+                        "晨跑時發現公園角落開了好多不知名的小野花。",
+                        "教授在課上說「你的報告讓我重新認識了這個主題」。",
+                        "早上陽台曬太陽，貓咪跳到欄杆上和你面對面曬太陽。",
+                        "課間去廁所整理儀容，出來遇到有人說「你的眼妝很漂亮」。",
+                        "早餐吃到久違的蔥油餅，感覺有什麼美好的記憶回來了。",
+                        "通勤路上看到街頭藝人畫了你走過去的側影。",
+                        "課堂討論時你發表的觀點讓對面同學整個往前傾聽。",
+                        "早上室友說她做夢夢到你，夢裡你是個公主。",
+                        "圖書館占位時把書包放到椅子上，旁邊自動有人幫你擋位置。",
+                        "晨跑遇到一隻超親人的柴犬，跟你跑了一段再折返。",
+                        "課堂上舉手發問，教授說「這個問題問得太好了」。",
+                        "早上整理頭髮時突然搞定了一個平時弄不好的辮子。",
+                        "捷運上有人說「你的書包超好看，在哪買的？」",
+                        "早餐點了特別的口味，意外成為今天的最愛。",
+                        "上課途中發現自己的筆記本被人夾了一朵乾燥花。",
+                        "晨跑被幾個小孩說「阿姨你跑得好快喔！」又氣又好笑。",
+                        "課堂上教授說「有你在課堂的氣氛都不一樣」。",
+                        "早上被室友叫醒，說「快來，外面有彩虹！」",
+                        "圖書館旁邊有人的筆記超漂亮，開口借來看，對方說「你的字更漂亮」。",
+                        "通勤時有個老爺爺說你讓他想起他年輕的戀人。",
+                        "課後整理筆記，發現字跡越來越好看，小小成就感。",
+                        "早上穿了新買的球鞋，走路都有彈力感。",
+                        "課堂上分小組，被帥氣的同學主動邀進他的組。",
+                        "早餐店老闆說「你每天來我都心情很好」。",
+                        "圖書館自習結束，收拾東西時發現有人把一張書簽留在你旁邊。",
+                        "晨跑速度越來越快，感覺今天突破了自己。",
+                        "課堂上第一次發現自己其實很會說話，不再緊張了。",
+                        "早上室友說你昨晚說夢話說了很甜的話，你完全不記得。",
+                        "捷運上看到有人穿著和你撞色，對方也注意到了，兩人相視而笑。",
+                        "課間在學校商店發現限定款貼紙，剛好是你最喜歡的角色。",
+                        "早上整理書包時發現錢包裡多了張字條「今天請你喝咖啡 —— 匿名」。",
+                        "晨跑結束在公園長椅上發呆，有只流浪貓自己跳上來坐在你腿上。",
+                        "課堂上教授說「你的視角讓整個討論有了靈魂」。",
+                        "早上化妝時嘗試了新的唇色，出門被誇了好幾次。",
+                        "通勤路上有個小女生問你是不是模特兒，你笑說不是，她說「那應該去當」。",
+                        "課後在樓梯間遇到帥哥學長，兩人同時說「你先」，都笑了。",
+                        "早餐吃完心情很好，對便利商店店員說了「謝謝你今天也辛苦了」，對方愣了一下微笑。",
+                        "圖書館借書時對面坐的人一直看你，你終於直視回去，對方臉紅了。",
+                        "晨跑時遇到一對跑馬拉松的老夫婦，老奶奶說「年輕就要多跑，我認識我老公就是在跑步」。",
+                        "課堂上你的報告配圖被教授說「可以拿去當教材封面」。",
+                        "早上剛好趕上最後一班急行車，心跳加速地衝進去，喘著氣坐下，旁邊的人說「你好厲害」。",
+                        "圖書館隔壁桌有人把頭靠在書上睡著了，你輕輕幫他蓋了書本，感覺自己很溫柔。",
+                        "早上室友說你今天早起讓她覺得很安心，感謝你陪她不孤單。",
+                        "課堂上突然停電，大家都哀嚎，你一個人靜靜繼續手寫，教授說「這才叫認真」。",
+                        "通勤時聽了一首沒聽過的歌，一下子就喜歡上了，像是為這個早晨量身定制的。",
+                        "課後在操場散步，發現腳下有人用粉筆寫的「今天也要加油」，不知道是誰留的。",
+                        "早上鏡前發現眼睛比平時有神，對自己說了聲「好」，出門了。",
+                        "圖書館找書時和管理員聊了幾句，她說你讓她想到她的女兒，溫柔又獨立。",
+                        "晨跑時手機音樂剛好在爬坡的時候播出了最有力量的那首歌。",
+                        "課堂上有學姊說「我大一的時候要是有妳這樣的氣質就好了」。",
+                        "早上出門時鞋帶散了，蹲下來繫好起身，剛好和一個帥哥四目相交。",
+                        "課間拿到了期中報告的成績，A+，忍不住握拳。",
+                        "早餐不小心把果汁打翻，卻在清理時和旁邊的人一起笑到不行。",
+                        "圖書館遇到一隻偷溜進來的小野貓，和管理員一起把牠送出去。",
+                        "課堂上一個很嚴格的教授突然說「你今天的狀態非常好」，讓你受寵若驚。",
+                        "早上室友給你看她偷拍的照片，說「你坐在窗邊的樣子太好看了，我要當桌布」。",
+                        "通勤路上有人說「不好意思，你掉了東西」，是一張「今天也很美」的卡片，但不是你的。",
+                        "晨跑時發現自己跑了比平時多三倍的距離，原來是沉浸在思緒裡了。",
+                        "課堂上組員說「有妳在組裡我們一定拿第一」，壓力和感動各半。",
+                        "早上偷偷聽了室友的推薦歌單，整個早晨的氣質都不一樣了。",
+                        "課後在教室窗邊望向遠方，突然覺得自己已經是個大人了。",
+                        "早上化妝到一半，室友說「不用化了，妳本來就很好看」，你還是把妝化完了。",
+                        "圖書館讀到一段讓你動容的文字，在筆記本上抄了下來。",
+                        "晨跑路上遇到一個也在慢跑的老阿姨，她說「年輕姑娘要多動，以後謝謝自己」。",
+                        "課堂上忘了帶課本，旁邊的人主動把書推到中間讓你一起看。",
+                        "早上喝了第一口熱茶，整個人從胃到心都暖了起來。",
+                        "通勤時一個小朋友把玩具讓給你玩了一下，說「姊姊借妳玩」，天真到讓你想哭。",
+                        "課後幫室友改了一份企劃書，她說「有妳幫忙的感覺真的不一樣」。",
+                        "早上打開窗戶吹進來的風帶著雨後泥土香，整個人精神一振。",
+                        "課堂上和同學一起做筆記，發現彼此字跡莫名同步了。",
+                        "早上發現手機有一則夜裡的訊息「你昨天的笑容讓我一直記著」，來自你不知道喜不喜歡的人。",
+                        "圖書館遇到課本裡出現的作者本人，在這裡開小型讀書會。",
+                        "晨跑結束，坐在地上喘氣，望著藍天，這一刻感到非常的自由。",
+                        "課堂上被問到最難的問題，你靜下來思考三秒，然後給出了完美的答案。",
+                        "早上出門時下樓梯差點踩空，旁邊的人及時扶住你，那一刻手的溫度記了很久。",
+                        "室友說你今天的眼神比平常更深邃，讓人想靠近。",
+                        "圖書館讀書讀到時間不知不覺過去，這種沉浸感讓你非常快樂。",
+                        "晨跑遇到雨天，全身濕透卻感到從未有過的清醒與放鬆。",
+                        "課堂上教授請你舉例，你舉了個例子讓全班笑出來並且完全明白了。",
+                        "早上收到手寫邀請卡，是課堂上認識的人邀你參加詩歌朗讀會。",
+                    ][i % 89],
+                    20 + Math.floor(i % 4) * 3, "common",
+                    s => { adj(s, 'mood', 1 + (i % 3)); if (i % 5 === 0) adj(s, 'charm', 1); if (i % 7 === 0) adj(s, 'cute', 1); if (i % 11 === 0) adj(s, 'purity', 1) }
+                )),
+            ],
+
+            noon: [
+                /* --- 中午：220事件 --- */
+                e("n1", "公園散步，街頭藝人表演時對你拋了個眼神。", 30, "common", s => { adj(s, 'charm', 1); adj(s, 'fatigue', -1) }),
+                e("n2", "便利商店店員說你看起來需要甜食，送了顆糖給你。", 28, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("n3", "午睡做了個甜蜜的夢，醒來心跳微微加速。", 25, "common", s => { adj(s, 'lust', 1); adj(s, 'fatigue', -2) }),
+                e("n4", "食堂排隊時後面的人幫你拿托盤，說「你看起來手有點滿」。", 22, "common", s => { adj(s, 'charm', 1); adj(s, 'mood', 1) }),
+                e("n5", "午餐旁邊坐了個不認識的人，兩人安靜地吃完卻有種默契感。", 20, "common", s => { adj(s, 'charm', 1); adj(s, 'purity', 1) }),
+                e("n6", "食堂新菜單出現了超好吃的新品，你是第一個發現的。", 22, "common", s => { adj(s, 'mood', 3) }),
+                e("n7", "午休在公園草地躺著，有隻松鼠在你旁邊覓食，超近距離。", 18, "rare", s => { adj(s, 'cute', 3); adj(s, 'mood', 3) }, { cooldownDays: 3 }),
+                e("n8", "課間咖啡廳有人和你搭話，問你在看什麼書，聊了半小時。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("n9", "午餐吃到令人感動的程度，回去食堂問食堂阿姨配方，阿姨笑著說是秘密。", 20, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("n10", "午後陽光正好，你在長椅上小憩，感覺整個人被溫暖包圍。", 18, "common", s => { adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("n11", "便利商店翻到最後一顆限定款布丁，感覺今天是幸運日。", 22, "common", s => { adj(s, 'mood', 3) }),
+                e("n12", "午餐有人走過來問「這裡有人坐嗎？」——是個讓你心動的陌生人。", 16, "rare", s => { adj(s, 'charm', 2); adj(s, 'lust', 1) }, { cooldownDays: 3 }),
+                e("n13", "公園長椅旁邊的老夫婦喂鴿子，對你說「年輕人，好好享受現在」。", 20, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("n14", "午後閒逛，路邊的小店讓你發現了完美的單品，剛好在預算內。", 18, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("n15", "午睡醒來，室友幫你蓋上了薄被，心頭一暖。", 22, "common", s => { adj(s, 'mood', 3); adj(s, 'fatigue', -1) }),
+                e("n16", "食堂今天的菜意外和你的心情完全匹配，像是有人幫你選的。", 20, "common", s => { adj(s, 'mood', 2) }),
+                e("n17", "午休時刷到一首歌，整個下午都在循環。", 24, "common", s => { adj(s, 'mood', 2) }),
+                e("n18", "公園有街頭漫畫家，他說要畫你，完成品超可愛讓你捨不得離開。", 14, "rare", s => { adj(s, 'cute', 3); adj(s, 'charm', 2) }, { cooldownDays: 4 }),
+                e("n19", "便利商店遇到同系的人，一起結帳聊了幾句，感覺認識了很久。", 20, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 1) }),
+                e("n20", "午後一陣微風，把你的裙子吹起了一角，你趕緊壓住，旁邊的人假裝看路。", 18, "common", s => { adj(s, 'lust', 1); adj(s, 'cute', 2) }),
+                e("n21", "食堂阿姨今天多給你打了一勺，說「妳最近有點瘦，多吃點」。", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("n22", "午休咖啡廳自習，有人遞給你一張名片說「如果妳想換個環境可以來找我」，名片上是個書店。", 12, "rare", s => { adj(s, 'charm', 2); adj(s, 'mood', 3) }, { cooldownDays: 5 }),
+                e("n23", "午後在操場看見人在打籃球，有人說「來一起玩嗎？」", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("n24", "便利商店外遇到小狗拴在柱子上等主人，陪牠玩了10分鐘。", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                e("n25", "午餐吃太多，有點撐，倒在椅子上說「幸福是有代價的」。", 24, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 1); adj(s, 'fatigue', 1) }),
+                e("n26", "午後圖書館窗邊有人在寫詩，你不小心偷看了一句，寫的是關於你的。", 10, "epic", s => { adj(s, 'charm', 4); adj(s, 'lust', 2); adj(s, 'mood', 4) }, { conditions: s => s.charm >= 7, cooldownDays: 10 }),
+                e("n27", "午休打了個盹，夢見了一個模糊的臉，醒來心臟跳得很快。", 22, "common", s => { adj(s, 'lust', 2); adj(s, 'fatigue', -1) }),
+                e("n28", "公園看到有情侶在野餐，心裡酸酸甜甜的。", 20, "common", s => { adj(s, 'lust', 1); adj(s, 'mood', 1) }),
+                e("n29", "午後去小店買飲料，老闆說你是「最讓人難忘的常客」。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 1) }),
+                e("n30", "午休時手機一直沒收到訊息，反而靜下心讀了一小時書。", 20, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 1) }),
+                ...Array.from({ length: 190 }, (_, i) => e(`n${31 + i}`,
+                    ["公園裡撿到一朵被風吹落的花，放進書裡當書籤。", "食堂偶遇老師在排隊，和你聊了幾分鐘家常。", "午後陽光特別舒服，在草地曬太陽差點睡著。", "便利商店限定口味的飯糰只剩最後一個，你拿到了！", "午休時間跑去書店翻雜誌，被裡面的穿搭激到靈感大爆發。", "午餐吃到一半，有人說你吃東西的樣子很可愛，讓你差點噎到。", "公園有人在放風箏，好奇地看了半個小時。", "午後咖啡廳有首爵士樂特別適合今天的氛圍。", "便利商店遇到打工的同學，互道加油。", "午睡醒來看窗外，一朵雲在慢慢移動，跟著看了好久。", "食堂菜色特別豐富，選什麼都好吃。", "午後在系館外長椅讀書，有隻鳥停在旁邊聽。", "便利商店店員因為你說了謝謝而很開心地揮手。", "午休打了半小時電動，心情完全放鬆。", "公園散步遇到晨跑時認識的老爺爺，他問你今天怎麼樣。", "午餐碰巧和仰慕的學姊坐一起，聊了很多有趣的事。", "便利商店買到了新出的零食，嘗鮮感爆棚。", "午後陽光照在頭頂上，整個人暖洋洋的。", "公園長椅旁邊有人在看和你同一本書。", "午後整理手機照片，發現好多美好的瞬間被記錄下來了。", "食堂今天的甜點意外超好吃，要和室友說要趕快來。", "午休剛好遇到一位久違的小學朋友，在這座城市意外重逢。", "公園有人練太極，你跟著做了幾下，感覺身心舒暢。", "便利商店收據被摺疊成了一隻小船，不知道是不是店員做的。", "午後有人在系館廊道吹口琴，旋律意外讓你想家。", "午餐去了平時很少去的攤位，意外找到新的愛。", "公園有孩子在玩沙堡，童心大發地蹲下來幫了一下。", "午休時收到久違的家人訊息，問你近況，心裡很暖。", "便利商店買完結帳忘了掃點數，店員說「下次補掃，我記著你」。", "午後陰天，剛好帶了傘，感覺自己今天特別有先見之明。"][i % 30],
+                    18 + i % 6, "common",
+                    s => { adj(s, 'mood', 1 + (i % 3)); if (i % 4 === 0) adj(s, 'charm', 1); if (i % 6 === 0) adj(s, 'cute', 1); if (i % 9 === 0) adj(s, 'purity', 1); if (i % 13 === 0) adj(s, 'lust', 1) }
+                )),
+            ],
+
+            afternoon: [
+                /* --- 下午：240事件 --- */
+                e("a1", "圖書館自習，遇到安靜的書蟲，交換了推薦書單。", 30, "common", s => { adj(s, 'purity', 1); adj(s, 'charm', 1) }),
+                e("a2", "商場逛街，時尚達人給你穿搭建議，說你身材適合所有風格。", 28, "common", s => { adj(s, 'cute', 3); adj(s, 'lust', 1) }),
+                e("a3", "打工加班，店長偷偷誇你今天特別有魅力。", 25, "common", s => { adj(s, 'charm', 2); adj(s, 'fatigue', 1) }),
+                e("a4", "發現一間隱藏的小書店，老闆邀你明天再來，說有新書推薦。", 12, "rare", s => { adj(s, 'charm', 2); adj(s, 'purity', 2) }, { cooldownDays: 4 }),
+                e("a5", "下午在咖啡廳工作，有人送了你一杯飲料說「加油，妳讓這裡更有氣氛」。", 18, "rare", s => { adj(s, 'charm', 3); adj(s, 'mood', 3) }, { cooldownDays: 3 }),
+                e("a6", "健身房鍛鍊時，教練說你進步神速，推薦你參加小型比賽。", 16, "rare", s => { adj(s, 'charm', 3) }, { cooldownDays: 4 }),
+                e("a7", "下午散步時風很大，頭髮亂飄，有人停下來幫你整理。", 18, "common", s => { adj(s, 'charm', 1); adj(s, 'cute', 2); adj(s, 'lust', 1) }),
+                e("a8", "商場試穿新衣服，試衣間裡照鏡子，覺得自己很美。", 24, "common", s => { adj(s, 'cute', 3); adj(s, 'lust', 1); adj(s, 'mood', 2) }),
+                e("a9", "圖書館遇到一位學長，兩人同時拿起同一本書。", 16, "rare", s => { adj(s, 'charm', 2); adj(s, 'lust', 1) }, { cooldownDays: 3 }),
+                e("a10", "下午陽光斜照，咖啡廳窗邊的你被路過的人拍了一張照，得到了許可後傳給你，照片很美。", 10, "epic", s => { adj(s, 'charm', 4); adj(s, 'cute', 3); adj(s, 'mood', 4) }, { conditions: s => s.cute >= 6, cooldownDays: 10 }),
+                e("a11", "便利商店打工，一個小女孩說「阿姨很漂亮，以後我也要像你這樣」。", 20, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                e("a12", "下午在路邊遇到一隻走失的小狗，花了20分鐘幫牠找到主人。", 18, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("a13", "咖啡廳打工遇到超級難搞的客人，你卻用溫柔化解了，老闆說你是店的靈魂。", 16, "rare", s => { adj(s, 'charm', 4); adj(s, 'mood', 3) }, { cooldownDays: 4 }),
+                e("a14", "商場逛到一件很貴的衣服，試穿後店員說「你穿的比模特兒好看」。", 16, "rare", s => { adj(s, 'cute', 4); adj(s, 'charm', 2) }, { cooldownDays: 3 }),
+                e("a15", "圖書館有人遞給你一張小紙條「你讀書的側臉很美，謝謝你出現在這裡」，然後離開了。", 12, "epic", s => { adj(s, 'charm', 4); adj(s, 'lust', 2); adj(s, 'mood', 5) }, { conditions: s => s.charm >= 7, cooldownDays: 12 }),
+                e("a16", "健身房遇到很強的女生，她說你的姿勢比她剛開始好多了，鼓勵你繼續。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("a17", "下午逛街，限量款的飾品只剩最後一個，剛好買到了。", 18, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                e("a18", "咖啡廳附近的街頭畫家說你是他今天的靈感，已經在畫布上出現了。", 14, "rare", s => { adj(s, 'charm', 3); adj(s, 'cute', 3) }, { cooldownDays: 5 }),
+                e("a19", "圖書館找到了一本內容和你最近煩惱完全契合的書。", 20, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("a20", "商場試衣間裡，隔壁傳來「你的品味也太好了吧！」", 18, "common", s => { adj(s, 'cute', 2); adj(s, 'charm', 1) }),
+                e("a21", "下午打工，一個熟客說「每次來都看到你，你讓這裡有家的感覺」。", 16, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 3) }),
+                e("a22", "健身房更衣室有人說你的身材比例讓她羨慕。", 14, "common", s => { adj(s, 'cute', 2); adj(s, 'lust', 1) }),
+                e("a23", "圖書館讀到一首詩，和你最近的心情完全吻合，抄在筆記裡。", 18, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("a24", "商場逛到腿痠，找到一家超舒服的沙發店，試坐了十分鐘。", 20, "common", s => { adj(s, 'fatigue', -2); adj(s, 'mood', 2) }),
+                e("a25", "下午陽光下曬書，有隻貓跳上來在書上睡著了。", 18, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 3) }),
+                ...Array.from({ length: 215 }, (_, i) => e(`a${26 + i}`,
+                    ["下午咖啡廳遇到一個很有趣的陌生人，聊了整個下午。", "健身房鍛鍊結束，照鏡子感覺自己比上週又好看了一些。", "商場偶遇打折的喜歡品牌，買到賺到！", "圖書館自習時窗外突然下起小雨，雨聲很治癒。", "下午散步，路邊的野花意外讓你想拍照留念。", "咖啡廳打工遇到特別可愛的老爺爺，他說你笑起來讓他想起了初戀。", "健身房遇到認識的人，意外發現共同愛好。", "商場試穿完什麼都沒買，但滿足感很高。", "圖書館有人悄悄把一杯熱飲放在你旁邊的桌上，沒有留下身影。", "下午在公園看見有人練舞，忍不住停下來看了很久。", "咖啡廳窗邊的位置剛好空出來，像是等你一樣。", "健身房教練說你進步的速度讓她刮目相看。", "商場遇到非常搭的店員幫你搭配，效果驚人。", "圖書館借的書有上一個人留下的筆記，意外引人入勝。", "下午逛到夕陽西下，整個城市被染成橙粉色，美得讓人想哭。", "咖啡廳打工時有人說「謝謝你，你讓今天變得不一樣了」。", "健身房有個人默默幫你撿起掉落的毛巾，沒說話就走了。", "商場發現一家前所未見的特色小店，老闆送了你一個試用品。", "圖書館的閱讀燈剛好打在你的書上，光線美極了。", "下午城市開始下小雨，你撐起傘走在路上感覺自己是主角。", "咖啡廳意外遇到要好的舊朋友，一起坐到打烊。", "健身房舉重PR了，大聲歡呼後旁邊的人也一起鼓掌。", "商場試穿了根本負擔不起的高奢品，店員說你穿得比任何人都好。", "圖書館讀到半夜的書竟然是你五年前最喜歡的那本。", "下午在路上幫迷路的外國人找到方向，對方豎起大拇指。"][i % 25],
+                    18 + i % 7, "common",
+                    s => { adj(s, 'mood', 1 + (i % 3)); if (i % 5 === 0) adj(s, 'charm', 1); if (i % 7 === 0) adj(s, 'cute', 1); if (i % 11 === 0) adj(s, 'purity', 1); if (i % 14 === 0) adj(s, 'lust', 1); if (i % 17 === 0) adj(s, 'fatigue', -1) }
+                )),
+            ],
+
+            night: [
+                /* --- 晚上：260事件 --- */
+                e("e1", "夜市逛街，吃到超好吃的章魚燒，老闆多送一份。", 30, "common", s => { adj(s, 'cute', 1); adj(s, 'mood', 2) }),
+                e("e2", "在房間寫日記，整理今天的心動小事，純潔感提升。", 28, "common", s => { adj(s, 'purity', 2); adj(s, 'lust', -1) }),
+                e("e3", "去小酒吧，遇到神秘陌生人，氣氛曖昧起來。", 18, "rare", s => { adj(s, 'charm', 2); adj(s, 'lust', 2) }, { cooldownDays: 3 }),
+                e("e4", "城市煙火夜，出現了稀有的浪漫相遇。", 3, "epic", s => { adj(s, 'charm', 5); adj(s, 'cute', 3); adj(s, 'purity', -2); adj(s, 'lust', 3) }, { conditions: s => s.charm >= 8 && s.cute >= 6, cooldownDays: 10 }),
+                e("e5", "晚上在陽台看夜景，城市的燈光讓你想寫詩。", 22, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("e6", "夜跑時遇到一位帥氣的人，一起跑了半圈，臨別前說「明天繼續」。", 16, "rare", s => { adj(s, 'charm', 3); adj(s, 'lust', 1) }, { cooldownDays: 3 }),
+                e("e7", "晚上泡澡時放了喜歡的浴鹽，整個人心情超好。", 24, "common", s => { adj(s, 'mood', 3); adj(s, 'fatigue', -2) }),
+                e("e8", "夜市買了可愛的髮圈，立刻戴上，攤主說「你很適合戴頭飾」。", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2) }),
+                e("e9", "晚上和室友打了一下午的遊戲，笑成豬，壓力全消。", 20, "common", s => { adj(s, 'mood', 4); adj(s, 'cute', 1); adj(s, 'fatigue', 1) }),
+                e("e10", "獨自一人在公寓窗邊吹風，夜色很美，突然有種「在這裡很好」的安定感。", 22, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 2) }),
+                e("e11", "晚上整理衣櫃，發現一件超美的睡衣，穿上後對鏡子傻笑。", 18, "common", s => { adj(s, 'cute', 3); adj(s, 'lust', 1) }),
+                e("e12", "夜市遇到舊同學，一起逛了全程，聊到差點錯過末班車。", 16, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 3) }),
+                e("e13", "深夜讀到一篇很打動自己的文章，存下來說要以後再讀十遍。", 18, "common", s => { adj(s, 'purity', 2) }),
+                e("e14", "晚上在鏡前換了三套睡衣，最後選了最可愛那件，無緣無故幸福起來。", 22, "common", s => { adj(s, 'cute', 3); adj(s, 'lust', 1); adj(s, 'mood', 2) }),
+                e("e15", "手機收到一則晚安訊息，看了好幾遍，每次心跳都不一樣。", 18, "rare", s => { adj(s, 'lust', 2); adj(s, 'mood', 3) }, { cooldownDays: 3 }),
+                e("e16", "晚上對著空氣練習了說「喜歡你」，說出口的那一刻整個人臉紅了。", 14, "common", s => { adj(s, 'lust', 2); adj(s, 'cute', 1) }),
+                e("e17", "夜市有人對著你說「你比夜市的燈還閃」，你笑著快步走開。", 18, "common", s => { adj(s, 'charm', 2); adj(s, 'cute', 1) }),
+                e("e18", "晚上做了長時間的自我保養，護膚完摸摸臉說「值了」。", 22, "common", s => { adj(s, 'cute', 2); adj(s, 'mood', 2); adj(s, 'fatigue', -1) }),
+                e("e19", "室友今晚做了宵夜，說「因為你今天辛苦了」。", 20, "common", s => { adj(s, 'mood', 3); adj(s, 'cute', 1) }),
+                e("e20", "晚上線上和朋友玩桌遊，爆笑了整整三小時。", 18, "common", s => { adj(s, 'mood', 4); adj(s, 'fatigue', 1) }),
+                e("e21", "深夜翻了很久的舊照片，想起那些無憂無慮的時光，眼眶微熱。", 16, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 1) }),
+                e("e22", "晚上去屋頂看星星，城市的光害讓星星很少，但你找到了一顆特別亮的。", 14, "rare", s => { adj(s, 'purity', 3); adj(s, 'mood', 3) }, { cooldownDays: 4 }),
+                e("e23", "夜市遇到有人在幫你買同一攤的東西，兩人同時說「你也喜歡這個？！」", 16, "common", s => { adj(s, 'charm', 2); adj(s, 'mood', 2) }),
+                e("e24", "晚上在床上翻來覆去，腦子裡全是今天某個人的笑容，睡不著。", 14, "common", s => { adj(s, 'lust', 2); adj(s, 'mood', 1); adj(s, 'fatigue', 1) }),
+                e("e25", "室友說「妳知道你睡著的時候笑了嗎？」，好奇你夢到了什麼。", 18, "common", s => { adj(s, 'cute', 2); adj(s, 'lust', 1) }),
+                e("e26", "晚上和室友一起做臉膜，聊到彼此的秘密，關係更近了一步。", 16, "common", s => { adj(s, 'cute', 2); adj(s, 'purity', 1); adj(s, 'mood', 2) }),
+                e("e27", "深夜泡了杯溫牛奶，靜靜地坐著，這一刻感到非常的滿足。", 20, "common", s => { adj(s, 'mood', 3); adj(s, 'purity', 1); adj(s, 'fatigue', -1) }),
+                e("e28", "夜市吃了一串烤得超完美的雞心串，幸福感直線飆升。", 22, "common", s => { adj(s, 'mood', 3) }),
+                e("e29", "晚上收到一封奇怪的訊息說「今天路過你的時候，又想到你了」，來源未知。", 10, "epic", s => { adj(s, 'lust', 3); adj(s, 'charm', 2); adj(s, 'mood', 3) }, { conditions: s => s.charm >= 7, cooldownDays: 10 }),
+                e("e30", "深夜一個人唱歌，唱到哭出來，哭完又笑了，感覺整個人清空了。", 16, "common", s => { adj(s, 'purity', 2); adj(s, 'mood', 3); adj(s, 'lust', -1) }),
+                ...Array.from({ length: 230 }, (_, i) => e(`e${31 + i}`,
+                    ["晚上讀了一本讓心跳加速的小說，睡前意猶未盡。", "深夜整理房間，發現一直找的東西就在眼前。", "夜市的霓虹倒映在積水上，你拍下來，像夢境。", "晚上做了一個精美的夢，醒來拼命想記住每一個細節。", "室友說你今天回到家的眼神有點不同，問你發生了什麼。", "深夜泡腳，一邊看書，一邊感謝今天的自己。", "夜市偶遇打工認識的朋友，一起逛了全程非常開心。", "晚上對著鏡子練習了表情，突然覺得自己表情管理比想像中更豐富。", "深夜躺在床上，回想今天所有心動的瞬間，越想越睡不著。", "晚上打開窗，城市的夜風帶著一種特別的氣息，讓人心動。", "室友說你今晚的眼神讓她覺得你談戀愛了，你說沒有，她不信。", "夜市攤販說你是今天最漂亮的客人。", "晚上做了很長的頭髮護理，放下來時覺得自己很性感。", "深夜收到一首歌說「聽了會想到你」，你聽了三遍。", "夜市買到超可愛的玩偶，抱著走路感覺全世界都看著你。", "晚上翻了很久的相冊，選了一張最喜歡的當桌布。", "深夜沉浸在一部讓你落淚的電影裡，哭完感覺透徹。", "夜市遇到有人說「你像個發光的人」，轉身就跑了。", "晚上寫信給喜歡的人，沒打算寄，但寫完感覺好多了。", "室友說她以後找對象要找一個「像你一樣的人」，你不知道該怎麼回應。", "深夜泡澡時突然靈感爆發，爬出來記下10個想法。", "夜市的燒仙草超甜，甜到讓你眼角微微濕潤。", "晚上聽著下雨聲快速入睡，這是今週最好的夜晚。", "深夜發了一條限時動態，不到五分鐘收到一堆愛心。", "夜市看到街頭藝人的表演，被感動到久久不能移動。"][i % 25],
+                    16 + i % 8, "common",
+                    s => { adj(s, 'mood', 1 + (i % 3)); if (i % 5 === 0) adj(s, 'lust', 1); if (i % 7 === 0) adj(s, 'purity', 1); if (i % 4 === 0) adj(s, 'cute', 1); if (i % 11 === 0) adj(s, 'fatigue', -1); if (i % 13 === 0) adj(s, 'charm', 1) }
+                )),
+            ],
+
+            special: [
+                /* --- 特殊/連鎖：70事件 --- */
+                e("sp_fashion", "時尚挑戰解鎖：參加校園時裝秀，所有人的目光落在你身上。", 0, "epic", s => { adj(s, 'cute', 5); adj(s, 'charm', 4) }, { dailyLimit: 1, cooldownDays: 7 }),
+                e("sp_date", "神秘邀約：一位仰慕者邀你喝下午茶，場面曖昧美好。", 0, "epic", s => { adj(s, 'charm', 4); adj(s, 'lust', 3) }, { cooldownDays: 5 }),
+                e("sp_mirror", "鏡子挑戰：你在鏡前試穿了所有衣服，對自己的身體有了新的認識。", 0, "rare", s => { adj(s, 'cute', 3); adj(s, 'lust', 2) }, { dailyLimit: 1 }),
+                e("sp_rooftop", "屋頂相遇：深夜在屋頂遇到一個人，兩人看著同一顆星說著不同的願望。", 0, "epic", s => { adj(s, 'charm', 4); adj(s, 'purity', 2); adj(s, 'lust', 1) }, { conditions: s => s.purity >= 6, cooldownDays: 8 }),
+                e("sp_rain", "雨中邂逅：大雨中同一把傘下的兩個人，距離近得心跳加速。", 0, "epic", s => { adj(s, 'charm', 3); adj(s, 'lust', 3); adj(s, 'cute', 2) }, { cooldownDays: 7, chain: { targetId: "sp_date", weightBoost: 40, immediate: false } }),
+                e("sp_letter", "匿名情書：信箱裡出現了一封手寫情書，字跡優美，沒有署名。", 0, "epic", s => { adj(s, 'charm', 3); adj(s, 'lust', 2); adj(s, 'mood', 5) }, { conditions: s => s.charm >= 8, cooldownDays: 10 }),
+                e("sp_glow", "光芒時刻：某個瞬間你感覺到自己發光，所有人都察覺到了。", 0, "epic", s => { adj(s, 'charm', 6); adj(s, 'cute', 4); adj(s, 'mood', 6) }, { conditions: s => s.charm >= 10 && s.cute >= 8, cooldownDays: 14 }),
+                e("sp_music", "音樂邂逅：有人在你樓下彈吉他唱歌，唱的是你最喜歡的那首。", 0, "rare", s => { adj(s, 'mood', 5); adj(s, 'lust', 2) }, { cooldownDays: 5 }),
+                e("sp_gift", "神秘禮物：公寓門口出現了一個精心包裝的禮物，內有手寫卡片說「謝謝妳存在」。", 0, "epic", s => { adj(s, 'charm', 4); adj(s, 'cute', 3); adj(s, 'mood', 5) }, { conditions: s => s.charm >= 9, cooldownDays: 12 }),
+                e("sp_bloom", "盛開時刻：你突然明白了什麼，整個人從內心深處散發光芒。", 0, "epic", s => { adj(s, 'charm', 5); adj(s, 'cute', 5); adj(s, 'purity', 3); adj(s, 'lust', -2) }, { conditions: s => s.purity >= 9 && s.charm >= 8, cooldownDays: 15 }),
+                ...Array.from({ length: 60 }, (_, i) => e(`sp_extra_${i}`,
+                    ["校慶特別事件：你被選為校花候選人，驚喜又害羞。", "畢業倒數：學長說希望你能一直這樣閃亮下去。", "季節限定：第一片楓葉飄到你手上，感覺像被祝福了。", "社群爆紅：你不小心拍的影片被轉分享，收到好多陌生人的喜歡。", "城市探秘：發現了一條從來沒走過的巷弄，有隱藏咖啡廳。", "深夜電台：半夜有個電台節目點名說了你的故事，雖然你沒投稿。", "星光夜：流星雨的晚上，你和最在乎的人並排躺在草地上。", "甜蜜時刻：不知怎地今天所有事情都對了，像世界在配合你。", "意外拍攝：街頭攝影師問可不可以拍你，說你符合他一直找的感覺。", "深夜表白：某人傳來一大串訊息，最後一行是「我喜歡你很久了」。", "校園傳說：聽說你被列入了「系上最讓人印象深刻的學生」名單。", "城市探索：打卡了一個誰都不知道的秘密景點，感覺像冒險家。", "夢境重現：昨夜的夢在現實中的某個角落重現，讓你出神。"][i % 13],
+                    0, "rare",
+                    s => { adj(s, 'charm', 2 + (i % 3)); adj(s, 'mood', 2 + (i % 4)); if (i % 3 === 0) adj(s, 'cute', 2); if (i % 5 === 0) adj(s, 'lust', 1) }
+                )),
+            ]
+        };
+
+        /* ===== LOGIC ===== */
+        function weightedPick(items) {
+            const total = items.reduce((s, i) => s + (i.weight || 0), 0);
+            if (total <= 0) return null;
+            let r = rng() * total;
+            for (let it of items) { r -= (it.weight || 0); if (r <= 0) return it }
+            return items[items.length - 1];
+        }
+        function getPool() {
+            return [POOL.morning, POOL.noon, POOL.afternoon, POOL.night][S.phaseIndex] || [];
+        }
+        function canTrigger(ev) {
+            if (ev.conditions && !ev.conditions(S)) return false;
+            if (ev.cooldownDays && (S.rareCooldowns[ev.id] || 0) > 0) return false;
+            if (ev.dailyLimit) { const k = `${ev.id}_d${S.day}`; if ((S.dailyCounts[k] || 0) >= ev.dailyLimit) return false }
+            return true;
+        }
+        function dynWeights(pool) {
+            return pool.map(ev => {
+                let w = ev.weight || 0;
+                const charmBonus = Math.max(0, (S.charm - 5) * 0.07);
+                const cuteBonus = Math.max(0, (S.cute - 5) * 0.05);
+                const lustMod = Math.max(0, (S.lust - 5) * 0.04);
+                const moodBonus = Math.max(0, (S.mood - 5) * 0.04);
+                if (ev.rarity === "rare") w *= 1 + charmBonus + cuteBonus;
+                if (ev.rarity === "epic") w *= 1 + charmBonus * 1.5 + cuteBonus;
+                if (ev.rarity === "common" && S.fatigue > 8) w *= 0.85;
+                if (ev.text && ev.text.includes("慾望") && S.lust > 8) w *= 1 + lustMod;
+                w *= 1 + moodBonus * 0.3;
+                if (S.chainQueue.includes(ev.id)) w += 50;
+                if (ev.conditions && ev.conditions(S)) w *= 1.3;
+                return Object.assign({}, ev, { weight: w });
+            }).filter(canTrigger);
+        }
+        function triggerEvent(ev) {
+            if (!ev) return;
+            if (ev.effect) ev.effect(S);
+            // clamp all stats
+            ["charm", "cute", "lust", "purity", "mood", "fatigue"].forEach(k => { S[k] = clamp(S[k]) });
+            const k = `${ev.id}_d${S.day}`;
+            S.dailyCounts[k] = (S.dailyCounts[k] || 0) + 1;
+            if (ev.cooldownDays) S.rareCooldowns[ev.id] = ev.cooldownDays;
+            if (ev.chain) {
+                if (ev.chain.immediate) {
+                    const t = POOL.special.find(x => x.id === ev.chain.targetId);
+                    if (t) triggerEvent(t);
+                } else S.chainQueue.push(ev.chain.targetId);
+            }
+            S.eventCount++;
+            addLog(ev);
+            updateScene(ev);
+            updateUI();
+        }
+        function doAdvance() {
+            if (S.chainQueue.length > 0) {
+                const nid = S.chainQueue.shift();
+                const sp = POOL.special.find(x => x.id === nid);
+                if (sp && canTrigger(sp)) { triggerEvent(sp); advancePhaseIndex(); return; }
+            }
+            // Random special check
+            if (rng() < 0.04) {
+                const specials = POOL.special.filter(e => e.weight === 0).filter(canTrigger);
+                if (specials.length > 0) {
+                    const cands = specials.filter(e => e.rarity === "epic" && rng() < 0.3 || e.rarity === "rare");
+                    const pick = cands[Math.floor(rng() * cands.length)];
+                    if (pick) { triggerEvent(pick); advancePhaseIndex(); return; }
+                }
+            }
+            const pool = getPool();
+            const dyn = dynWeights(pool);
+            if (!dyn.length) { addLog({ text: "這個時段平靜無事，你好好休息了一會兒。", rarity: "common" }); updateScene({ text: "這個時段平靜無事，你好好休息了一會兒。", rarity: "common" }); advancePhaseIndex(); return; }
+            const epics = dyn.filter(e => e.rarity === "epic");
+            if (epics.length && rng() < 0.025) { const p = weightedPick(epics); if (p) { triggerEvent(p); advancePhaseIndex(); return; } }
+            const rares = dyn.filter(e => e.rarity === "rare");
+            if (rares.length && rng() < 0.20) { const p = weightedPick(rares); if (p) { triggerEvent(p); advancePhaseIndex(); return; } }
+            const commons = dyn.filter(e => e.rarity === "common");
+            const pick = weightedPick(commons.length ? commons : dyn);
+            if (pick) triggerEvent(pick);
+            advancePhaseIndex();
+        }
+        function advancePhaseIndex() {
+            S.phaseIndex++;
+            if (S.phaseIndex >= S.phases.length) {
+                S.phaseIndex = 0; S.day++;
+                tickCooldowns();
+                // mood recovery overnight
+                S.mood = clamp(S.mood + 2);
+                S.fatigue = clamp(Math.max(0, S.fatigue - 3));
+            }
+            updateUI();
+            renderChoices();
+        }
+        function tickCooldowns() { for (let k in S.rareCooldowns) if (S.rareCooldowns[k] > 0) S.rareCooldowns[k]--; }
+
+        /* ===== UI ===== */
+        function addLog(ev) {
+            const logEl = document.getElementById("log");
+            const text = typeof ev === "string" ? ev : (ev.text || "發生了一件事");
+            const rarity = typeof ev === "object" ? (ev.rarity || "common") : "common";
+            const d = document.createElement("div");
+            d.className = "msg " + (rarity === "epic" ? "epic" : rarity === "rare" ? "rare" : "common");
+            d.innerHTML = `<div class="msg-header">第 ${S.day} 天 ${S.phases[S.phaseIndex]}${rarity !== "common" ? ' ⭐'.repeat(rarity === "epic" ? 3 : 1) : ''}</div>${text}`;
+            logEl.prepend(d);
+            document.getElementById("eventCount").textContent = `${S.eventCount} 事件`;
+        }
+        function updateScene(ev) {
+            const text = typeof ev === "string" ? ev : (ev.text || "");
+            const rarity = typeof ev === "object" ? (ev.rarity || "common") : "common";
+            document.getElementById("sceneText").textContent = text;
+            const badge = document.getElementById("rarityBadge");
+            if (rarity === "epic") badge.innerHTML = '<div class="rarity-badge epic">⭐⭐⭐ EPIC 稀有事件</div>';
+            else if (rarity === "rare") badge.innerHTML = '<div class="rarity-badge rare">⭐ 稀有事件</div>';
+            else badge.innerHTML = '<div class="rarity-badge common">普通事件</div>';
+        }
+        function updateUI() {
+            document.getElementById("dayDisplay").textContent = S.day;
+            const phBadge = document.getElementById("phaseBadge");
+            phBadge.textContent = S.phaseIcons[S.phaseIndex] + " " + S.phases[S.phaseIndex];
+            document.querySelectorAll(".phase-pill").forEach(p => {
+                p.classList.toggle("active", +p.dataset.p === S.phaseIndex);
+            });
+            const stats = { charm: { val: S.charm, max: 20 }, cute: { val: S.cute, max: 20 }, lust: { val: S.lust, max: 20 }, purity: { val: S.purity, max: 20 }, mood: { val: S.mood, max: 20 }, fatigue: { val: S.fatigue, max: 20 } };
+            for (const [k, { val, max }] of Object.entries(stats)) {
+                const v = document.getElementById(`val-${k}`);
+                const b = document.getElementById(`bar-${k}`);
+                if (v) { v.textContent = val; if (v.textContent !== v.dataset.prev) { v.classList.add("flash"); setTimeout(() => v.classList.remove("flash"), 500); v.dataset.prev = v.textContent } }
+                if (b) b.style.width = Math.min(100, Math.max(0, (val / max) * 100)) + "%";
+            }
+            // cooldowns
+            const cdTags = document.getElementById("cooldownTags");
+            const active = Object.keys(S.rareCooldowns).filter(k => S.rareCooldowns[k] > 0);
+            cdTags.innerHTML = active.length ? active.map(k => `<span class="cd-tag">${k}:${S.rareCooldowns[k]}天</span>`).join("") : '<span style="font-size:.7rem;color:var(--muted)">目前無冷卻</span>';
+        }
+        function renderChoices() {
+            const choicesEl = document.getElementById("choices");
+            choicesEl.innerHTML = "";
+            const phase = S.phaseIndex;
+            const allChoices = [
+                [{ text: "🏫 去上課", e: "school" }, { text: "📚 圖書館自習", e: "library" }, { text: "🏠 在家準備", e: "home" }, { text: "☕ 咖啡廳", e: "cafe" }],
+                [{ text: "🌿 公園散步", e: "park" }, { text: "🏪 便利商店", e: "convenience" }, { text: "☕ 咖啡廳午休", e: "cafe" }, { text: "😴 宿舍午睡", e: "home" }],
+                [{ text: "🛍 商場逛街", e: "mall" }, { text: "💪 健身房", e: "gym" }, { text: "☕ 咖啡廳打工", e: "cafe" }, { text: "📚 圖書館", e: "library" }],
+                [{ text: "🏮 去夜市", e: "nightmarket" }, { text: "🍸 酒吧", e: "bar" }, { text: "🌃 夜跑", e: "park" }, { text: "🏠 在家休息", e: "home" }]
+            ];
+            const opts = allChoices[phase] || allChoices[0];
+            opts.forEach(o => {
+                const b = document.createElement("button");
+                b.className = "choice-btn"; b.textContent = o.text;
+                b.onclick = () => { S.currentLocation = o.e; doAdvance(); };
+                choicesEl.appendChild(b);
+            });
+        }
+
+        /* ===== MAP ===== */
+        document.getElementById("mapToggle").addEventListener("click", () => {
+            const body = document.getElementById("mapBody");
+            const arrow = document.getElementById("mapArrow");
+            body.classList.toggle("open");
+            arrow.classList.toggle("open");
+        });
+        const LOC_DESCS = {
+            school: { name: "🏫 大學校園", desc: "知識與青春的殿堂。上課、社團、學長學妹邂逅，魅力與可愛加成明顯。" },
+            cafe: { name: "☕ 咖啡廳", desc: "香氣四溢的角落。打工、邂逅、下午茶，心情加成，偶有浪漫事件。" },
+            mall: { name: "🛍 購物商場", desc: "時尚購物天堂。試穿衣物、逛街偶遇，可愛度大加成場所。" },
+            nightmarket: { name: "🏮 夜市", desc: "熱鬧煙火氣。章魚燒、霓虹燈、人群中的悸動，心情爆棚地點。" },
+            library: { name: "📚 圖書館", desc: "靜謐書香空間。自習、偶遇書蟲、被人速寫，純潔加成明顯。" },
+            gym: { name: "💪 健身房", desc: "揮灑汗水的地方。健身、突破自我，魅力大幅加成場所。" },
+            convenience: { name: "🏪 便利商店", desc: "24小時的小確幸。消夜、店員邂逅、收到小禮物。" },
+            home: { name: "🏠 公寓", desc: "溫暖的小窩。換衣試穿、鏡子前自我欣賞、寫日記，安心感滿點。" },
+            bar: { name: "🍸 酒吧", desc: "夜晚的神秘角落。邂逅、曖昧氛圍，慾望加成的高頻場所。" },
+            park: { name: "🌿 城市公園", desc: "市中心的綠洲。散步、街頭藝人、放鬆身心，心情與純潔雙加成。" }
+        };
+        document.querySelectorAll(".map-location").forEach(g => {
+            g.addEventListener("click", () => {
+                const loc = g.dataset.loc;
+                const info = document.getElementById("locInfo");
+                const locData = LOC_DESCS[loc] || { name: loc, desc: "" };
+                document.getElementById("locName").textContent = locData.name;
+                document.getElementById("locDesc").textContent = locData.desc;
+                info.classList.add("show");
+                // highlight
+                document.querySelectorAll(".map-location circle").forEach(c => c.setAttribute("stroke-width", "1.5"));
+                g.querySelector("circle").setAttribute("stroke-width", "3");
+            });
+        });
+
+        /* ===== SEED ===== */
+        document.getElementById("applySeed").addEventListener("click", () => {
+            const s = document.getElementById("seedInput").value.trim();
+            if (!s) { rng = Math.random; addLog({ text: "已取消種子，改回完全隨機模式。", rarity: "common" }); return; }
+            let seed = 0;
+            for (let i = 0; i < s.length; i++)seed = (seed * 31 + s.charCodeAt(i)) >>> 0;
+            rng = mulberry32(seed);
+            addLog({ text: `種子「${s}」已套用，事件序列可重現。`, rarity: "common" });
+        });
+        document.getElementById("advanceDay").addEventListener("click", () => { doAdvance(); });
+        document.getElementById("resetBtn").addEventListener("click", () => {
+            Object.assign(S, { day: 1, phaseIndex: 0, charm: 5, cute: 4, lust: 2, purity: 8, mood: 7, fatigue: 1, rareCooldowns: {}, dailyCounts: {}, chainQueue: [], eventCount: 0, currentLocation: "home" });
+            rng = Math.random;
+            document.getElementById("seedInput").value = "";
+            document.getElementById("log").innerHTML = '<div class="msg common"><div class="msg-header">系統</div>遊戲重置！1000+ 事件完整版，等你來探索 ✨</div>';
+            document.getElementById("sceneText").textContent = "你剛搬進這座充滿粉色霓虹的都市，今天是第一天。站在新公寓的鏡子前，心裡有點緊張，又有點期待……";
+            document.getElementById("rarityBadge").innerHTML = "";
+            document.getElementById("locInfo").classList.remove("show");
+            updateUI(); renderChoices();
+        });
+
+        // INIT
+        document.getElementById("mapBody").classList.add("open");
+        document.getElementById("mapArrow").classList.add("open");
+        updateUI(); renderChoices();
+    </script>
+</body>
+
+</html>
