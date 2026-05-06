@@ -79,12 +79,18 @@
         .logo {
             font-family: 'Josefin Sans', sans-serif;
             font-weight: 700;
-            font-size: 1.6rem;
+            font-size: 1.6em;
             background: linear-gradient(90deg, var(--rose), var(--violet), var(--sky));
+            background-clip: text;
+            /* 標準屬性 */
             -webkit-background-clip: text;
+            /* WebKit 前綴 */
             -webkit-text-fill-color: transparent;
+            color: transparent;
+            /* 保險起見，標準透明文字 */
             white-space: nowrap;
         }
+
 
         .logo span {
             font-size: .75rem;

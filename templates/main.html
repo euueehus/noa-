@@ -36,23 +36,32 @@
 
 <body>
 
-
+    <label for="fristsee">內頁預覽</label>
+    <select id="fristsee">
+        <option value="none"> </option>
+        <option value="index">自我介紹!</option>
+        <option value="kards">Kards卡組</option>
+        <option value="mc">不完整的mc</option>
+        <option value="df">三角洲(還沒開始編輯</option>
+        <option value="class">c#課堂資料</option>
+        <option value="use">好用的玩具或工具</option>
+    </select>
     <h2>
         Noa在這~~
     </h2>
     <img src="/static/hutao.jpg">
     <button onclick="window.location.href='/list'">目錄</button>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 <script>
-Swal.fire({
-    title: "歡迎來到我的網站~~~",
-    text: "wish you have a happy time",
-    imageUrl: "/static/saba.jpg",
-    imageWidth: 400,
-    imageHeight: 500,
-    imageAlt: "Custom image"
-});
+    Swal.fire({
+        title: "歡迎來到我的網站~~~",
+        text: "wish you have a happy time",
+        imageUrl: "/static/saba.jpg",
+        imageWidth: 400,
+        imageHeight: 500,
+        imageAlt: "Custom image"
+    });
 </script>
 
 
