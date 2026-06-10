@@ -1,2 +1,2 @@
 web service
-http://noa.zeabur.app/
+https://noa-fuck-zeabur.onrender.com/
