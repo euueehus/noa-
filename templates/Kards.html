@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<title>Noa的Kards小站</title>
 
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>導航頁</title>
+    <title>Noa的Kards小站</title>
 
     <style>
         :root {
@@ -51,6 +50,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 16px;
             z-index: 10;
         }
 
@@ -64,16 +64,6 @@
             background: linear-gradient(90deg, transparent, var(--accent), transparent);
         }
 
-        header img {
-            width: 42px;
-            height: 42px;
-            position: absolute;
-            left: 40px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 1px solid var(--border);
-        }
-
         .header-title {
             font-family: 'Space Mono', monospace;
             font-size: 15px;
@@ -84,12 +74,13 @@
             text-shadow: 0 0 6px var(--accent);
         }
 
-        .allset {
+        .container {
             max-width: 860px;
             margin: 48px auto;
             padding: 0 24px;
             position: relative;
             z-index: 1;
+            margin-bottom: 100px;
         }
 
         .section-label {
@@ -98,7 +89,7 @@
             color: var(--muted);
             letter-spacing: 0.3em;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 28px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -121,10 +112,13 @@
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-            cursor: default;
+            transition: all 0.3s ease;
             animation: fadeUp 0.5s ease both;
-            backdrop-filter: blur(6px);
+            backdrop-filter: blur(8px);
+        }
+
+        .project:last-child {
+            margin-bottom: 80px;
         }
 
         .project:nth-child(2) {
@@ -138,7 +132,7 @@
         @keyframes fadeUp {
             from {
                 opacity: 0;
-                transform: translateY(16px) scale(0.95);
+                transform: translateY(20px) scale(0.96);
             }
 
             to {
@@ -149,30 +143,32 @@
 
         .project:hover {
             border-color: var(--accent);
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 0 24px rgba(200, 245, 66, 0.15), 0 0 32px rgba(66, 245, 200, 0.1);
+            transform: translateY(-5px) scale(1.015);
+            box-shadow: 0 0 28px rgba(200, 245, 66, 0.18),
+                0 0 40px rgba(66, 245, 200, 0.12);
         }
 
         .project-left {
             display: flex;
             align-items: center;
             gap: 18px;
+            flex: 1;
         }
 
         .project-index {
             font-family: 'Space Mono', monospace;
-            font-size: 11px;
+            font-size: 13px;
             color: var(--muted);
-            width: 28px;
+            width: 32px;
             flex-shrink: 0;
+            font-weight: 700;
         }
 
         .project-info h2 {
             font-size: 17px;
             font-weight: 700;
-            color: var(--text);
-            margin-bottom: 4px;
             letter-spacing: 0.02em;
+            margin-bottom: 4px;
         }
 
         .project-info .note {
@@ -181,41 +177,61 @@
             font-family: 'Space Mono', monospace;
         }
 
+        /* 標籤優化（重點） */
         .tag {
             font-family: 'Space Mono', monospace;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.12em;
-            padding: 4px 12px;
-            border-radius: 20px;
+            padding: 6px 16px;
+            border-radius: 9999px;
             background: rgba(200, 245, 66, 0.08);
             color: var(--accent);
-            border: 1px solid rgba(200, 245, 66, 0.2);
+            border: 1px solid rgba(200, 245, 66, 0.35);
+            box-shadow: 0 0 12px rgba(200, 245, 66, 0.25);
             white-space: nowrap;
-            box-shadow: 0 0 6px rgba(200, 245, 66, 0.2);
+            transition: all 0.4s ease;
         }
 
-        .tag.teal {
+        .tag:hover {
+            background: rgba(200, 245, 66, 0.15);
+            box-shadow: 0 0 18px rgba(200, 245, 66, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .tag.us {
+            color: var(--accent);
+            border-color: rgba(200, 245, 66, 0.5);
+            box-shadow: 0 0 14px rgba(200, 245, 66, 0.35);
+        }
+
+        .tag.uk {
             background: rgba(66, 245, 200, 0.08);
             color: var(--accent2);
-            border-color: rgba(66, 245, 200, 0.2);
-            box-shadow: 0 0 6px rgba(66, 245, 200, 0.2);
+            border-color: rgba(66, 245, 200, 0.5);
+            box-shadow: 0 0 14px rgba(66, 245, 200, 0.35);
+        }
+
+        .project-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
         }
 
         .btn {
             font-family: 'Space Mono', monospace;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 700;
             letter-spacing: 0.08em;
-            padding: 9px 20px;
+            padding: 10px 24px;
             border-radius: 8px;
             border: 1px solid var(--border);
             background: transparent;
             color: var(--text);
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             white-space: nowrap;
-            flex-shrink: 0;
             background-size: 200% 100%;
             background-position: left center;
         }
@@ -225,42 +241,61 @@
             border-color: transparent;
             color: #000;
             background-position: right center;
-        }
-
-        .project-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-shrink: 0;
+            transform: translateY(-1px);
         }
     </style>
 </head>
 
-
 <body>
     <header>
-        <div class="header-title">
-            <span>kards~</span>
-        </div>
+        <img src="/static/c_logo.jpg" alt="logo"
+            style="width:42px; height:42px; border-radius:8px; border:1px solid var(--border);">
+        <span class="header-title">kards~</span>
     </header>
-    <div class="all-set">
-        <label class="section-label " for="title">123</label>
+
+    <div class="container">
+        <div class="section-label">國家列表</div>
+
         <div class="project">
-
-            <button class="btn" onclick="location.href='/Kards_us'">Kards美國卡組</button>
-
+            <div class="project-left">
+                <span class="project-index">01</span>
+                <div class="project-info">
+                    <h2>美國卡組</h2>
+                    <p class="note">US Kards Deck</p>
+                </div>
+            </div>
+            <div class="project-right">
+                <span class="tag us">美國</span>
+                <button class="btn" onclick="location.href='/Kards_us'">前往 →</button>
+            </div>
         </div>
+
         <div class="project">
-
-            <label class="project-right" for="uk">02英國卡組</label>
-            <button class="btn" onclick="location.href='/Kards_uk'">Kards英國卡組</button>
+            <div class="project-left">
+                <span class="project-index">02</span>
+                <div class="project-info">
+                    <h2>英國卡組</h2>
+                    <p class="note">UK Kards Deck</p>
+                </div>
+            </div>
+            <div class="project-right">
+                <span class="tag uk">英國</span>
+                <button class="btn" onclick="location.href='/Kards_uk'">前往 →</button>
+            </div>
         </div>
+
         <div class="project">
-            <button class="btn" onclick="window.location.href='/list'">回去</button>
+            <div class="project-left">
+                <span class="project-index">03</span>
+                <div class="project-info">
+                    <h2>返回列表</h2>
+                </div>
+            </div>
+            <div class="project-right">
+                <button class="btn" onclick="window.location.href='/list'">回去</button>
+            </div>
         </div>
-
-
-
+    </div>
 </body>
 
 </html>

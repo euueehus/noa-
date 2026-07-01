@@ -99,5 +99,10 @@ def H_game():
     return render_template("H_game.html")
 
 
+@app.route("/pri")
+def pri():
+    return render_template("pri.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=os.getenv("PORT", default=5000), host="0.0.0.0")
