@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #000000;
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #fff;
+        }
+
+        h1 {
+            color: #ff4444;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        ul li {
+            display: inline-block;
+            margin: 0 15px;
+        }
+
+        ul li a {
+            color: #00aaff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        ul li a:hover {
+            color: #ffaa00;
+        }
+
+        .section {
+            background: #1a1a1a;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-content {
+            flex: 1;
+            color: #ffaa00;
+        }
+
+        .section img {
+            width: 120px;
+            height: auto;
+            border-radius: 8px;
+            margin-left: 20px;
+        }
+
+        .section p {
+            color: #ccc;
+        }
+
+        button {
+            padding: 8px 20px;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #00aaff;
+            color: #fff;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ffaa00;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>目錄如下~:</h1>
+    <ul>
+        <li><a href="#intro">自我介紹</a></li>
+        <li><a href="#kards">Kards</a></li>
+        <li><a href="#minecraft">Minecraft</a></li>
+        <li><a href="#delta">三角洲</a></li>
+        <li><a href="#class">上課的</a></li>
+        <li><a href="#csharp">C#作品</a></li>
+        <li><s>待增加...</s></li>
+    </ul>
+
+    <div class="section" id="intro">
+        <div class="section-content">
+            <h2>自我介紹!</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/intro'">點我跳轉!</button>
+        </div>
+        <img src="/static/intro.jpg" alt="intro">
+    </div>
+
+    <div class="section" id="kards">
+        <div class="section-content">
+            <h2>Kards!</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/Kards'">點我跳轉!</button>
+        </div>
+        <img src="/static/Kards_logo.jpg" alt="kards">
+    </div>
+
+    <div class="section" id="minecraft">
+        <div class="section-content">
+            <h2>Minecraft!</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/minecraft'">點我跳轉!</button>
+        </div>
+        <img src="/static/minecraft_logo.jpg" alt="minecraft">
+    </div>
+
+    <div class="section" id="delta">
+        <div class="section-content">
+            <h2>三角洲!!</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/delta'">點我跳轉!</button>
+        </div>
+        <img src="/static/H.D.A.jpg" alt="delta">
+    </div>
+
+    <div class="section" id="class">
+        <div class="section-content">
+            <h2>上課的!!</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/calss'">點我跳轉!</button>
+        </div>
+        <img src="/static/calss_logo.jpg" alt="class">
+    </div>
+    <div class="section" id="csharp">
+        <div class="section-content">
+            <h2>java小工具或玩具!!</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/c_list'">點我跳轉!</button>
+        </div>
+        <img src="/static/row_money.jpg" alt="csharp">
+    </div>
+    <div class="section" id="pic">
+        <div class="section-content">
+            <h2>Noa的限制區域</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/passs'">點我跳轉!</button>
+        </div>
+        <img src="/static/noa_banned_logo.jpg" alt="Noa">
+    </div>
+    <div class="section" id="pic">
+        <div class="section-content">
+            <h2>Noa的筆記</h2>
+            <h5>
+                <p>這個是按鈕!</p>
+            </h5>
+            <button onclick="location.href='/pri'">點我跳轉!</button>
+        </div>
+        <img src="/static/noa_banned_logo.jpg" alt="Noa">
+    </div>
+
+    <div class="footer">
+        <button onclick="window.location.href='/'">回去!!</button>
+    </div>
+</body>
+
+</html>

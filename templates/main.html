@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noa的介紹~~~</title>
+    <style>
+        body {
+            text-align: center;
+
+        }
+
+        body {
+            background-color: #A9A9A9;
+        }
+
+        h2 {
+            color: #0000ff;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            height: 100px;
+            width: 100px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #0000ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <label for="fristsee">內頁預覽</label>
+    <select id="fristsee">
+        <option value="none"> </option>
+        <option value="index">自我介紹!</option>
+        <option value="kards">Kards卡組</option>
+        <option value="mc">不完整的mc</option>
+        <option value="df">三角洲(還沒開始編輯</option>
+        <option value="class">c#課堂資料</option>
+        <option value="use">好用的玩具或工具</option>
+    </select>
+    <h2>
+        Noa在這~~
+    </h2>
+    <img src="/static/hutao.jpg">
+    <button onclick="window.location.href='/list'">目錄</button>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+<script>
+    Swal.fire({
+        title: "歡迎來到我的網站~~~",
+        text: "wish you have a happy time",
+        imageUrl: "/static/blue_man.jpg",
+        imageWidth: 400,
+        imageHeight: 550,
+        imageAlt: "Custom image"
+
+    });
+</script>
+
+
+
+</html>

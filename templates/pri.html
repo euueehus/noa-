@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/tabler-icons.min.css">
+    <style>
+        :root {
+            --bg: #f7f7f5;
+            --surface: #ffffff;
+            --card: #ffffff;
+            --border: #e5e5e2;
+            --border-hover: #c8c8c4;
+            --text: #1a1a18;
+            --muted: #888884;
+            --faint: #b8b8b4;
+            --accent: #2563eb;
+            --accent-bg: #eff6ff;
+
+            --tag-idea-bg: #f0fdf4;
+            --tag-idea-color: #15803d;
+            --tag-idea-border: #bbf7d0;
+            --tag-task-bg: #eff6ff;
+            --tag-task-color: #1d4ed8;
+            --tag-task-border: #bfdbfe;
+            --tag-ref-bg: #fffbeb;
+            --tag-ref-color: #b45309;
+            --tag-ref-border: #fde68a;
+            --tag-note-bg: #f5f3ff;
+            --tag-note-color: #6d28d9;
+            --tag-note-border: #ddd6fe;
+
+            --radius: 10px;
+            --radius-lg: 14px;
+            --radius-pill: 9999px;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+            --transition: 0.18s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #111110;
+                --surface: #1a1a18;
+                --card: #1e1e1c;
+                --border: #2e2e2b;
+                --border-hover: #444441;
+                --text: #e8e8e4;
+                --muted: #888884;
+                --faint: #555552;
+                --accent: #3b82f6;
+                --accent-bg: #1e3a5f;
+
+                --tag-idea-bg: #14301e;
+                --tag-idea-color: #86efac;
+                --tag-idea-border: #166534;
+                --tag-task-bg: #1e3a5f;
+                --tag-task-color: #93c5fd;
+                --tag-task-border: #1e40af;
+                --tag-ref-bg: #3b2a0e;
+                --tag-ref-color: #fcd34d;
+                --tag-ref-border: #92400e;
+                --tag-note-bg: #2e1e5f;
+                --tag-note-color: #c4b5fd;
+                --tag-note-border: #5b21b6;
+            }
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Header ── */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+
+        .header-brand i {
+            font-size: 20px;
+            color: var(--accent);
+        }
+
+        .header-meta {
+            font-size: 12px;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ── Layout ── */
+        .layout {
+            display: flex;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 28px 24px 80px;
+            gap: 24px;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 200px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-section {
+            margin-bottom: 28px;
+        }
+
+        .sidebar-label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--faint);
+            margin-bottom: 6px;
+            padding: 0 8px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 10px;
+            border-radius: var(--radius);
+            font-size: 13px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: background var(--transition), color var(--transition);
+            user-select: none;
+        }
+
+        .sidebar-item:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .sidebar-item.active {
+            background: var(--accent-bg);
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .sidebar-item .left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .sidebar-item i {
+            font-size: 15px;
+        }
+
+        .sidebar-count {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--border);
+            padding: 1px 6px;
+            border-radius: var(--radius-pill);
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .sidebar-item.active .sidebar-count {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .tag-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── Main ── */
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .search-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-wrap i {
+            position: absolute;
+            left: 11px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .search-wrap input {
+            width: 100%;
+            padding: 9px 12px 9px 34px;
+            font-size: 13px;
+            font-family: inherit;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--surface);
+            color: var(--text);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .search-wrap input::placeholder {
+            color: var(--faint);
+        }
+
+        .search-wrap input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: 500;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            border-color: var(--border-hover);
+            background: var(--bg);
+        }
+
+        .btn i {
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            background: var(--accent);
+        }
+
+        select.btn {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 10px;
+        }
+
+        /* ── View toggle ── */
+        .view-toggle {
+            display: flex;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .view-btn {
+            padding: 7px 10px;
+            font-size: 15px;
+            background: var(--surface);
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .view-btn.active {
+            background: var(--accent-bg);
+            color: var(--accent);
+        }
+
+        /* ── Grid / List ── */
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 12px;
+        }
+
+        .notes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* ── Note card (grid) ── */
+        .note-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+            position: relative;
+            animation: fadeUp 0.22s ease both;
+        }
+
+        .note-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .note-card.editing {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+            transform: none;
+        }
+
+        .note-card.pinned::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            background: var(--accent);
+        }
+
+        /* ── Note row (list) ── */
+        .note-row {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 11px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            cursor: pointer;
+            transition: border-color var(--transition), box-shadow var(--transition);
+            animation: fadeUp 0.2s ease both;
+        }
+
+        .note-row:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow);
+        }
+
+        .note-row.editing {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        }
+
+        .note-row .row-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .note-row .row-side {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ── Card / row shared elements ── */
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 2px;
+            opacity: 0;
+            transition: opacity var(--transition);
+            flex-shrink: 0;
+        }
+
+        .note-card:hover .card-actions,
+        .note-row:hover .card-actions {
+            opacity: 1;
+        }
+
+        .note-card.editing .card-actions,
+        .note-row.editing .card-actions {
+            opacity: 1;
+        }
+
+        .card-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--muted);
+            padding: 3px 5px;
+            border-radius: 6px;
+            font-size: 15px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            transition: color var(--transition), background var(--transition);
+        }
+
+        .card-btn:hover {
+            color: var(--text);
+            background: var(--border);
+        }
+
+        .card-btn.del:hover {
+            color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .card-btn.pin-btn.is-pinned {
+            color: var(--accent);
+            opacity: 1 !important;
+        }
+
+        textarea.note-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: none;
+            width: 100%;
+            padding: 0;
+            line-height: 1.4;
+            font-family: inherit;
+            overflow: hidden;
+        }
+
+        textarea.note-body {
+            font-size: 13px;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: none;
+            width: 100%;
+            padding: 0;
+            line-height: 1.65;
+            font-family: inherit;
+            min-height: 44px;
+            overflow: hidden;
+        }
+
+        .note-row textarea.note-title {
+            font-size: 13px;
+        }
+
+        .note-row textarea.note-body {
+            min-height: 0;
+            font-size: 12px;
+        }
+
+        .note-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2px;
+        }
+
+        .tag-badge {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: var(--radius-pill);
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .note-date {
+            font-size: 11px;
+            color: var(--faint);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .char-count {
+            font-size: 10px;
+            color: var(--faint);
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ── Tag picker (editing) ── */
+        .tag-picker {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .tag-opt {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 9px;
+            border-radius: var(--radius-pill);
+            border: 1px solid transparent;
+            cursor: pointer;
+            opacity: 0.45;
+            transition: opacity var(--transition);
+        }
+
+        .tag-opt.sel {
+            opacity: 1;
+        }
+
+        .tag-opt:hover {
+            opacity: 0.85;
+        }
+
+        /* ── Section divider ── */
+        .section-divider {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--faint);
+            grid-column: 1/-1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+            margin-bottom: -2px;
+        }
+
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .notes-list .section-divider {
+            grid-column: unset;
+        }
+
+        /* ── Add card ── */
+        .add-card {
+            background: transparent;
+            border: 1px dashed var(--border);
+            border-radius: var(--radius-lg);
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            cursor: pointer;
+            color: var(--faint);
+            font-size: 13px;
+            font-family: inherit;
+            font-weight: 500;
+            min-height: 96px;
+            transition: all var(--transition);
+        }
+
+        .add-card:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-bg);
+        }
+
+        /* ── Empty state ── */
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--faint);
+        }
+
+        .empty-state i {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--muted);
+        }
+
+        .empty-state small {
+            font-size: 12px;
+        }
+
+        /* ── Toast ── */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(60px);
+            background: var(--text);
+            color: var(--bg);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: var(--radius-pill);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ── Modal ── */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 24px 28px;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: scale(0.95);
+            transition: transform 0.2s;
+        }
+
+        .modal-backdrop.open .modal {
+            transform: scale(1);
+        }
+
+        .modal h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .modal p {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 720px) {
+            .layout {
+                flex-direction: column;
+                padding: 16px 16px 80px;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .sidebar-section {
+                margin-bottom: 12px;
+            }
+
+            .sidebar-items {
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+
+            .sidebar-item {
+                padding: 5px 10px;
+            }
+
+            .sidebar-label {
+                display: none;
+            }
+
+            .header {
+                padding: 0 16px;
+            }
+
+            .notes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="header-brand">
+            <i class="ti ti-notebook"></i>
+            My Notes
+        </div>
+        <div class="header-meta" id="header-meta"></div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-label">分類</div>
+                <div class="sidebar-items" id="sidebar"></div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+            <div class="toolbar">
+                <div class="search-wrap">
+                    <i class="ti ti-search"></i>
+                    <input type="text" id="search" placeholder="搜尋標題或內容…">
+                </div>
+                <select class="btn" id="sort" title="排序方式">
+                    <option value="date">最新</option>
+                    <option value="alpha">標題</option>
+                    <option value="pinned">置頂</option>
+                </select>
+                <div class="view-toggle">
+                    <button class="view-btn active" id="btn-grid" title="格狀" onclick="setView('grid')"><i
+                            class="ti ti-layout-grid"></i></button>
+                    <button class="view-btn" id="btn-list" title="列表" onclick="setView('list')"><i
+                            class="ti ti-list"></i></button>
+                </div>
+                <button class="btn btn-primary" onclick="addNote()"><i class="ti ti-plus"></i>新增</button>
+            </div>
+
+            <div id="notes-container"></div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Delete confirm modal -->
+    <div class="modal-backdrop" id="modal-backdrop">
+        <div class="modal">
+            <h3>刪除筆記</h3>
+            <p>確定要刪除這則筆記？此操作無法復原。</p>
+            <div class="modal-btns">
+                <button class="btn" onclick="closeModal()">取消</button>
+                <button class="btn" id="modal-confirm-btn"
+                    style="background:#dc2626;color:#fff;border-color:#dc2626">刪除</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── Data ──
+        const TAGS = [
+            { id: 'idea', label: '想法', icon: 'ti-bulb' },
+            { id: 'task', label: '待辦', icon: 'ti-checkbox' },
+            { id: 'ref', label: '參考', icon: 'ti-bookmark' },
+            { id: 'note', label: '筆記', icon: 'ti-file-text' },
+            { id: 'LEEC', label: 'leetcode', icon: 'ti-file-text' },
+
+        ];
+
+        function tagStyle(id) {
+            return `var(--tag-${id}-bg)`;
+        }
+        function tagColor(id) {
+            return `var(--tag-${id}-color)`;
+        }
+        function tagBorder(id) {
+            return `var(--tag-${id}-border)`;
+        }
+        function tagInfo(id) { return TAGS.find(t => t.id === id) || TAGS[3]; }
+
+        let notes = loadNotes() || [
+            { id: 1, title: '閱讀清單', body: '', tag: 'ref', date: today(), pinned: false, created: Date.now() - 5000 },
+            { id: 2, title: '專案 MVP 功能', body: '登入、搜尋、詳情頁、收藏功能', tag: 'task', date: today(), pinned: true, created: Date.now() - 3000 },
+            { id: 3, title: '設計靈感', body: '極簡主義，大量留白，細線條邊框，避免過度裝飾', tag: 'idea', date: today(), pinned: false, created: Date.now() - 2000 },
+            { id: 4, title: 'CSS 筆記', body: 'grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))', tag: 'note', date: today(), pinned: false, created: Date.now() - 1000 },
+        ];
+        let nextId = notes.reduce((m, n) => Math.max(m, n.id), 0) + 1;
+        let activeTag = 'all';
+        let editingId = null;
+        let currentView = 'grid';
+        let deletePendingId = null;
+
+        // ── Persistence ──
+        function loadNotes() {
+            try { const r = localStorage.getItem('notes-app'); return r ? JSON.parse(r) : null; } catch { return null; }
+        }
+        function saveNotes() {
+            try { localStorage.setItem('notes-app', JSON.stringify(notes)); } catch { }
+        }
+
+        // ── Helpers ──
+        function today() {
+            const d = new Date();
+            return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`;
+        }
+        function autoSize(ta) { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; }
+
+        let toastTimer;
+        function showToast(msg) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+        }
+
+        function openModal(id) {
+            deletePendingId = id;
+            document.getElementById('modal-backdrop').classList.add('open');
+            document.getElementById('modal-confirm-btn').onclick = confirmDelete;
+        }
+        function closeModal() {
+            deletePendingId = null;
+            document.getElementById('modal-backdrop').classList.remove('open');
+        }
+        function confirmDelete() {
+            if (deletePendingId == null) return;
+            notes = notes.filter(n => n.id !== deletePendingId);
+            if (editingId === deletePendingId) editingId = null;
+            saveNotes();
+            closeModal();
+            renderAll();
+            showToast('筆記已刪除');
+        }
+
+        // ── State changes ──
+        function setView(v) {
+            currentView = v;
+            document.getElementById('btn-grid').classList.toggle('active', v === 'grid');
+            document.getElementById('btn-list').classList.toggle('active', v === 'list');
+            renderAll();
+        }
+        function setTag(id) { activeTag = id; renderAll(); }
+
+        function addNote() {
+            const n = { id: nextId++, title: '', body: '', tag: 'note', date: today(), pinned: false, created: Date.now() };
+            notes.unshift(n);
+            editingId = n.id;
+            saveNotes();
+            renderAll();
+            setTimeout(() => {
+                const el = document.querySelector(`[data-id="${n.id}"] .note-title`);
+                if (el) { el.focus(); el.removeAttribute('readonly'); }
+            }, 40);
+        }
+
+        function updateNote(id, field, val) {
+            const n = notes.find(n => n.id === id);
+            if (n) { n[field] = val; n.date = today(); saveNotes(); }
+        }
+        function setNoteTag(id, tag) { updateNote(id, 'tag', tag); renderAll(); }
+        function togglePin(id) {
+            const n = notes.find(n => n.id === id);
+            if (n) { n.pinned = !n.pinned; saveNotes(); renderAll(); showToast(n.pinned ? '已置頂' : '已取消置頂'); }
+        }
+
+        function getFiltered() {
+            const q = document.getElementById('search').value.toLowerCase().trim();
+            const sort = document.getElementById('sort').value;
+            let list = notes.filter(n =>
+                (activeTag === 'all' || n.tag === activeTag) &&
+                (!q || n.title.toLowerCase().includes(q) || n.body.toLowerCase().includes(q))
+            );
+            if (sort === 'alpha') list = [...list].sort((a, b) => a.title.localeCompare(b.title, 'zh'));
+            else if (sort === 'pinned') list = [...list].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.created || 0) - (a.created || 0));
+            else list = [...list].sort((a, b) => (b.created || 0) - (a.created || 0));
+            return list;
+        }
+
+        function startEdit(id) {
+            if (editingId === id) return;
+            editingId = id; renderAll();
+            setTimeout(() => {
+                const card = document.querySelector(`[data-id="${id}"]`);
+                if (card) card.querySelectorAll('textarea').forEach(ta => { ta.removeAttribute('readonly'); autoSize(ta); });
+            }, 0);
+        }
+
+        function maybeStopEdit(id) {
+            setTimeout(() => {
+                const card = document.querySelector(`[data-id="${id}"]`);
+                if (card && !card.contains(document.activeElement)) { editingId = null; renderAll(); }
+            }, 160);
+        }
+
+        // ── Render ──
+        function renderSidebar() {
+            const all = notes.length;
+            const sidebarEl = document.getElementById('sidebar');
+            let html = `
+    <div class="sidebar-item${activeTag === 'all' ? ' active' : ''}" onclick="setTag('all')">
+      <span class="left"><i class="ti ti-files"></i>全部</span>
+      <span class="sidebar-count">${all}</span>
+    </div>`;
+            TAGS.forEach(t => {
+                const c = notes.filter(n => n.tag === t.id).length;
+                const dotStyle = `background:${tagColor(t.id)}`;
+                html += `
+    <div class="sidebar-item${activeTag === t.id ? ' active' : ''}" onclick="setTag('${t.id}')">
+      <span class="left">
+        <span class="tag-dot" style="${dotStyle}"></span>${t.label}
+      </span>
+      <span class="sidebar-count">${c}</span>
+    </div>`;
+            });
+            sidebarEl.innerHTML = html;
+        }
+
+        function renderHeader() {
+            const pinned = notes.filter(n => n.pinned).length;
+            document.getElementById('header-meta').textContent =
+                `${notes.length} 則筆記${pinned ? `・${pinned} 置頂` : ''}`;
+        }
+
+        function badgeHTML(tagId) {
+            const t = tagInfo(tagId);
+            return `<span class="tag-badge" style="background:${tagStyle(tagId)};color:${tagColor(tagId)};border-color:${tagBorder(tagId)}">${t.label}</span>`;
+        }
+
+        function cardActionsHTML(n) {
+            return `<div class="card-actions">
+    <button class="card-btn pin-btn${n.pinned ? ' is-pinned' : ''}" title="${n.pinned ? '取消置頂' : '置頂'}" onclick="event.stopPropagation();togglePin(${n.id})">
+      <i class="ti ${n.pinned ? 'ti-pin' : 'ti-pin-off'}"></i>
+    </button>
+    <button class="card-btn del" title="刪除" onclick="event.stopPropagation();openModal(${n.id})">
+      <i class="ti ti-trash"></i>
+    </button>
+  </div>`;
+        }
+
+        function tagPickerHTML(n) {
+            return `<div class="tag-picker">${TAGS.map(x =>
+                `<span class="tag-opt${n.tag === x.id ? ' sel' : ''}"
+      style="background:${tagStyle(x.id)};color:${tagColor(x.id)};border-color:${tagBorder(x.id)}"
+      onclick="event.stopPropagation();setNoteTag(${n.id},'${x.id}')">${x.label}</span>`
+            ).join('')}</div>`;
+        }
+
+        function renderGridCard(n, i) {
+            const isEditing = editingId === n.id;
+            return `
+  <div class="note-card${isEditing ? ' editing' : ''}${n.pinned ? ' pinned' : ''}" data-id="${n.id}"
+    style="animation-delay:${i * 0.035}s" onclick="startEdit(${n.id})">
+    <div class="card-top">
+      <textarea class="note-title" rows="1" placeholder="標題…"
+        oninput="autoSize(this);updateNote(${n.id},'title',this.value)"
+        onblur="maybeStopEdit(${n.id})"
+        ${isEditing ? '' : 'readonly'}>${escHtml(n.title)}</textarea>
+      ${cardActionsHTML(n)}
+    </div>
+    <textarea class="note-body" rows="3" placeholder="寫點什麼…"
+      oninput="autoSize(this);updateNote(${n.id},'body',this.value)"
+      onblur="maybeStopEdit(${n.id})"
+      ${isEditing ? '' : 'readonly'}>${escHtml(n.body)}</textarea>
+    ${isEditing ? tagPickerHTML(n) : ''}
+    ${isEditing && n.body.length > 0 ? `<div class="char-count">${n.body.length} 字</div>` : ''}
+    <div class="note-footer">
+      ${badgeHTML(n.tag)}
+      <span class="note-date">${n.date}</span>
+    </div>
+  </div>`;
+        }
+
+        function renderListRow(n, i) {
+            const isEditing = editingId === n.id;
+            return `
+  <div class="note-row${isEditing ? ' editing' : ''}${n.pinned ? ' pinned' : ''}" data-id="${n.id}"
+    style="animation-delay:${i * 0.03}s" onclick="startEdit(${n.id})">
+    <div class="row-main">
+      <div class="card-top">
+        <textarea class="note-title" rows="1" placeholder="標題…"
+          oninput="autoSize(this);updateNote(${n.id},'title',this.value)"
+          onblur="maybeStopEdit(${n.id})"
+          ${isEditing ? '' : 'readonly'}>${escHtml(n.title)}</textarea>
+        ${cardActionsHTML(n)}
+      </div>
+      <textarea class="note-body" rows="1" placeholder="寫點什麼…"
+        oninput="autoSize(this);updateNote(${n.id},'body',this.value)"
+        onblur="maybeStopEdit(${n.id})"
+        ${isEditing ? '' : 'readonly'}>${escHtml(n.body)}</textarea>
+      ${isEditing ? tagPickerHTML(n) : ''}
+    </div>
+    <div class="row-side">
+      ${badgeHTML(n.tag)}
+      <span class="note-date">${n.date}</span>
+    </div>
+  </div>`;
+        }
+
+        function escHtml(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+        function renderAll() {
+            renderSidebar();
+            renderHeader();
+
+            const list = getFiltered();
+            const pinned = list.filter(n => n.pinned);
+            const rest = list.filter(n => !n.pinned);
+            const isGrid = currentView === 'grid';
+
+            const container = document.getElementById('notes-container');
+            container.innerHTML = '';
+
+            const grid = document.createElement('div');
+            grid.className = isGrid ? 'notes-grid' : 'notes-list';
+
+            if (!list.length) {
+                const q = document.getElementById('search').value.trim();
+                grid.innerHTML = `<div class="empty-state">
+      <i class="ti ${q ? 'ti-search-off' : 'ti-notes'}"></i>
+      <p>${q ? '找不到符合的筆記' : '還沒有筆記'}</p>
+      <small>${q ? '試試不同的關鍵字' : '點擊「新增」建立第一則筆記'}</small>
+    </div>`;
+            } else {
+                let html = '';
+                let idx = 0;
+                if (pinned.length) {
+                    html += `<div class="section-divider"><i class="ti ti-pin" style="font-size:11px"></i>置頂</div>`;
+                    html += pinned.map(n => isGrid ? renderGridCard(n, idx++) : renderListRow(n, idx++)).join('');
+                }
+                if (rest.length) {
+                    if (pinned.length) html += `<div class="section-divider">筆記</div>`;
+                    html += rest.map(n => isGrid ? renderGridCard(n, idx++) : renderListRow(n, idx++)).join('');
+                }
+                html += isGrid
+                    ? `<div class="add-card" onclick="addNote()"><i class="ti ti-plus"></i>新增筆記</div>`
+                    : '';
+                grid.innerHTML = html;
+            }
+
+            container.appendChild(grid);
+        }
+
+        // ── Init ──
+        document.getElementById('search').addEventListener('input', renderAll);
+        document.getElementById('sort').addEventListener('change', renderAll);
+        document.getElementById('modal-backdrop').addEventListener('click', function (e) {
+            if (e.target === this) closeModal();
+        });
+
+        renderAll();
+    </script>
+</body>
+
+</html>

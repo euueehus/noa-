@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進位轉換</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --border: #2a2a3a;
+            --accent: #00e5ff;
+            --accent2: #ff4081;
+            --text: #e0e0f0;
+            --text-dim: #5a5a7a;
+            --mono: 'Space Mono', monospace;
+            --sans: 'Noto Sans TC', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridDrift 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gridDrift {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(40px);
+            }
+        }
+
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            pointer-events: none;
+            animation: blobFloat 8s ease-in-out infinite alternate;
+        }
+
+        .blob-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: -100px;
+            left: -100px;
+        }
+
+        .blob-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent2);
+            bottom: -80px;
+            right: -80px;
+            animation-delay: -4s;
+        }
+
+        @keyframes blobFloat {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(30px, 20px) scale(1.1);
+            }
+        }
+
+        .card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 44px 40px;
+            width: 460px;
+            box-shadow: 0 0 60px rgba(0, 229, 255, 0.06), 0 20px 60px rgba(0, 0, 0, 0.6);
+            animation: cardIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 40px;
+            right: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .header .label {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .header h1 {
+            font-family: var(--mono);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .header h1 span {
+            color: var(--accent);
+        }
+
+        /* ── converter row ── */
+        .converter-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 12px;
+            align-items: end;
+            margin-bottom: 24px;
+        }
+
+        .field-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        /* base selector */
+        .base-select-wrap {
+            position: relative;
+        }
+
+        .base-select-wrap::after {
+            content: '▾';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent);
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        select {
+            width: 100%;
+            background: rgba(0, 229, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 36px 11px 14px;
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--text);
+            outline: none;
+            appearance: none;
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
+        }
+
+        select option {
+            background: #1a1a28;
+        }
+
+        /* custom base input row */
+        .custom-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .custom-block {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .custom-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 64, 129, 0.3);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-family: var(--mono);
+            font-size: 14px;
+            color: var(--accent2);
+            outline: none;
+            width: 100%;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .custom-input:focus {
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 3px rgba(255, 64, 129, 0.12);
+        }
+
+        .custom-input::placeholder {
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* arrow icon */
+        .arrow-col {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 2px;
+        }
+
+        .arrow-icon {
+            font-family: var(--mono);
+            font-size: 20px;
+            color: var(--text-dim);
+            letter-spacing: -2px;
+        }
+
+        /* input number */
+        .num-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-family: var(--mono);
+            font-size: 20px;
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .num-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
+        }
+
+        .num-input::placeholder {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .section-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* button */
+        .convert-btn {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            color: var(--accent);
+            font-family: var(--mono);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .convert-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .convert-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .convert-btn:hover::before {
+            opacity: 0.1;
+        }
+
+        .convert-btn:hover {
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        }
+
+        .convert-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* output */
+        #output {
+            width: 100%;
+            background: rgba(0, 229, 255, 0.04);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 10px;
+            padding: 16px 18px;
+            font-family: var(--mono);
+            font-size: 22px;
+            color: var(--accent);
+            outline: none;
+            letter-spacing: 2px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        #output.has-value {
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+        }
+
+        #output::placeholder {
+            color: var(--text-dim);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        @keyframes resultFlash {
+            0% {
+                box-shadow: 0 0 30px rgba(0, 229, 255, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+            }
+        }
+
+        #output.flash {
+            animation: resultFlash 0.4s ease-out;
+        }
+
+        /* steps breakdown */
+        .steps-wrap {
+            margin-top: 18px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 16px;
+            display: none;
+        }
+
+        .steps-wrap.visible {
+            display: block;
+        }
+
+        .steps-title {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .steps-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-height: 140px;
+            overflow-y: auto;
+        }
+
+        .steps-list li {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: var(--text-dim);
+            display: flex;
+            gap: 8px;
+        }
+
+        .steps-list li .step-num {
+            color: var(--accent);
+            min-width: 60px;
+        }
+
+        .steps-list li .step-rem {
+            color: var(--accent2);
+        }
+
+        /* divider */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+            opacity: 0.5;
+        }
+
+        /* error */
+        .error-msg {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent2);
+            letter-spacing: 1px;
+            min-height: 16px;
+            margin-bottom: 12px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="card">
+        <div class="header">
+            <span class="label">Base Converter</span>
+            <h1>進位<span>轉換</span></h1>
+        </div>
+
+        <!-- From / To selectors -->
+        <div class="converter-row">
+            <div class="field-block">
+                <span class="field-label">從（來源進位）</span>
+                <div class="base-select-wrap">
+                    <select id="fromBase" onchange="onFromBaseChange()">
+                        <option value="2">2　二進位 BIN</option>
+                        <option value="8">8　八進位 OCT</option>
+                        <option value="10" selected>10　十進位 DEC</option>
+                        <option value="16">16　十六進位 HEX</option>
+                        <option value="custom">自訂…</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="arrow-col">
+                <span class="arrow-icon">→</span>
+            </div>
+
+            <div class="field-block">
+                <span class="field-label">到（目標進位）</span>
+                <div class="base-select-wrap">
+                    <select id="toBase" onchange="onToBaseChange()">
+                        <option value="2" selected>2　二進位 BIN</option>
+                        <option value="8">8　八進位 OCT</option>
+                        <option value="10">10　十進位 DEC</option>
+                        <option value="16">16　十六進位 HEX</option>
+                        <option value="custom">自訂…</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom base inputs (hidden by default) -->
+        <div class="custom-row" id="customRow" style="display:none;">
+            <div class="custom-block" id="customFromBlock" style="display:none;">
+                <span class="field-label"
+                    style="color:var(--accent2);letter-spacing:2px;font-size:10px;font-family:var(--mono);text-transform:uppercase;">自訂來源進位</span>
+                <input class="custom-input" type="number" id="customFrom" placeholder="例：3, 5, 32…" min="2" max="36"
+                    value="">
+            </div>
+            <div class="custom-block" id="customToBlock" style="display:none;">
+                <span class="field-label"
+                    style="color:var(--accent2);letter-spacing:2px;font-size:10px;font-family:var(--mono);text-transform:uppercase;">自訂目標進位</span>
+                <input class="custom-input" type="number" id="customTo" placeholder="例：3, 5, 32…" min="2" max="36"
+                    value="">
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Number input -->
+        <span class="section-label">輸入數字</span>
+        <input class="num-input" type="text" id="inputNum" placeholder="在此輸入…" autocomplete="off" spellcheck="false">
+
+        <div class="divider"></div>
+
+        <span class="error-msg" id="errMsg"></span>
+
+        <button class="convert-btn" onclick="run()"><span>CONVERT ▸</span></button>
+
+        <span class="section-label">結果</span>
+        <input type="text" id="output" readonly placeholder="—">
+
+        <!-- Steps breakdown -->
+        <div class="steps-wrap" id="stepsWrap">
+            <div class="steps-title">計算步驟</div>
+            <ul class="steps-list" id="stepsList"></ul>
+        </div>
+    </div>
+
+    <script>
+        const DIGITS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        function getFromBase() {
+            const sel = document.getElementById('fromBase').value;
+            if (sel === 'custom') return parseInt(document.getElementById('customFrom').value);
+            return parseInt(sel);
+        }
+        function getToBase() {
+            const sel = document.getElementById('toBase').value;
+            if (sel === 'custom') return parseInt(document.getElementById('customTo').value);
+            return parseInt(sel);
+        }
+
+        function onFromBaseChange() {
+            updateCustomVisibility();
+            updateInputPlaceholder();
+        }
+        function onToBaseChange() {
+            updateCustomVisibility();
+        }
+
+        function updateCustomVisibility() {
+            const fromCustom = document.getElementById('fromBase').value === 'custom';
+            const toCustom = document.getElementById('toBase').value === 'custom';
+            document.getElementById('customRow').style.display = (fromCustom || toCustom) ? 'grid' : 'none';
+            document.getElementById('customFromBlock').style.display = fromCustom ? 'flex' : 'none';
+            document.getElementById('customToBlock').style.display = toCustom ? 'flex' : 'none';
+        }
+
+        function updateInputPlaceholder() {
+            const fb = getFromBase();
+            if (!isNaN(fb)) {
+                document.getElementById('inputNum').placeholder = `輸入 ${fb} 進位數字`;
+            }
+        }
+
+        // Parse a string in given base to decimal (BigInt for precision)
+        function parseToDecimal(str, base) {
+            str = str.toUpperCase().trim();
+            let result = 0n;
+            const b = BigInt(base);
+            for (let i = 0; i < str.length; i++) {
+                const ch = str[i];
+                const val = DIGITS.indexOf(ch);
+                if (val < 0 || val >= base) throw new Error(`字元 "${ch}" 不屬於 ${base} 進位`);
+                result = result * b + BigInt(val);
+            }
+            return result;
+        }
+
+        // Convert decimal (BigInt) to string in given base, also return steps
+        function decimalToBase(num, base) {
+            if (num === 0n) return { result: '0', steps: [{ div: '0', rem: '0' }] };
+            const b = BigInt(base);
+            const steps = [];
+            let digits = [];
+            let n = num;
+            while (n > 0n) {
+                const rem = n % b;
+                steps.push({ div: n.toString(), rem: DIGITS[Number(rem)] });
+                digits.push(DIGITS[Number(rem)]);
+                n = n / b;
+            }
+            digits.reverse();
+            steps.reverse();
+            return { result: digits.join(''), steps };
+        }
+
+        function run() {
+            const errEl = document.getElementById('errMsg');
+            errEl.textContent = '';
+
+            const fromBase = getFromBase();
+            const toBase = getToBase();
+
+            if (isNaN(fromBase) || fromBase < 2 || fromBase > 36) {
+                errEl.textContent = '⚠ 來源進位需介於 2–36'; return;
+            }
+            if (isNaN(toBase) || toBase < 2 || toBase > 36) {
+                errEl.textContent = '⚠ 目標進位需介於 2–36'; return;
+            }
+
+            const inputStr = document.getElementById('inputNum').value.trim();
+            if (!inputStr) { errEl.textContent = '⚠ 請輸入數字'; return; }
+
+            let decimal;
+            try {
+                decimal = parseToDecimal(inputStr, fromBase);
+            } catch (e) {
+                errEl.textContent = `⚠ ${e.message}`; return;
+            }
+
+            const { result, steps } = decimalToBase(decimal, toBase);
+
+            const outputEl = document.getElementById('output');
+            outputEl.value = result;
+            outputEl.classList.add('has-value');
+            outputEl.classList.remove('flash');
+            void outputEl.offsetWidth;
+            outputEl.classList.add('flash');
+
+            // Show steps (only when not trivial)
+            const stepsWrap = document.getElementById('stepsWrap');
+            const stepsList = document.getElementById('stepsList');
+            stepsList.innerHTML = '';
+
+            if (toBase !== 10) {
+                // Show conversion steps
+                steps.forEach(s => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span class="step-num">${s.div} ÷ ${toBase}</span><span>= … 餘</span><span class="step-rem"> ${s.rem}</span>`;
+                    stepsList.appendChild(li);
+                });
+                stepsWrap.classList.add('visible');
+            } else {
+                stepsWrap.classList.remove('visible');
+            }
+        }
+
+        document.getElementById('inputNum').addEventListener('keydown', e => {
+            if (e.key === 'Enter') run();
+        });
+    </script>
+</body>
+
+</html>

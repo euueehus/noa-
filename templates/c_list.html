@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>導航頁</title>
+
+    <style>
+        :root {
+            --bg: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            --surface: rgba(17, 17, 17, 0.9);
+            --card: rgba(22, 22, 22, 0.85);
+            --border: #2a2a2a;
+            --accent: #c8f542;
+            --accent2: #42f5c8;
+            --text: #e8e8e8;
+            --muted: #888;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 背景紋理 */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header {
+            position: relative;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        header img {
+            width: 42px;
+            height: 42px;
+            position: absolute;
+            left: 40px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border);
+        }
+
+        .header-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 0 0 6px var(--accent);
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 48px auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .project {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            cursor: default;
+            animation: fadeUp 0.5s ease both;
+            backdrop-filter: blur(6px);
+        }
+
+        .project:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .project:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .project:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 0 24px rgba(200, 245, 66, 0.15), 0 0 32px rgba(66, 245, 200, 0.1);
+        }
+
+        .project-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .project-index {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            width: 28px;
+            flex-shrink: 0;
+        }
+
+        .project-info h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .project-info .note {
+            font-size: 13px;
+            color: var(--muted);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(200, 245, 66, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(200, 245, 66, 0.2);
+            white-space: nowrap;
+            box-shadow: 0 0 6px rgba(200, 245, 66, 0.2);
+        }
+
+        .tag.teal {
+            background: rgba(66, 245, 200, 0.08);
+            color: var(--accent2);
+            border-color: rgba(66, 245, 200, 0.2);
+            box-shadow: 0 0 6px rgba(66, 245, 200, 0.2);
+        }
+
+        .btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 9px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            background-size: 200% 100%;
+            background-position: left center;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-color: transparent;
+            color: #000;
+            background-position: right center;
+        }
+
+        .project-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="/static/c_logo.jpg" alt="logo">
+        <span class="header-title">導航頁</span>
+    </header>
+
+    <div class="container">
+        <div class="section-label">專案列表</div>
+
+        <div class="project">
+            <div class="project-left">
+                <span class="project-index">01</span>
+                <div class="project-info">
+                    <h2>身分證字號驗證</h2>
+                    <p class="note">Taiwan ID Validator</p>
+                </div>
+            </div>
+            <div class="project-right">
+                <span class="tag">工具</span>
+                <button class="btn" onclick="window.location.href='/c_sfz'">前往 →</button>
+            </div>
+        </div>
+
+        <div class="project">
+            <div class="project-left">
+                <span class="project-index">02</span>
+                <div class="project-info">
+                    <h2>進制轉換</h2>
+                    <p class="note">Base Converter 2 / 8 / 10 / 16</p>
+                </div>
+            </div>
+            <div class="project-right">
+                <span class="tag">工具</span>
+                <button class="btn" onclick="window.location.href='/c_bi'">前往 →</button>
+            </div>
+        </div>
+        <div class="project">
+            <div class="project-left">
+                <span class="project-index">03</span>
+                <div class="project-info">
+                    <h2>俄羅斯輪盤賭</h2>
+                    <p class="note">Russian Roulette</p>
+                </div>
+            </div>
+            <div class="project-right">
+                <span class="tag teal">遊戲</span>
+                <button class="btn" onclick="window.location.href='/c_gb'">前往 →</button>
+            </div>
+        </div>
+        <div class="project">
+            <div class="project-left">
+                <span class="project-index">03</span>
+                <div class="project-info">
+                    <h2>Hgame</h2>
+                    <p class="note">Hgame</p>
+                </div>
+            </div>
+            <div class="project-right">
+                <span class="tag teal">遊戲</span>
+                <button class="btn" onclick="window.location.href='/H_game'">前往 →</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            background-color: #000000;
+        }
+
+        img {
+            width: 50%;
+            height: auto;
+        }
+
+        h1 {
+            color: rgb(255, 255, 255);
+        }
+
+        h2 {
+            color: rgb(255, 255, 255);
+        }
+
+        h3 {
+            color: rgb(255, 255, 255);
+        }
+
+        h4 {
+            color: rgb(255, 255, 255);
+        }
+
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            color: #0000ff;
+        }
+
+        .list {
+            color: rgb(255, 255, 255);
+        }
+
+        .imgup {
+            width: 50%;
+            height: auto;
+        }
+
+        .custom-popup {
+            width: 700x;
+            max-width: 90vw;
+
+
+            border-radius: 12px;
+        }
+    </style>
+
+
+
+
+
+
+
+
+<body>
+    <h1>洲~</h1><br>
+    <h3>嗯對還沒更新~
+
+
+    </h3>
+
+
+
+
+
+
+
+
+    <button onclick="window.location.href='/list' ">回去</button>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+<script>
+    Swal.fire({
+        html: '<span style="color:#ff4444;font-size:40px;"><b>你掉進陷阱了!</b></span>',
+        imageUrl: "/static/賽大哥.jpg",
+        imageWidth: 1000,
+        imageHeight: 500,
+        imageAlt: "Custom image",
+        customClass: {
+            popup: 'custom-popup'
+        }
+    });
+</script>
