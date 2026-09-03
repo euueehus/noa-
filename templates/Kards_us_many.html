@@ -3,116 +3,219 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta charset="UTF-8">
     <title>Noa的Kards小站 - 很多解牌</title>
     <style>
-        body {
-            background-color: #000000;
-            font-family: sans-serif;
+        :root {
+            --bg: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            --surface: rgba(17, 17, 17, 0.9);
+            --card: rgba(22, 22, 22, 0.85);
+            --border: #2a2a2a;
+            --accent: #c8f542;
+            --accent2: #42f5c8;
+            --text: #e8e8e8;
+            --muted: #888;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        h2 {
+        body {
+            background: var(--bg);
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 背景紋理 */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header {
+            position: relative;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 18px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            z-index: 10;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .header-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 0 0 6px var(--accent);
+        }
+
+        h2.page-title {
             text-align: center;
-            color: #0000ff;
-            margin-top: 20px;
+            font-family: 'Space Mono', monospace;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            margin: 40px 0 8px;
+            text-shadow: 0 0 6px rgba(200, 245, 66, 0.4);
         }
 
         .container {
+            max-width: 1000px;
+            margin: 32px auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin: 40px 0 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 20px;
+            align-items: center;
+            gap: 12px;
         }
 
-        img {
-            width: 25%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            margin-right: 20px;
-        }
-
-        .deck {
+        .section-label::after {
+            content: '';
             flex: 1;
-            color: #0000ff;
-            background-color: #f0f0f0;
-            padding: 15px;
-            border-radius: 10px;
-            white-space: pre-wrap;
-            line-height: 1.6;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .deck-layout {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .deck-info {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 28px;
+            flex: 1;
+            backdrop-filter: blur(8px);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .deck-info strong {
+            color: var(--accent);
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        .deck-info .side-label {
+            display: inline-block;
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 9999px;
+        }
+
+        .side-label.us {
+            color: var(--accent);
+            background: rgba(200, 245, 66, 0.08);
+            border: 1px solid rgba(200, 245, 66, 0.35);
+        }
+
+        .side-label.uk {
+            color: var(--accent2);
+            background: rgba(66, 245, 200, 0.08);
+            border: 1px solid rgba(66, 245, 200, 0.5);
+        }
+
+        .card-line {
+            display: block;
         }
 
         .codebox {
-            background-color: #e8e8e8;
-            border: 1px dashed #0000ff;
-            padding: 10px;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px dashed var(--accent2);
+            padding: 12px 14px;
             margin-top: 20px;
-            font-family: monospace;
-            font-size: 14px;
-            color: #333;
-            border-radius: 5px;
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            color: var(--accent2);
+            border-radius: 8px;
             word-break: break-word;
         }
 
         .card-gallery {
             display: flex;
             flex-wrap: wrap;
-            grid-template-columns: repeat(auto-fill, minmax(px, 1fr));
-            gap: 15px;
-            padding: 15px;
-
+            gap: 16px;
+            padding: 0;
+            margin: 20px 0 80px;
         }
 
         .card {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-            padding: 1px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px;
+            width: 140px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
 
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 0 18px rgba(200, 245, 66, 0.18);
         }
 
         .card img {
-            width: 50%;
+            width: 100%;
             height: auto;
-            border-radius: 5px;
+            border-radius: 6px;
+            display: block;
+            margin: 0 auto 8px;
         }
 
         .card-name {
-            margin-top: 8px;
-            font-weight: bold;
-            color: #0000ff;
-            font-size: 14px;
-        }
-
-        .button-area {
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            color: #0000ff;
-            background-color: #fff;
-            border: 2px solid #0000ff;
-            border-radius: 5px;
-            margin: 5px;
-        }
-
-        button:hover {
-            background-color: #0000ff;
-            color: #fff;
+            font-weight: 700;
+            color: var(--text);
+            font-size: 13px;
         }
 
         .card-name span {
             display: block;
-            font-weight: normal;
-            font-size: 13px;
+            font-weight: 400;
+            font-size: 11px;
             margin-top: 4px;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.08em;
         }
 
         .rarity-normal {
@@ -134,48 +237,82 @@
             color: #FFD700;
             /* 精英：金色 */
         }
+
+        .button-area {
+            text-align: center;
+            margin: 30px 0 80px;
+        }
+
+        .btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 12.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 10px 24px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            background-size: 200% 100%;
+            background-position: left center;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-color: transparent;
+            color: #000;
+            background-position: right center;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 
 <body>
-    <h2>很多解牌~</h2>
+    <header>
+        <img src="/static/c_logo.jpg" alt="logo"
+            style="width:42px; height:42px; border-radius:8px; border:1px solid var(--border);">
+        <span class="header-title">kards~</span>
+    </header>
+
+    <h2 class="page-title">很多解牌~</h2>
 
     <div class="container">
+        <div class="deck-layout">
+            <div class="deck-info">
+                <strong>Major power:</strong> USA<br>
+                <strong>Ally:</strong> Britain<br>
+                <strong>HQ:</strong> 瑟堡<br>
 
-        <div class="deck">
-            <strong>Major power:</strong> USA<br>
-            <strong>Ally:</strong> Britain<br>
-            <strong>HQ:</strong> 瑟堡<br><br>
+                <span class="side-label us">USA</span>
+                <span class="card-line">3x (0K) 脅迫</span>
+                <span class="card-line">1x (1K) 狂怒</span>
+                <span class="card-line">2x (1K) 為了自由</span>
+                <span class="card-line">4x (2K) 戰爭機器</span>
+                <span class="card-line">2x (4K) 第 2 密歇根州步兵團</span>
+                <span class="card-line">1x (4K) 第 48 裝甲步兵團</span>
+                <span class="card-line">2x (4K) 激勵部隊</span>
+                <span class="card-line">1x (4K) 轟炸機黑手黨</span>
+                <span class="card-line">3x (4K) M4 雪曼</span>
+                <span class="card-line">3x (5K) 戰爭債券</span>
+                <span class="card-line">2x (5K) M4 螢火蟲 PL</span>
+                <span class="card-line">2x (6K) 龍卷師 幹....優質帥哥喔</span>
+                <span class="card-line">1x (9K) 海上入侵</span>
 
-            <strong>USA:</strong><br>
-            3x (0K) 脅迫<br>
-            1x (1K) 狂怒<br>
-            2x (1K) 為了自由<br>
-            4x (2K) 戰爭機器<br>
-            2x (4K) 第 2 密歇根州步兵團<br>
-            1x (4K) 第 48 裝甲步兵團<br>
-            2x (4K) 激勵部隊<br>
-            1x (4K) 轟炸機黑手黨<br>
-            3x (4K) M4 雪曼<br>
-            3x (5K) 戰爭債券<br>
-            2x (5K) M4 螢火蟲 PL<br>
-            2x (6K) 龍卷師 幹....優質帥哥喔<br>
-            1x (9K) 海上入侵<br><br>
+                <span class="side-label uk">Britain</span>
+                <span class="card-line">2x (1K) 貝克街分隊</span>
+                <span class="card-line">3x (1K) 兩難困境</span>
+                <span class="card-line">3x (1K) 第 9 突擊隊</span>
+                <span class="card-line">3x (3K) HX 175 護航隊</span>
+                <span class="card-line">1x (5K) 邱吉爾 Mk IV</span>
 
-            <strong>Britain:</strong><br>
-            2x (1K) 貝克街分隊<br>
-            3x (1K) 兩難困境<br>
-            3x (1K) 第 9 突擊隊<br>
-            3x (3K) HX 175 護航隊<br>
-            1x (5K) 邱吉爾 Mk IV<br>
-
-            <div class="codebox">%%52|1gbCmNpBpD;bqgLouqGr6r9;08bPd4ohoxsC;bK</div>
+                <div class="codebox">%%52|1gbCmNpBpD;bqgLouqGr6r9;08bPd4ohoxsC;bK</div>
+            </div>
         </div>
-    </div>
 
-    <h2>卡牌圖鑑</h2>
-    <div class="card-gallery">
-
+        <div class="section-label">卡牌圖鑑</div>
         <div class="card-gallery">
             <div class="card"><img src="/static/戰爭機器.jpg">
                 <div class="card-name">戰爭機器
@@ -267,9 +404,12 @@
                     <span class="rarity-limited">限定</span>
                 </div>
             </div>
-            <div class="button-area">
-                <button onclick="location.href='/Kards_us'">回去</button>
-            </div>
+        </div>
+
+        <div class="button-area">
+            <button class="btn" onclick="location.href='/Kards_us'">回去</button>
+        </div>
+    </div>
 </body>
 
 </html>

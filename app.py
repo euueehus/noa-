@@ -99,9 +99,19 @@ def H_game():
     return render_template("H_game.html")
 
 
+@app.route("/Kards_ge")
+def Kards_ge():
+    return render_template("Kards_ge.html")
+
+
 @app.route("/pri")
 def pri():
     return render_template("pri.html")
+
+
+@app.route("/Kards_ge_high")
+def Kards_ge_high():
+    return render_template("Kards_ge_high.html")
 
 
 if __name__ == "__main__":
